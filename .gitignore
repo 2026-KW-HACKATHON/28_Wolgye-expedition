@@ -1,0 +1,72 @@
+# ==========================================
+# Unity Auto-Generated & Temporary Folders
+# ==========================================
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Mm]emoryCaptures/
+/[Rr]ecordings/
+
+# ==========================================
+# Unity Package Manager & Local Packages
+# ==========================================
+# Unity가 패키지 캐시를 재생성하므로 제외합니다.
+/[P3d]/
+/Assets/Plugins/Editor/JetBrains*
+
+# ==========================================
+# Asset Store & External Tool Artifacts
+# ==========================================
+# Asset Store 패키지 설치 시 생기는 임시 에셋 및 예제 제외 (필요에 따라 주석 해제)
+# /Assets/AssetStoreTools*
+
+# ==========================================
+# Visual Studio / VS Code / Rider / MonoDevelop
+# ==========================================
+.vs/
+.idea/
+.vscode/
+/*.csproj
+/*.unityproj
+/*.sln
+/*.suo
+/*.user
+/*.userprefs
+/*.pidb
+/*.booproj
+/*.svd
+/*.pdb
+/*.opendb
+/*.idb
+*.csproj
+*.unityproj
+*.sln
+
+# ==========================================
+# OS Generated Files
+# ==========================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ==========================================
+# Crash Reports & Builds
+# ==========================================
+sysinfo.txt
+*.apk
+*.aab
+*.unitypackage
+*.app
+
+# ==========================================
+# PlasticSCM / Collab / Version Control Temp
+# ==========================================
+/[Aa]ssets/Plugins/PlasticSCM*
