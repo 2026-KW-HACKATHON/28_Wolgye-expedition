@@ -1,0 +1,5 @@
+C:/Project/WolgyeExpedition/.utmp/RelWithDebInfo/o4k1o6jg/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Project/WolgyeExpedition/.utmp/RelWithDebInfo/o4k1o6jg/arm64-v8a/CMakeFiles/rebuild_cache.dir
+C:/Project/WolgyeExpedition/.utmp/RelWithDebInfo/o4k1o6jg/arm64-v8a/GameActivity/CMakeFiles/game.dir
+C:/Project/WolgyeExpedition/.utmp/RelWithDebInfo/o4k1o6jg/arm64-v8a/GameActivity/CMakeFiles/edit_cache.dir
+C:/Project/WolgyeExpedition/.utmp/RelWithDebInfo/o4k1o6jg/arm64-v8a/GameActivity/CMakeFiles/rebuild_cache.dir
