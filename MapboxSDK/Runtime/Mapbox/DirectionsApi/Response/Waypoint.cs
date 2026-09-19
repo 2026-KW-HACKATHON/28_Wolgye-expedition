@@ -1,0 +1,35 @@
+﻿//-----------------------------------------------------------------------
+// <copyright file="Waypoint.cs" company="Mapbox">
+//     Copyright (c) 2016 Mapbox. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+
+using System;
+using Mapbox.BaseModule.Data.Vector2d;
+using Mapbox.BaseModule.Utilities.JsonConverters;
+using Newtonsoft.Json;
+
+namespace Mapbox.DirectionsApi.Response
+{
+	/// <summary>
+    /// A Waypoint from a Directions API call.
+    /// </summary>
+    [Serializable]
+	public class Waypoint
+    {
+	    /// <summary>
+	    /// Gets or sets the name.
+	    /// </summary>
+	    /// <value>The name.</value>
+	    [JsonProperty("name")] 
+	    public string Name;
+
+	    /// <summary>
+	    /// Gets or sets the location.
+	    /// </summary>
+	    /// <value>The location.</value>
+	    [JsonProperty("location")] 
+	    [JsonConverter(typeof(LonLatToVector2dConverter))]
+	    public Vector2d Location;
+    }
+}

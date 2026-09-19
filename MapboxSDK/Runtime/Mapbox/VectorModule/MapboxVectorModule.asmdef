@@ -1,0 +1,20 @@
+{
+    "name": "MapboxVectorModule",
+    "rootNamespace": "",
+    "references": [
+        "GUID:093b9fb2cd4794a8c94472d55c8bb0a9",
+        "GUID:a42927d1d4a3b4cda9b076a7adecb9cc",
+        "GUID:25ace1f7ded6f48c0a8abf5ef590456e",
+        "GUID:1f1db07d22489445ab0fc8ed6ef2ed4f",
+        "GUID:dcd3af994807b4804b1e69cd4a2bdfed"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

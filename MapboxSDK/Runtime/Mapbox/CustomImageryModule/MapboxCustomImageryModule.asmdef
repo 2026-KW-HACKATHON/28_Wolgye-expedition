@@ -1,0 +1,18 @@
+{
+    "name": "MapboxCustomImageryModule",
+    "rootNamespace": "",
+    "references": [
+        "GUID:093b9fb2cd4794a8c94472d55c8bb0a9",
+        "GUID:36ca6af6e2b304d4090888554d6ce199",
+        "GUID:5ff00896142b94bc7a58a7c72b2faf57"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

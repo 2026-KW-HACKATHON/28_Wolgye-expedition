@@ -1,0 +1,19 @@
+{
+    "name": "MapboxCustomImageryModule.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:60dcad938ceef450e9b8d773e5c61b99",
+        "GUID:15fe16679907f4627ab38b784df8ca99"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

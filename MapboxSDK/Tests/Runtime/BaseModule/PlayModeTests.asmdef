@@ -1,0 +1,39 @@
+{
+    "name": "PlayModeTests",
+    "rootNamespace": "",
+    "references": [
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "MapboxBaseModule",
+        "MapboxDebug",
+        "UnityMapModule",
+        "MapboxExamples",
+        "Unity.Recorder",
+        "Unity.Recorder.Editor",
+        "MapboxImageryModule",
+        "MapboxVectorModule"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll",
+        "Mapbox.VectorTile.VectorTileReader.dll",
+        "Mapbox.VectorTile.Geometry.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.unity.recorder",
+            "expression": "",
+            "define": "UNITY_RECORDER"
+        }
+    ],
+    "noEngineReferences": false
+}

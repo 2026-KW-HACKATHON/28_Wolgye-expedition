@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.mapbox.sdk": {
-      "version": "file:C:/Users/jaeye/Downloads/mapbox-unity-sdk-main",
+      "version": "file:../MapboxSDK",
       "depth": 0,
       "source": "local",
       "dependencies": {

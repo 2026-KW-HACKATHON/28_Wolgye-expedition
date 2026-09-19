@@ -1,0 +1,31 @@
+{
+    "name": "MapboxBaseModuleTests",
+    "rootNamespace": "",
+    "references": [
+        "GUID:093b9fb2cd4794a8c94472d55c8bb0a9",
+        "GUID:27619889b8ba8c24980f49ee34dbb44a",
+        "GUID:0acc523941302664db1f4e527237feb3",
+        "GUID:36ca6af6e2b304d4090888554d6ce199",
+        "GUID:b539fa37cbf6b482d9d4da9b14c33dc6",
+        "GUID:5ff00896142b94bc7a58a7c72b2faf57",
+        "GUID:2400806fb903448e5b7e737b92f1e434"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll",
+        "Newtonsoft.Json.dll",
+        "Mapbox.VectorTile.VectorTileReader.dll",
+        "Mapbox.VectorTile.Geometry.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
