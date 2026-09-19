@@ -1,0 +1,365 @@
+using System;
+using System.Collections.Generic;
+using Mapbox.BaseModule.Map;
+using Mapbox.BaseModule.Utilities;
+using UnityEngine;
+using System.Collections;
+using Mapbox.BaseModule.Data;
+using Mapbox.BaseModule.Data.Tiles;
+using Mapbox.BaseModule.Unity;
+using Mapbox.VectorModule.MeshGeneration;
+using Mapbox.VectorTile;
+
+namespace Mapbox.VectorModule
+{
+    public enum ModifierStackExecutionMode
+    {
+        All,
+        FirstHit
+    }
+
+    [Serializable]
+    public class VectorLayerVisualizer : IVectorLayerVisualizer
+    {
+        public Dictionary<int, ModifierStack> GetModStacks => _stackList;
+        public string VectorLayerName => _vectorLayerName;
+        public bool Active { get; set; }
+
+        protected VectorLayerVisualizerSettings _settings;
+        protected string _vectorLayerName;
+        protected UnityContext _unityContext;
+        protected Dictionary<int, ModifierStack> _stackList;
+        protected Dictionary<CanonicalTileId, List<VectorEntity>> _results;
+        protected IMapInformation _mapInformation;
+        protected Transform _layerRootObject;
+        
+        public VectorLayerVisualizer(string name, IMapInformation mapInformation, UnityContext unityContext = null, VectorLayerVisualizerSettings settings = null)
+        {
+            _vectorLayerName = name;
+            _mapInformation = mapInformation;
+            _unityContext = unityContext;
+            _settings = settings ?? new VectorLayerVisualizerSettings();
+            _stackList = new Dictionary<int, ModifierStack>();
+            _results = new Dictionary<CanonicalTileId, List<VectorEntity>>();
+            _layerRootObject = new GameObject(_vectorLayerName + " layer objects").transform;
+            if (_unityContext != null)
+            {
+                // worldPositionStays: false so Unity doesn't counter-rotate localRotation
+                // when parenting under a rotated RuntimeGenerationRoot (e.g. MapRoot
+                // anchored to an AR rig). The layer root should compose with the parent
+                // chain, not pin to world space.
+                _layerRootObject.SetParent(_unityContext.RuntimeGenerationRoot, worldPositionStays: false);
+            }
+            _layerRootObject.transform.localPosition = Vector3.zero;
+            _layerRootObject.transform.localRotation = Quaternion.identity;
+            // localPosition (not position) so the offset stays in MapRoot-local space.
+            // Writing world-space here would clobber any parent transform on the map
+            // hierarchy (e.g. an AR anchor rotating / translating MapRoot).
+            _layerRootObject.transform.localPosition += _settings.Offset;
+        }
+
+        public virtual void UpdateForView(CanonicalTileId canonicalTileId, IMapInformation information)
+        {
+            if (_results.TryGetValue(canonicalTileId, out var visuals))
+            {
+                foreach (var entity in visuals)
+                {
+                    _mapInformation.PositionObjectFor(canonicalTileId, out var position, out var scale);
+                    // Both operands in MapRoot-local space: `position` comes from
+                    // PositionObjectFor (Mercator-derived, map-local), and we read the
+                    // layer root's localPosition rather than its world-space position.
+                    entity.GameObject.transform.localPosition = new Vector3(
+                        position.x - _layerRootObject.transform.localPosition.x,
+                        entity.GameObject.transform.localPosition.y,
+                        position.z - _layerRootObject.transform.localPosition.z);
+                    
+                    var stack = _stackList[entity.StackId];
+                    if (stack.Settings.LayerType == LayerTypeEnum.Polygon || stack.Settings.LayerType == LayerTypeEnum.Line)
+                    {
+                        entity.GameObject.transform.localScale = scale;
+                    }
+                }
+            }
+        }
+
+        public virtual void SetActive(CanonicalTileId canonicalTileId, bool isActive, IMapInformation mapInformation)
+        {
+            if (isActive)
+            {
+                if (_results.TryGetValue(canonicalTileId, out var visuals))
+                {
+                    foreach (var entity in visuals)
+                    {
+                        if (_stackList.TryGetValue(entity.StackId, out var stack))
+                        {
+                            var isVisible = stack.IsZinSupportedRange(_mapInformation.AbsoluteZoom);
+                            entity.GameObject.SetActive(isVisible);
+                        }
+                        else
+                        {
+                            Debug.Log("All entities should have a stack id");
+                        }
+                    }
+                }
+            }
+            else
+            {
+                UnregisterTile(canonicalTileId);
+            }
+        }
+        
+        public bool ContainsVisualFor(CanonicalTileId dataTileId)
+        {
+            return _results.ContainsKey(dataTileId);
+        }
+
+        public IEnumerator Initialize()
+        {
+            foreach (var stack in _stackList)
+            {
+                stack.Value.Initialize(_layerRootObject);
+            }
+
+            yield return null;
+        }
+
+        public void AddModifierStack(List<ModifierStack> stack)
+        {
+            foreach (var modifierStack in stack)
+            {
+                _stackList.Add(modifierStack.GetHashCode(), modifierStack);
+            }
+        }
+
+        public virtual Dictionary<int, HashSet<MeshData>> CreateMesh(CanonicalTileId tileId, VectorTileLayer layer)
+        {
+            var meshData = new Dictionary<int, HashSet<MeshData>>();
+            MeshModifications(tileId, layer, meshData);
+            return meshData;
+        }
+
+        public virtual List<GameObject> CreateGo(CanonicalTileId tileId, Dictionary<int, HashSet<MeshData>> meshData)
+        {
+            var objects =  GameObjectModifications(tileId, meshData);
+            return objects;
+        }
+
+        public virtual void UnregisterTile(CanonicalTileId tileId)
+        {
+            if (_results.ContainsKey(tileId))
+            {
+                foreach (var entity in _results[tileId])
+                {
+                    entity.GameObject.SetActive(false);
+                    if (_stackList.TryGetValue(entity.StackId, out var stack))
+                    {
+                        stack.Finalize(entity);
+                    }
+                    else
+                    {
+                        Debug.Log("shouldn't happen");
+                    }
+                    
+                    OnVectorMeshDestroyed(entity.GameObject);
+                }
+
+                _results[tileId].Clear();
+                _results.Remove(tileId);
+            }
+
+            foreach (var modifierStack in _stackList.Values)
+            {
+                modifierStack.UnregisterTile(tileId);
+            }
+        }
+
+        public virtual void ClearCaches()
+        {
+            foreach (var entities in _results.Values)
+            {
+                foreach (var entity in entities)
+                {
+                    OnVectorMeshDestroyed(entity.GameObject);
+                    GameObject.Destroy(entity.GameObject);
+                }
+            }
+
+            foreach (var stack in _stackList)
+            {
+                stack.Value.OnDestroy();
+            }
+
+            _results.Clear();
+        }
+        
+        public void OnDestroy()
+        {
+            foreach (var entities in _results.Values)
+            {
+                foreach (var entity in entities)
+                {
+                    OnVectorMeshDestroyed(entity.GameObject);
+                    GameObject.Destroy(entity.GameObject);
+                }
+            }
+
+            foreach (var stack in _stackList)
+            {
+                stack.Value.OnDestroy();
+            }
+
+            _results.Clear();
+        }
+
+        protected void MeshModifications(CanonicalTileId canonicalTileId, VectorTileLayer layer, Dictionary<int, HashSet<MeshData>> meshDataList)
+        {
+            for (int i = 0; i < layer.FeatureCount(); i++)
+            {
+                var featureResult = GetFeature(layer, i);
+                if (featureResult == null)
+                    continue;
+                featureResult.TileId = canonicalTileId;
+
+                foreach (var stack in _stackList)
+                {
+                    if (stack.Value.Filters != null && !stack.Value.Filters.Try(featureResult))
+                        continue;
+                    
+                    var meshData = new MeshData();
+                    meshData.Feature = featureResult;
+                    meshData = stack.Value.RunMeshModifiers(featureResult, meshData, _mapInformation);
+                    
+                    if (!meshDataList.ContainsKey(stack.Key)) meshDataList.Add(stack.Key, new HashSet<MeshData>());
+                    meshDataList[stack.Key].Add(meshData);
+                    if (_settings.StackExecutionMode == ModifierStackExecutionMode.FirstHit)
+                        break;
+                }
+            }
+
+            // if (!tile.IsActive)
+            //     return;
+
+            foreach (var meshResult in meshDataList)
+            {
+                var stack = _stackList[meshResult.Key];
+                if (stack.Settings.MergeObjects)
+                {
+                    var mergedData = CombineMeshData(meshResult.Value);
+                    meshResult.Value.Clear();
+                    meshResult.Value.Add(mergedData);
+                }
+            }
+        }
+
+        protected List<GameObject> GameObjectModifications(CanonicalTileId canonicalTileId, Dictionary<int, HashSet<MeshData>> meshDataList)
+        {
+            var objectList = new List<GameObject>();
+            foreach (var pair in meshDataList)
+            {
+                foreach (var meshData in pair.Value)
+                {
+                    var entity = _stackList[pair.Key].CreateEntity(meshData);
+                    entity.GameObject.transform.SetParent(_layerRootObject, worldPositionStays: false);
+                    entity.StackId = pair.Key;
+                    entity.Feature = meshData.Feature;
+                    if(Application.isEditor) entity.GameObject.name = VectorLayerName + " " + canonicalTileId.ToString();
+                    _stackList[pair.Key].RunGoModifiers(entity, _mapInformation);
+                    objectList.Add(entity.GameObject);
+                    
+                    if(!_results.ContainsKey(canonicalTileId))
+                        _results.Add(canonicalTileId, new List<VectorEntity>());
+                    _results[canonicalTileId].Add(entity);
+                    OnVectorMeshCreated(entity.GameObject);
+                }
+            }
+
+            return objectList;
+        }
+        
+        protected VectorFeatureUnity GetFeature(VectorTileLayer layer, int i)
+        {
+            var feature = layer.GetFeature(i);
+            var layerExtent = (float)layer.Extent;
+            var featureResult = new VectorFeatureUnity();
+            featureResult.Properties = feature.GetProperties();
+
+            var geometry = feature.Geometry<float>(0);
+            var points = new List<List<Vector3>>();
+            foreach (var t in geometry)
+            {
+                var pointCount = t.Count;
+                var newPoints = new List<Vector3>(pointCount);
+                for (int k = 0; k < pointCount; k++)
+                {
+                    var point = t[k];
+                    newPoints.Add(new Vector3(
+                    point.X / layerExtent,
+                    0, 
+                    -1 * (point.Y / layerExtent)));
+                }
+
+                points.Add(newPoints);
+            }
+
+            featureResult.Points = points;
+            if (featureResult.Points.Count < 1)
+            {
+                return null;
+            }
+            featureResult.Data = feature;
+            return featureResult;
+        }
+
+        protected MeshData CombineMeshData(HashSet<MeshData> meshDataList)
+        {
+            var mergedData = new MeshData();
+            foreach (var currentData in meshDataList)
+            {
+                if (currentData.Vertices.Count <= 3)
+                    continue;
+
+                var st = mergedData.Vertices.Count;
+                mergedData.Vertices.AddRange(currentData.Vertices);
+                mergedData.Normals.AddRange(currentData.Normals);
+                mergedData.Tangents.AddRange(currentData.Tangents);
+
+                var c2 = currentData.UV.Count;
+                for (int j = 0; j < c2; j++)
+                {
+                    if (mergedData.UV.Count <= j)
+                    {
+                        mergedData.UV.Add(new List<Vector2>(currentData.UV[j].Count));
+                    }
+                }
+
+                c2 = currentData.UV.Count;
+                for (int j = 0; j < c2; j++)
+                {
+                    mergedData.UV[j].AddRange(currentData.UV[j]);
+                }
+
+                c2 = currentData.Triangles.Count;
+                for (int j = 0; j < c2; j++)
+                {
+                    if (mergedData.Triangles.Count <= j)
+                    {
+                        mergedData.Triangles.Add(new List<int>(currentData.Triangles[j].Count));
+                    }
+                }
+
+                for (int j = 0; j < c2; j++)
+                {
+                    for (int k = 0; k < currentData.Triangles[j].Count; k++)
+                    {
+                        mergedData.Triangles[j].Add(currentData.Triangles[j][k] + st);
+                    }
+                }
+            }
+
+            return mergedData;
+        }
+        
+        public Action<GameObject> OnVectorMeshCreated = list => { };
+        public Action<GameObject> OnVectorMeshDestroyed = go => { };
+    }
+}

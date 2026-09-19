@@ -1,0 +1,23 @@
+{
+    "name": "MapboxExamples",
+    "rootNamespace": "",
+    "references": [
+        "GUID:093b9fb2cd4794a8c94472d55c8bb0a9",
+        "GUID:2400806fb903448e5b7e737b92f1e434",
+        "GUID:5ff00896142b94bc7a58a7c72b2faf57",
+        "GUID:36ca6af6e2b304d4090888554d6ce199",
+        "GUID:1b64b068a01f943108c7f4b7a5356c7a",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:8ba268152fd3143f59445711358cb12f",
+        "GUID:75469ad4d38634e559750d17036d5f7c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

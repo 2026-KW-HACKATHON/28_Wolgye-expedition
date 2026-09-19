@@ -1,0 +1,19 @@
+{
+    "name": "MapboxComponentSystem.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:5aef8304858a8459cb2204d15bf75ab9",
+        "GUID:093b9fb2cd4794a8c94472d55c8bb0a9"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

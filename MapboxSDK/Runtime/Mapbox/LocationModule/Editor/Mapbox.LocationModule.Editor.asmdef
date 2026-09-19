@@ -1,0 +1,18 @@
+{
+    "name": "MapboxLocationModule.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:1b64b068a01f943108c7f4b7a5356c7a"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

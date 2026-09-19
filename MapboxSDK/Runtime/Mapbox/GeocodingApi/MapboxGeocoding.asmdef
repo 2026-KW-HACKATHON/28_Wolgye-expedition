@@ -1,0 +1,16 @@
+{
+    "name": "MapboxGeocodingApi",
+    "rootNamespace": "",
+    "references": [
+        "GUID:093b9fb2cd4794a8c94472d55c8bb0a9"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

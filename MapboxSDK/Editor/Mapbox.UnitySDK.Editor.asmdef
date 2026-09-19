@@ -1,0 +1,19 @@
+{
+    "name": "MapboxUnitySDK.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:093b9fb2cd4794a8c94472d55c8bb0a9",
+        "GUID:36ca6af6e2b304d4090888554d6ce199"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
