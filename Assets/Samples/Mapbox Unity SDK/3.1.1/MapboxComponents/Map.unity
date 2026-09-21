@@ -817,9 +817,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerLocation
   _mapBehaviour: {fileID: 1316629399}
+  _cameraBehaviour: {fileID: 2054936221}
   _locationProviderFactory: {fileID: 309918882}
   _playerArrow: {fileID: 1542728884}
-  _moveThreshold: 5
+  _moveThreshold: 3
 --- !u!1 &1808235829
 GameObject:
   m_ObjectHideFlags: 0

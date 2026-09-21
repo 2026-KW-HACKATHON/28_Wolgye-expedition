@@ -20,12 +20,15 @@ public class PlayerLocation : MonoBehaviour
     [SerializeField]
     private Transform _playerArrow;
     [SerializeField]
-    private float _moveThreshold = 5f;
+    private float _moveThreshold = 3f;
 
     private ILocationProvider _locationProvider;
 
     private Location _lastLocation;
     private bool _hasLocation;
+
+    private LatitudeLongitude _lastMapLocation;
+    private bool _hasMapLocation;
 
     private void Start()
     {
@@ -107,9 +110,46 @@ public class PlayerLocation : MonoBehaviour
         if (_mapBehaviour.MapboxMap == null)
             return;
 
-        _mapBehaviour.MapboxMap.ChangeView(
-            location.LatitudeLongitude
+        LatitudeLongitude currentLocation =
+        location.LatitudeLongitude;
+
+        // 최초 위치
+        if (!_hasMapLocation)
+        {
+            _mapBehaviour.MapboxMap.LoadMapView(
+                currentLocation,
+                () =>
+                {
+                    UpdatePlayerPosition(location);
+                }
+            );
+
+            _lastMapLocation = currentLocation;
+            _hasMapLocation = true;
+
+            return;
+        }
+
+        // 마지막으로 지도를 이동시킨 위치와 현재 GPS 위치의 거리
+        float distance = CalculateDistance(
+            _lastMapLocation,
+            currentLocation
         );
+
+        // 3m 미만이면 지도 이동하지 않음
+        if (distance < _moveThreshold)
+            return;
+
+        // 3m 이상 이동했으면 지도 이동
+        _mapBehaviour.MapboxMap.LoadMapView(
+            currentLocation,
+            () =>
+            {
+                UpdatePlayerPosition(location);
+            }
+        );
+
+        _lastMapLocation = currentLocation;
     }
 
     private IEnumerator WaitForMap()
@@ -124,7 +164,7 @@ public class PlayerLocation : MonoBehaviour
 
         if (_hasLocation)
         {
-            UpdatePlayerPosition(_lastLocation);
+            OnLocationUpdated(_lastLocation);
         }
     }
 
@@ -145,5 +185,35 @@ public class PlayerLocation : MonoBehaviour
         _playerArrow.localPosition = localPosition;
 
         // Debug.Log($"Player Position = {localPosition}");
+    }
+
+    private float CalculateDistance(
+    LatitudeLongitude a,
+    LatitudeLongitude b)
+    {
+        const float EarthRadius = 6371000f;
+
+        float lat1 = Mathf.Deg2Rad * (float)a.Latitude;
+        float lat2 = Mathf.Deg2Rad * (float)b.Latitude;
+
+        float deltaLat =
+            Mathf.Deg2Rad * (float)(b.Latitude - a.Latitude);
+
+        float deltaLon =
+            Mathf.Deg2Rad * (float)(b.Longitude - a.Longitude);
+
+        float sinLat = Mathf.Sin(deltaLat / 2f);
+        float sinLon = Mathf.Sin(deltaLon / 2f);
+
+        float h =
+            sinLat * sinLat +
+            Mathf.Cos(lat1) *
+            Mathf.Cos(lat2) *
+            sinLon * sinLon;
+
+        float distance =
+            2f * EarthRadius * Mathf.Asin(Mathf.Sqrt(h));
+
+        return distance;
     }
 }
