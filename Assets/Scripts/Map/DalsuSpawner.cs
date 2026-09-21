@@ -20,9 +20,12 @@ public class DalsuSpawner : MonoBehaviour
     private Transform _spawnRoot;
     [SerializeField]
     private GameObject _dalsuMarker;
-
     [SerializeField]
     private float _despawnExtraDistance = 10f;
+
+    [Header("Catch")]
+    [SerializeField]
+    private float _catchRadius = 10f;
 
     private readonly Dictionary<string, GameObject> _spawnedDalsu = new();
 
@@ -115,6 +118,8 @@ public class DalsuSpawner : MonoBehaviour
             }
             else
             {
+                UpdateCatchState(data.id, distance);
+
                 if (distance > data.spawnRadius + _despawnExtraDistance)
                 {
                     Despawn(data);
@@ -145,12 +150,33 @@ public class DalsuSpawner : MonoBehaviour
         //);
 
         GameObject instance = Instantiate(
-            _dalsuMarker,
-            _mapBehaviour.MapboxMap.UnityContext.MapRoot,
-            false
-        );
+    _dalsuMarker,
+    _mapBehaviour.MapboxMap.UnityContext.MapRoot,
+    false
+);
 
         instance.transform.localPosition = localPosition;
+
+        DalsuController controller =
+            instance.GetComponent<DalsuController>();
+
+        if (controller == null)
+        {
+            Debug.LogError(
+                $"[DalsuSpawner] DalsuController가 없습니다. " +
+                $"{instance.name}"
+            );
+
+            Destroy(instance);
+            return;
+        }
+
+        controller.SetCanCatch(
+            CalculateDistance(
+                _currentLocation,
+                location
+            ) <= _catchRadius
+        );
 
         _spawnedDalsu.Add(data.id, instance);
     }
@@ -193,6 +219,35 @@ public class DalsuSpawner : MonoBehaviour
 
             instance.transform.localPosition = localPosition;
         }
+    }
+
+    private void UpdateCatchState(
+    string id,
+    float distance)
+    {
+        if (!_spawnedDalsu.TryGetValue(
+                id,
+                out GameObject instance))
+        {
+            return;
+        }
+
+        DalsuController controller =
+            instance.GetComponent<DalsuController>();
+
+        if (controller == null)
+        {
+            Debug.LogError(
+                $"[DalsuSpawner] DalsuController가 없습니다. " +
+                $"{instance.name}"
+            );
+
+            return;
+        }
+
+        bool canCatch = distance <= _catchRadius;
+
+        controller.SetCanCatch(canCatch);
     }
 
     private float CalculateDistance(
