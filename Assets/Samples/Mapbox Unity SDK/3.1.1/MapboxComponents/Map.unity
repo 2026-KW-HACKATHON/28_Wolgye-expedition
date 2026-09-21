@@ -607,7 +607,7 @@ MonoBehaviour:
   _spawnRoot: {fileID: 0}
   _dalsuMarker: {fileID: 5687499155010298105, guid: a4393658222d7ba4b9f05d797ac1ca98, type: 3}
   _despawnExtraDistance: 10
-  _catchRadius: 10
+  _catchRadius: 30
 --- !u!4 &1167436372
 Transform:
   m_ObjectHideFlags: 0

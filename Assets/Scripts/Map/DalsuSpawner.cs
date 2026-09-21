@@ -28,6 +28,7 @@ public class DalsuSpawner : MonoBehaviour
     private float _catchRadius = 10f;
 
     private readonly Dictionary<string, GameObject> _spawnedDalsu = new();
+    private readonly HashSet<string> _caughtDalsu = new();
 
     private LatitudeLongitude _currentLocation;
     private bool _hasLocation;
@@ -45,6 +46,30 @@ public class DalsuSpawner : MonoBehaviour
 
         CheckDalsuSpawn();
         RefreshSpawnedPositions();
+    }
+
+    public void OnDalsuCaught(string id)
+    {
+        if (!_spawnedDalsu.TryGetValue(
+                id,
+                out GameObject instance))
+        {
+            Debug.LogWarning(
+                $"[DalsuSpawner] 잡힌 Dalsu를 찾을 수 없습니다. id = {id}"
+            );
+
+            return;
+        }
+
+        _spawnedDalsu.Remove(id);
+
+        _caughtDalsu.Add(id);
+
+        Destroy(instance);
+
+        Debug.Log(
+            $"[DalsuSpawner] Dalsu 잡기 완료 / id = {id}"
+        );
     }
 
     private void CheckDalsuSpawn()
@@ -84,6 +109,11 @@ public class DalsuSpawner : MonoBehaviour
             if (data == null)
             {
                 Debug.LogWarning("[DalsuSpawner] null인 DalsuData가 있습니다.");
+                continue;
+            }
+
+            if (_caughtDalsu.Contains(data.id))
+            {
                 continue;
             }
 
@@ -150,10 +180,10 @@ public class DalsuSpawner : MonoBehaviour
         //);
 
         GameObject instance = Instantiate(
-    _dalsuMarker,
-    _mapBehaviour.MapboxMap.UnityContext.MapRoot,
-    false
-);
+            _dalsuMarker,
+            _mapBehaviour.MapboxMap.UnityContext.MapRoot,
+            false
+        );
 
         instance.transform.localPosition = localPosition;
 
@@ -170,6 +200,11 @@ public class DalsuSpawner : MonoBehaviour
             Destroy(instance);
             return;
         }
+
+        controller.Initialize(
+            data.id,
+            this
+        );
 
         controller.SetCanCatch(
             CalculateDistance(
@@ -246,6 +281,14 @@ public class DalsuSpawner : MonoBehaviour
         }
 
         bool canCatch = distance <= _catchRadius;
+
+        Debug.Log(
+            $"[DalsuSpawner] Catch 상태 업데이트 / " +
+            $"id = {id} / " +
+            $"distance = {distance:F1}m / " +
+            $"catchRadius = {_catchRadius:F1}m / " +
+            $"canCatch = {canCatch}"
+        );
 
         controller.SetCanCatch(canCatch);
     }

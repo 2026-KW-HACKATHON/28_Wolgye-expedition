@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f5c34f0a8ded4447b1377c811bb08d0, type: 3}
   m_Name: TestDalsuData
   m_EditorClassIdentifier: Assembly-CSharp::DalsuData
-  id: 
+  id: 1
   dalsuName: 
   type: 
   description: 
