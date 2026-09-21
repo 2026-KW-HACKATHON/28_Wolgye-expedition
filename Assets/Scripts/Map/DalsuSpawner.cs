@@ -32,7 +32,7 @@ public class DalsuSpawner : MonoBehaviour
     public void UpdateLocation(LatitudeLongitude location)
     {
         Debug.Log(
-        $"[DalsuSpawner] À§Ä¡ ¾÷µ¥ÀÌÆ® / " +
+        $"[DalsuSpawner] ìœ„ì¹˜ ì—…ë°ì´íŠ¸ / " +
         $"Lat = {location.Latitude}, " +
         $"Lon = {location.Longitude}"
     );
@@ -46,41 +46,41 @@ public class DalsuSpawner : MonoBehaviour
 
     private void CheckDalsuSpawn()
     {
-        Debug.Log("[DalsuSpawner] CheckDalsuSpawn ½ÃÀÛ");
+        Debug.Log("[DalsuSpawner] CheckDalsuSpawn ì‹œì‘");
 
         if (!_hasLocation)
         {
-            Debug.LogWarning("[DalsuSpawner] À§Ä¡°¡ ¾ø½À´Ï´Ù.");
+            Debug.LogWarning("[DalsuSpawner] ìœ„ì¹˜ê°€ ì—†ìŠµë‹ˆë‹¤.");
             return;
         }
 
         if (_mapBehaviour == null)
         {
-            Debug.LogError("[DalsuSpawner] MapBehaviour°¡ ¿¬°áµÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+            Debug.LogError("[DalsuSpawner] MapBehaviourê°€ ì—°ê²°ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
             return;
         }
 
         if (_mapBehaviour.MapboxMap == null)
         {
-            Debug.LogError("[DalsuSpawner] MapboxMapÀÌ nullÀÔ´Ï´Ù.");
+            Debug.LogError("[DalsuSpawner] MapboxMapì´ nullì…ë‹ˆë‹¤.");
             return;
         }
 
         if (_dalsuDatas == null)
         {
-            Debug.LogError("[DalsuSpawner] DalsuData ¹è¿­ÀÌ nullÀÔ´Ï´Ù.");
+            Debug.LogError("[DalsuSpawner] DalsuData ë°°ì—´ì´ nullì…ë‹ˆë‹¤.");
             return;
         }
 
         Debug.Log(
-            $"[DalsuSpawner] DalsuData °³¼ö = {_dalsuDatas.Length}"
+            $"[DalsuSpawner] DalsuData ê°œìˆ˜ = {_dalsuDatas.Length}"
         );
 
         foreach (DalsuData data in _dalsuDatas)
         {
             if (data == null)
             {
-                Debug.LogWarning("[DalsuSpawner] nullÀÎ DalsuData°¡ ÀÖ½À´Ï´Ù.");
+                Debug.LogWarning("[DalsuSpawner] nullì¸ DalsuDataê°€ ìˆìŠµë‹ˆë‹¤.");
                 continue;
             }
 
@@ -97,7 +97,7 @@ public class DalsuSpawner : MonoBehaviour
 
             Debug.Log(
                 $"[DalsuSpawner] {data.dalsuName} / " +
-                $"°Å¸® = {distance:F1}m / " +
+                $"ê±°ë¦¬ = {distance:F1}m / " +
                 $"SpawnRadius = {data.spawnRadius}m"
             );
 
@@ -106,7 +106,7 @@ public class DalsuSpawner : MonoBehaviour
                 if (distance <= data.spawnRadius)
                 {
                     Debug.Log(
-                        $"[DalsuSpawner] Spawn Á¶°Ç ¸¸Á·! " +
+                        $"[DalsuSpawner] Spawn ì¡°ê±´ ë§Œì¡±! " +
                         $"{data.dalsuName}"
                     );
 
@@ -135,7 +135,7 @@ public class DalsuSpawner : MonoBehaviour
                  .ConvertLatLngToPosition(location);
 
         //Debug.Log(
-        //    $"[DalsuSpawner] Spawn ÁÂÇ¥ È®ÀÎ\n" +
+        //    $"[DalsuSpawner] Spawn ì¢Œí‘œ í™•ì¸\n" +
         //    $"GPS Current : {_currentLocation.Latitude}, {_currentLocation.Longitude}\n" +
         //    $"GPS Dalsu   : {location.Latitude}, {location.Longitude}\n" +
         //    $"Distance    : {CalculateDistance(_currentLocation, location):F3}m\n" +

@@ -12,7 +12,7 @@ public class MapTileScaleChecker : MonoBehaviour
         if (_mapBehaviour == null ||
             _mapBehaviour.MapboxMap == null)
         {
-            Debug.LogError("MapÀÌ ¾ÆÁ÷ ÁØºñµÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+            Debug.LogError("Mapì´ ì•„ì§ ì¤€ë¹„ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
             return;
         }
 

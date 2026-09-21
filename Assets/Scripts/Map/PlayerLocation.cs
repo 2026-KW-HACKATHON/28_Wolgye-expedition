@@ -38,19 +38,19 @@ public class PlayerLocation : MonoBehaviour
     {
         if (_locationProviderFactory == null)
         {
-            Debug.LogError("LocationProviderFactory°¡ ¿¬°áµÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+            Debug.LogError("LocationProviderFactoryê°€ ì—°ê²°ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
             return;
         }
 
         if (_mapBehaviour == null)
         {
-            Debug.LogError("MapboxMapBehaviour°¡ ¿¬°áµÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+            Debug.LogError("MapboxMapBehaviourê°€ ì—°ê²°ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
             return;
         }
 
         if (_playerArrow == null)
         {
-            Debug.LogError("PlayerArrow°¡ ¿¬°áµÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+            Debug.LogError("PlayerArrowê°€ ì—°ê²°ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
             return;
         }
 
@@ -78,21 +78,21 @@ public class PlayerLocation : MonoBehaviour
 
         if (_locationProvider == null)
         {
-            Debug.LogError("LocationProvider°¡ ¾ø½À´Ï´Ù.");
+            Debug.LogError("LocationProviderê°€ ì—†ìŠµë‹ˆë‹¤.");
             return;
         }
 
         _locationProvider.OnLocationUpdated += OnLocationUpdated;
 
         Debug.Log(
-            $"PlayerLocation: Location Provider ¿¬°á ¿Ï·á / " +
+            $"PlayerLocation: Location Provider ì—°ê²° ì™„ë£Œ / " +
             $"Type = {_locationProvider.GetType().Name}"
         );
 
         Location currentLocation = _locationProvider.CurrentLocation;
 
         Debug.Log(
-            $"ÇöÀç À§Ä¡ : " +
+            $"í˜„ì¬ ìœ„ì¹˜ : " +
             $"Lat = {currentLocation.LatitudeLongitude.Latitude}, " +
             $"Lon = {currentLocation.LatitudeLongitude.Longitude}"
         );
@@ -117,7 +117,7 @@ public class PlayerLocation : MonoBehaviour
         LatitudeLongitude currentLocation =
         location.LatitudeLongitude;
 
-        // ÃÖÃÊ À§Ä¡
+        // ìµœì´ˆ ìœ„ì¹˜
         if (!_hasMapLocation)
         {
             _mapBehaviour.MapboxMap.LoadMapView(
@@ -134,17 +134,17 @@ public class PlayerLocation : MonoBehaviour
             return;
         }
 
-        // ¸¶Áö¸·À¸·Î Áöµµ¸¦ ÀÌµ¿½ÃÅ² À§Ä¡¿Í ÇöÀç GPS À§Ä¡ÀÇ °Å¸®
+        // ë§ˆì§€ë§‰ìœ¼ë¡œ ì§€ë„ë¥¼ ì´ë™ì‹œí‚¨ ìœ„ì¹˜ì™€ í˜„ì¬ GPS ìœ„ì¹˜ì˜ ê±°ë¦¬
         float distance = CalculateDistance(
             _lastMapLocation,
             currentLocation
         );
 
-        // 3m ¹Ì¸¸ÀÌ¸é Áöµµ ÀÌµ¿ÇÏÁö ¾ÊÀ½
+        // 3m ë¯¸ë§Œì´ë©´ ì§€ë„ ì´ë™í•˜ì§€ ì•ŠìŒ
         if (distance < _moveThreshold)
             return;
 
-        // 3m ÀÌ»ó ÀÌµ¿ÇßÀ¸¸é Áöµµ ÀÌµ¿
+        // 3m ì´ìƒ ì´ë™í–ˆìœ¼ë©´ ì§€ë„ ì´ë™
         _mapBehaviour.MapboxMap.LoadMapView(
             currentLocation,
             () =>
@@ -158,13 +158,13 @@ public class PlayerLocation : MonoBehaviour
 
     private IEnumerator WaitForMap()
     {
-        Debug.Log("MapboxMap ÃÊ±âÈ­¸¦ ±â´Ù¸®´Â Áß...");
+        Debug.Log("MapboxMap ì´ˆê¸°í™”ë¥¼ ê¸°ë‹¤ë¦¬ëŠ” ì¤‘...");
 
         yield return new WaitUntil(() =>
             _mapBehaviour.MapboxMap != null
         );
 
-        Debug.Log("MapboxMap ÃÊ±âÈ­ ¿Ï·á!");
+        Debug.Log("MapboxMap ì´ˆê¸°í™” ì™„ë£Œ!");
 
         if (_hasLocation)
         {

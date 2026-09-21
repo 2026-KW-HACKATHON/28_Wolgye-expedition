@@ -29,7 +29,7 @@ namespace Mapbox.Example.Scripts.MapInput
         [Tooltip("Right-click rotation sensitivity. Higher = faster rotation. Default: 50")]
         public float RotationSpeed = 50.0f;
 
-        [Tooltip("»ç¿ëÀÚ ¸¶¿ì½º/ÅÍÄ¡ ÀÔ·ÂÀ¸·Î Ä«¸Ş¶ó¸¦ ¿òÁ÷ÀÏÁö ¿©ºÎ")]
+        [Tooltip("ì‚¬ìš©ì ë§ˆìš°ìŠ¤/í„°ì¹˜ ì…ë ¥ìœ¼ë¡œ ì¹´ë©”ë¼ë¥¼ ì›€ì§ì¼ì§€ ì—¬ë¶€")]
         public bool EnableUserInput = true;
 
         private Vector3 _previousScreenPosition;
