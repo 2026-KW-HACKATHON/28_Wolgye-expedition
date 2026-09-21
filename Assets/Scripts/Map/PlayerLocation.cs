@@ -19,8 +19,11 @@ public class PlayerLocation : MonoBehaviour
     [Header("Player")]
     [SerializeField]
     private Transform _playerArrow;
+    [SerializeField]
+    private float _moveThreshold = 5f;
 
     private ILocationProvider _locationProvider;
+
     private Location _lastLocation;
     private bool _hasLocation;
 
@@ -100,6 +103,13 @@ public class PlayerLocation : MonoBehaviour
         //    $"Lat = {location.LatitudeLongitude.Latitude}, " +
         //    $"Lon = {location.LatitudeLongitude.Longitude}"
         //);
+
+        if (_mapBehaviour.MapboxMap == null)
+            return;
+
+        _mapBehaviour.MapboxMap.ChangeView(
+            location.LatitudeLongitude
+        );
     }
 
     private IEnumerator WaitForMap()

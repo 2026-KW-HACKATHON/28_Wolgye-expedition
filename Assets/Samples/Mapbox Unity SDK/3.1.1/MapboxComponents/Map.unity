@@ -819,6 +819,7 @@ MonoBehaviour:
   _mapBehaviour: {fileID: 1316629399}
   _locationProviderFactory: {fileID: 309918882}
   _playerArrow: {fileID: 1542728884}
+  _moveThreshold: 5
 --- !u!1 &1808235829
 GameObject:
   m_ObjectHideFlags: 0
@@ -1013,6 +1014,7 @@ MonoBehaviour:
     DistanceScale: 0.5
     ZoomSensitivity: 2
     RotationSpeed: 50
+    EnableUserInput: 0
 --- !u!4 &2054936222
 Transform:
   m_ObjectHideFlags: 0
