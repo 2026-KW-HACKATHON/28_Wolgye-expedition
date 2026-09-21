@@ -22,6 +22,10 @@ public class PlayerLocation : MonoBehaviour
     [SerializeField]
     private float _moveThreshold = 3f;
 
+    [Header("Dalsu")]
+    [SerializeField]
+    private DalsuSpawner _dalsuSpawner;
+
     private ILocationProvider _locationProvider;
 
     private Location _lastLocation;
@@ -171,11 +175,10 @@ public class PlayerLocation : MonoBehaviour
     private void UpdatePlayerPosition(Location location)
     {
         Vector3 localPosition =
-            Conversions.LatitudeLongitudeToWorldPosition(
-                location.LatitudeLongitude,
-                _mapBehaviour.MapboxMap.MapInformation.CenterMercator,
-                _mapBehaviour.MapboxMap.MapInformation.Scale
-            );
+            _mapBehaviour.MapboxMap.MapInformation
+                .ConvertLatLngToPosition(
+                    location.LatitudeLongitude
+                );
 
         _playerArrow.SetParent(
             _mapBehaviour.MapboxMap.UnityContext.MapRoot,
@@ -184,8 +187,12 @@ public class PlayerLocation : MonoBehaviour
 
         _playerArrow.localPosition = localPosition;
 
-        // Debug.Log($"Player Position = {localPosition}");
+        _dalsuSpawner?.UpdateLocation(
+            location.LatitudeLongitude
+        );
     }
+
+
 
     private float CalculateDistance(
     LatitudeLongitude a,

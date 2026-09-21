@@ -572,6 +572,56 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!1 &1167436370
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1167436372}
+  - component: {fileID: 1167436371}
+  m_Layer: 0
+  m_Name: DalsuSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1167436371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167436370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3090f19972700c44ea9ee1e130588933, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DalsuSpawner
+  _mapBehaviour: {fileID: 1316629399}
+  _dalsuDatas:
+  - {fileID: 11400000, guid: 84d49857080c9ff4f943e7072c0beb8f, type: 2}
+  _spawnRoot: {fileID: 0}
+  _dalsuMarker: {fileID: 5687499155010298105, guid: a4393658222d7ba4b9f05d797ac1ca98, type: 3}
+  _despawnExtraDistance: 10
+--- !u!4 &1167436372
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167436370}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -11.23712, y: -26.18033, z: 10.23244}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1316629397
 GameObject:
   m_ObjectHideFlags: 0
@@ -817,10 +867,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerLocation
   _mapBehaviour: {fileID: 1316629399}
-  _cameraBehaviour: {fileID: 2054936221}
   _locationProviderFactory: {fileID: 309918882}
   _playerArrow: {fileID: 1542728884}
   _moveThreshold: 3
+  _dalsuSpawner: {fileID: 1167436371}
 --- !u!1 &1808235829
 GameObject:
   m_ObjectHideFlags: 0
@@ -1012,7 +1062,7 @@ MonoBehaviour:
     Pitch: 30
     Bearing: 0
     CameraCurve: {fileID: 11400000, guid: e887d93d4b690437fa30a6cc54adc7e8, type: 2}
-    DistanceScale: 0.5
+    DistanceScale: 0.8
     ZoomSensitivity: 2
     RotationSpeed: 50
     EnableUserInput: 0
@@ -1042,3 +1092,4 @@ SceneRoots:
   - {fileID: 43046694}
   - {fileID: 309918881}
   - {fileID: 1542728884}
+  - {fileID: 1167436372}
