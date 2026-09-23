@@ -108,12 +108,3994 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_0"
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 4474
+        width: 571
+        height: 183
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b80b4b7041bbc54493d41ccf2dd0595
+      internalID: 659418864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_1"
+      rect:
+        serializedVersion: 2
+        x: 653
+        y: 4642
+        width: 42
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4007b0d05dc258d41bf059ceec15feb9
+      internalID: 169667170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_2"
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 4628
+        width: 42
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e36fc8dec568d65438acdcb0cb17ab9c
+      internalID: 1939272897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_3"
+      rect:
+        serializedVersion: 2
+        x: 888
+        y: 4558
+        width: 169
+        height: 85
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2aa0160f8afd41e4191e7e756d1ccd93
+      internalID: -1197793303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_4"
+      rect:
+        serializedVersion: 2
+        x: 695
+        y: 4475
+        width: 140
+        height: 126
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bdbb6e47fe05a848bd9075fc17d83aa
+      internalID: 17320548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_5"
+      rect:
+        serializedVersion: 2
+        x: 708
+        y: 4587
+        width: 28
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78331cc5fe2b869498565f144e9878ec
+      internalID: -1686511187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_6"
+      rect:
+        serializedVersion: 2
+        x: 815
+        y: 4580
+        width: 32
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df1018f6b13dfd043b27e49e61fd41c2
+      internalID: 1580623939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_7"
+      rect:
+        serializedVersion: 2
+        x: 859
+        y: 4531
+        width: 30
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1eb60da61cc50b49ab83c89803d06e8
+      internalID: 2077530176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_8"
+      rect:
+        serializedVersion: 2
+        x: 895
+        y: 4475
+        width: 165
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a81fdeb1a4600b4db99bb78d50990a2
+      internalID: 381996312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_9"
+      rect:
+        serializedVersion: 2
+        x: 1063
+        y: 4517
+        width: 21
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee21e3a6f2cf6a94c8abd30aaf423f8e
+      internalID: 937204399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_10"
+      rect:
+        serializedVersion: 2
+        x: 653
+        y: 4459
+        width: 88
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 846c371854b97914bbfa358288d760cf
+      internalID: 1991649794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_11"
+      rect:
+        serializedVersion: 2
+        x: 808
+        y: 4459
+        width: 97
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94ca33ceb15d9094185be325899ece1f
+      internalID: -135379213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_12"
+      rect:
+        serializedVersion: 2
+        x: 822
+        y: 4464
+        width: 67
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 908aaf4898eda6d46b2aa917d5ab7687
+      internalID: 1609266927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_13"
+      rect:
+        serializedVersion: 2
+        x: 1042
+        y: 4447
+        width: 42
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ceb452a2362ec341ab2abdc390f6bfe
+      internalID: -2036609865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_14"
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 4420
+        width: 37
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa2119a3b4951974a8641541d4828744
+      internalID: 1676741790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_15"
+      rect:
+        serializedVersion: 2
+        x: 942
+        y: 4436
+        width: 86
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2de6be1fbcc16f44db48adf6157913d3
+      internalID: -222731071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_16"
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 4225
+        width: 16
+        height: 181
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ac0dafe965055747a275d24fb45f6ae
+      internalID: 149440386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_17"
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 4222
+        width: 876
+        height: 212
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4cf7009abcc69140a1e967eaa650987
+      internalID: 99622044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_18"
+      rect:
+        serializedVersion: 2
+        x: 961
+        y: 4225
+        width: 39
+        height: 209
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 199bb161be1134e499da7f3ebe13ab36
+      internalID: 1888198544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_19"
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 4183
+        width: 28
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4d6ec47996ff414dab36ebaf0d3ba7e
+      internalID: -1830225796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_20"
+      rect:
+        serializedVersion: 2
+        x: 889
+        y: 4156
+        width: 56
+        height: 37
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af8623ddeff2eaa4f90816747d2ab885
+      internalID: -2134475216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_21"
+      rect:
+        serializedVersion: 2
+        x: 959
+        y: 4183
+        width: 27
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cfa24e068bf1634382b5e863f17b25f
+      internalID: -1660001062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_22"
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 4004
+        width: 799
+        height: 167
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70b42e1db69688b4e9226276ea0c3076
+      internalID: 239936568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_23"
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 3836
+        width: 130
+        height: 139
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29a2ec90347eb46428305a9f63ab6bf8
+      internalID: 1952685725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_24"
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 3961
+        width: 39
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76f00c0c358dc904082a4cd2ede6a14f
+      internalID: -201211786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_25"
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 3964
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50aada50d8ec0f248bc75939b371ceda
+      internalID: 1923833903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_26"
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 3961
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d6c0f9d3ec89fd409caf3b8b7b16c4c
+      internalID: -465439681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_27"
+      rect:
+        serializedVersion: 2
+        x: 519
+        y: 3961
+        width: 37
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85498584b4b29c442971915783619257
+      internalID: 1872007545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_28"
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 3947
+        width: 36
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca3e80950c1ef054ab356d13c43620e1
+      internalID: -952096974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_29"
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 3864
+        width: 13
+        height: 83
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b6678b820f0ab3479655a39676773da
+      internalID: -711628105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_30"
+      rect:
+        serializedVersion: 2
+        x: 249
+        y: 3836
+        width: 126
+        height: 125
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5354a52b9e5215b4aa85c8a41fccb13b
+      internalID: -324251685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_31"
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 3836
+        width: 118
+        height: 122
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32e7cbb03bfa8bd41b436f42ea287897
+      internalID: 600680959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_32"
+      rect:
+        serializedVersion: 2
+        x: 556
+        y: 3835
+        width: 121
+        height: 123
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 803d3cd566facb64398f902aefe15755
+      internalID: -915173217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_33"
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 3836
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 699cadaf14b765d4b9eb233774f4d5d9
+      internalID: -903734289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_34"
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 3822
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db4dc95710fc4d94082c752205a44a16
+      internalID: -1684246520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_35"
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 3811
+        width: 44
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89f4a084a51036d4cbab27c5ea682ebf
+      internalID: -1857342304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_36"
+      rect:
+        serializedVersion: 2
+        x: 368
+        y: 3813
+        width: 37
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 459fded74ac9f164ba3ce8254a4aa1da
+      internalID: 1797741419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_37"
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 3813
+        width: 44
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94ae543b2cc7d464f8fb839ba02efcc1
+      internalID: 940926910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_38"
+      rect:
+        serializedVersion: 2
+        x: 679
+        y: 3813
+        width: 182
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02e9976a6774cf94caf4e8852274a989
+      internalID: -1042574360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_39"
+      rect:
+        serializedVersion: 2
+        x: 889
+        y: 3808
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32c7a0125f95d5047813b6810248726e
+      internalID: 457306249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_40"
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 3766
+        width: 28
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f3a157363dc01a45afda9f3afc742db
+      internalID: -5967917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_41"
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 3583
+        width: 823
+        height: 198
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6d7bf8d490d4a145b068bac1862f105
+      internalID: -1496905758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_42"
+      rect:
+        serializedVersion: 2
+        x: 931
+        y: 3766
+        width: 27
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2c69e69c478a7f41bba646a373e589e
+      internalID: 499424729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_43"
+      rect:
+        serializedVersion: 2
+        x: 972
+        y: 3780
+        width: 112
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02570754fb182a44090cfc7461a4944c
+      internalID: 132897841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_44"
+      rect:
+        serializedVersion: 2
+        x: 1084
+        y: 3767
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71e78226d126dcc4bb7bff659748d068
+      internalID: 1205432376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_45"
+      rect:
+        serializedVersion: 2
+        x: 950
+        y: 3600
+        width: 144
+        height: 166
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d45a34c384d8b649b28f2f79a51eeda
+      internalID: -1124336674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_46"
+      rect:
+        serializedVersion: 2
+        x: 1098
+        y: 3750
+        width: 13
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfaed67a3ddbd38418eee4ceef302a55
+      internalID: -526711148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_47"
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 3641
+        width: 7
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53035d4a51e82734cb69c5f143bb15ff
+      internalID: 2091407740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_48"
+      rect:
+        serializedVersion: 2
+        x: 935
+        y: 3641
+        width: 10
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78bee8e5a8d7c244fb1e110dee8467dd
+      internalID: -654094380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_49"
+      rect:
+        serializedVersion: 2
+        x: 1097
+        y: 3725
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abe451b106afedf46b87570b1285150a
+      internalID: 1069541773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_50"
+      rect:
+        serializedVersion: 2
+        x: 1121
+        y: 3641
+        width: 4
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c10a93a32b223304bb9e0b4134e24d9b
+      internalID: 350704154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_51"
+      rect:
+        serializedVersion: 2
+        x: 1097
+        y: 3627
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 450e0dcab8c721e489d3f0ded46a74e8
+      internalID: 646284306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_52"
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 3586
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7983e5d00e739ab40bf88501fdeb450f
+      internalID: 191931948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_53"
+      rect:
+        serializedVersion: 2
+        x: 931
+        y: 3586
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38643feb388f1d94a81152ac7c391999
+      internalID: -35235455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_54"
+      rect:
+        serializedVersion: 2
+        x: 959
+        y: 3572
+        width: 124
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe6632a68ad232e4d9997f48e62d815b
+      internalID: 1005320964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_55"
+      rect:
+        serializedVersion: 2
+        x: 972
+        y: 3586
+        width: 98
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b791e24d50350fe428510f79a300f3b0
+      internalID: 1884443914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_56"
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 3530
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83df5ff8a167e61469e6ff7d0096dbad
+      internalID: -289660452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_57"
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 2867
+        width: 862
+        height: 657
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 545623649c1e0344099693f1e095ab57
+      internalID: 1706861142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_58"
+      rect:
+        serializedVersion: 2
+        x: 1014
+        y: 3161
+        width: 293
+        height: 286
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31bf4281d3ca6364b96237df01410b23
+      internalID: 298920469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_59"
+      rect:
+        serializedVersion: 2
+        x: 1014
+        y: 3419
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa5187762f92d784886789467148d398
+      internalID: 1666788015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_60"
+      rect:
+        serializedVersion: 2
+        x: 1312
+        y: 3161
+        width: 273
+        height: 286
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a70f44938184c049863d7c337612701
+      internalID: -759275899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_61"
+      rect:
+        serializedVersion: 2
+        x: 1587
+        y: 3155
+        width: 302
+        height: 292
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 668981885f053054d963b7dfa6477f6c
+      internalID: 1311201904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_62"
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 3183
+        width: 7
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96d5e0de040fe9249997ea56af904b1d
+      internalID: 540048402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_63"
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 2891
+        width: 7
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7dccbcf255fa6e348a70844c41b2ec1f
+      internalID: 1443093026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_64"
+      rect:
+        serializedVersion: 2
+        x: 1037
+        y: 2876
+        width: 270
+        height: 257
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b055fb8fe7b0a154d8125c655b69dd6b
+      internalID: -1986205883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_65"
+      rect:
+        serializedVersion: 2
+        x: 1312
+        y: 2878
+        width: 273
+        height: 254
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89d594eafef4fcc4ba6124231ceb01af
+      internalID: -837921663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_66"
+      rect:
+        serializedVersion: 2
+        x: 1587
+        y: 2863
+        width: 302
+        height: 267
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8323d15620f8efe4e871f02b2c1237e9
+      internalID: -764818898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_67"
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 2849
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01fb49ccfd4ca7e409b552c01563e671
+      internalID: -1633590682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_68"
+      rect:
+        serializedVersion: 2
+        x: 1042
+        y: 2707
+        width: 140
+        height: 142
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37ecaa0e981115f43ae8f8d2961b20f7
+      internalID: -1589523640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_69"
+      rect:
+        serializedVersion: 2
+        x: 1264
+        y: 2845
+        width: 5
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9457d439862bc2344ae9b97a6103a0e1
+      internalID: -1563416209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_70"
+      rect:
+        serializedVersion: 2
+        x: 1287
+        y: 2845
+        width: 5
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d78c623fb7d3931418b4b852ee80ec5c
+      internalID: -671183599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_71"
+      rect:
+        serializedVersion: 2
+        x: 1820
+        y: 2835
+        width: 28
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 952284612df1a324f999d002f46b4ceb
+      internalID: -659170005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_72"
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 2360
+        width: 808
+        height: 461
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f6b41ad81ab0bf419127812ab37e360
+      internalID: 905350410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_73"
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 2821
+        width: 708
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 190106024ab53da46b6c70408f0d7799
+      internalID: 153209231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_74"
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 2807
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd21727fafd732e4ca554766002ad894
+      internalID: 332612298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_75"
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 2807
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eff1ebb207fd49b4b919497586e9132f
+      internalID: 1258378153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_76"
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 2807
+        width: 10
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e18e565daa968d419e925e482bfcc67
+      internalID: 139077526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_77"
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 2807
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b181cace17b9084bb6af1efc441e217
+      internalID: 1694707069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_78"
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 2807
+        width: 4
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c54d3da6bec3ca94494790e0bdd06c48
+      internalID: -167608296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_79"
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 2807
+        width: 10
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47195bf6d235ea3439a26f33a0a95628
+      internalID: -1150958364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_80"
+      rect:
+        serializedVersion: 2
+        x: 570
+        y: 2807
+        width: 4
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7aac1243255c5bc478a89241591608ba
+      internalID: 2030061311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_81"
+      rect:
+        serializedVersion: 2
+        x: 803
+        y: 2807
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e318ef0bda4cba14ab892056c3063884
+      internalID: -457812467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_82"
+      rect:
+        serializedVersion: 2
+        x: 829
+        y: 2807
+        width: 5
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd9f06a1ecea079498838f1d23ba1da7
+      internalID: -688936152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_83"
+      rect:
+        serializedVersion: 2
+        x: 1153
+        y: 2808
+        width: 83
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0f6df56f555cfa48817d5bf702ef5a2
+      internalID: 874575507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_84"
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 2821
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 059458af431a3404992256df49f19282
+      internalID: 368691197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_85"
+      rect:
+        serializedVersion: 2
+        x: 1320
+        y: 2807
+        width: 69
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 275241b14b2174c4282507b68bdf9bce
+      internalID: -992754644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_86"
+      rect:
+        serializedVersion: 2
+        x: 1376
+        y: 2695
+        width: 166
+        height: 126
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b7b9fef436e30a498d182ce3d8bc59d
+      internalID: -1707091163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_87"
+      rect:
+        serializedVersion: 2
+        x: 1486
+        y: 2805
+        width: 84
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90d42b0c42e628d43bb5ce8d1edb35ff
+      internalID: -281463497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_88"
+      rect:
+        serializedVersion: 2
+        x: 1542
+        y: 2695
+        width: 131
+        height: 127
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1086b51ca9637f043a18f222734bb888
+      internalID: 1813414751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_89"
+      rect:
+        serializedVersion: 2
+        x: 1653
+        y: 2807
+        width: 70
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 505ac953ea783d34a8362a0a497ff9d8
+      internalID: -345623167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_90"
+      rect:
+        serializedVersion: 2
+        x: 1709
+        y: 2704
+        width: 125
+        height: 119
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88e38f7f1daa318489052ca7b75d8812
+      internalID: 2064377634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_91"
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 2794
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3a80fe9a67b3be44af61fab9c67f4f6
+      internalID: 1268366795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_92"
+      rect:
+        serializedVersion: 2
+        x: 1208
+        y: 2695
+        width: 140
+        height: 123
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 253e0ef0e03a4f24599581ec8c0424d9
+      internalID: 1357836549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_93"
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 2710
+        width: 14
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f5e7afbfe33de44b98051cc4294a047
+      internalID: 1464324266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_94"
+      rect:
+        serializedVersion: 2
+        x: 1042
+        y: 2696
+        width: 28
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3cad289328adbe14eb6b688c325379d4
+      internalID: 733161648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_95"
+      rect:
+        serializedVersion: 2
+        x: 1084
+        y: 2668
+        width: 13
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cca5efab262325b4091a4b8275d05548
+      internalID: 1183305321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_96"
+      rect:
+        serializedVersion: 2
+        x: 1097
+        y: 2682
+        width: 17
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17ed2f2289d11d5409209d0bde2f6bf9
+      internalID: 1255588560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_97"
+      rect:
+        serializedVersion: 2
+        x: 1116
+        y: 2682
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92d9939794252eb4fb163b654b51c260
+      internalID: 1537430595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_98"
+      rect:
+        serializedVersion: 2
+        x: 1389
+        y: 2668
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4928dcaeb09905649adfb2f80f6ff1be
+      internalID: -2050141038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_99"
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 2590
+        width: 14
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 009ab0b7d3a42ea418abd159b52e609d
+      internalID: -1019292061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_100"
+      rect:
+        serializedVersion: 2
+        x: 1014
+        y: 2571
+        width: 42
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbdf9787b6b7fc5479c1702bbe4d498c
+      internalID: 652634012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_101"
+      rect:
+        serializedVersion: 2
+        x: 1917
+        y: 2585
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: faacd8ac25dae73438947a900ac7ed18
+      internalID: -1940654650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_102"
+      rect:
+        serializedVersion: 2
+        x: 1014
+        y: 2530
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a616c9d9ab29a8349bc60687947d2242
+      internalID: -1409876348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_103"
+      rect:
+        serializedVersion: 2
+        x: 1048
+        y: 2542
+        width: 866
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf15beaaedb266941bb69af16608cf69
+      internalID: 1297995129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_104"
+      rect:
+        serializedVersion: 2
+        x: 1048
+        y: 2498
+        width: 866
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b54c9cfad8cf4d408172bf19d93e594
+      internalID: 1407515788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_105"
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 2446
+        width: 5
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2655649d852afd40b99c3ea2d792f67
+      internalID: -1919817499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_106"
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 2451
+        width: 14
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4174da6b5fd7b945b19d12ee36d0ce5
+      internalID: 559580247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_107"
+      rect:
+        serializedVersion: 2
+        x: 1031
+        y: 2320
+        width: 886
+        height: 141
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de5be65f476208141a4947116b394981
+      internalID: 411650350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_108"
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 1986
+        width: 862
+        height: 359
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3fc0644401e899b44abb54111a96533e
+      internalID: -143518958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_109"
+      rect:
+        serializedVersion: 2
+        x: 917
+        y: 2335
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d151690a940d2054db9492b76c66080d
+      internalID: 2114970031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_110"
+      rect:
+        serializedVersion: 2
+        x: 1014
+        y: 2321
+        width: 14
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47baf22ea3c075a44bfafde8e553558a
+      internalID: -2057834220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_111"
+      rect:
+        serializedVersion: 2
+        x: 1924
+        y: 2335
+        width: 7
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8bef6dc5bce365b47b002b68a0fd65b3
+      internalID: -508137398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_112"
+      rect:
+        serializedVersion: 2
+        x: 1014
+        y: 2154
+        width: 14
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d061c0d6228d8e84bbda001c0a8bb8ed
+      internalID: -600742524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_113"
+      rect:
+        serializedVersion: 2
+        x: 1055
+        y: 2126
+        width: 839
+        height: 183
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 368c8e8f9b6f64448a4cd2b528c1572c
+      internalID: -883301452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_114"
+      rect:
+        serializedVersion: 2
+        x: 1924
+        y: 2182
+        width: 7
+        height: 83
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5dbb13e4a3f1ba94db82385d11abdfa3
+      internalID: -1860398021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_115"
+      rect:
+        serializedVersion: 2
+        x: 1014
+        y: 2085
+        width: 42
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbdd51fe5fa45874eb171655c4a84c20
+      internalID: 393754944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_116"
+      rect:
+        serializedVersion: 2
+        x: 1036
+        y: 1417
+        width: 827
+        height: 673
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2532ba92e0646444e95055ed015f1849
+      internalID: 537758162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_117"
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 1974
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06d539cd2fe59b940a8d9c3f431d4c8e
+      internalID: -1469815306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_118"
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 1487
+        width: 5
+        height: 542
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74a06ee094f8cb34b8323b887c746273
+      internalID: 390975850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_119"
+      rect:
+        serializedVersion: 2
+        x: 1889
+        y: 1459
+        width: 14
+        height: 584
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6b25f2ea16d92641b9d823cfe1eb3cf
+      internalID: 856413409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_120"
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 1946
+        width: 694
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52da9280bc2065d42adc78d2c4db0787
+      internalID: 1429438284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_121"
+      rect:
+        serializedVersion: 2
+        x: 875
+        y: 1946
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d2ba31d73a3ab9439ee00b086c8a5fa
+      internalID: 2071883029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_122"
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 1806
+        width: 567
+        height: 115
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c68865276f1364141ba21fb54eb06ffe
+      internalID: 1050376307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_123"
+      rect:
+        serializedVersion: 2
+        x: 695
+        y: 1918
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86dce1c641cca3749b81063442eae65e
+      internalID: 896793269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_124"
+      rect:
+        serializedVersion: 2
+        x: 889
+        y: 1890
+        width: 42
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a63ddcac47d2edb439f3fa824106b3f8
+      internalID: -986182211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_125"
+      rect:
+        serializedVersion: 2
+        x: 698
+        y: 1808
+        width: 206
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d0dc41c71fecc746b319af745bcd858
+      internalID: 637839301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_126"
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 1652
+        width: 571
+        height: 133
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5a805f3440d5c54e80fd7cf0cca8237
+      internalID: 1681660957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_127"
+      rect:
+        serializedVersion: 2
+        x: 708
+        y: 1765
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6503d5a1dca2bdb43b59446d8543a5e4
+      internalID: -561085396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_128"
+      rect:
+        serializedVersion: 2
+        x: 875
+        y: 1765
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf6d2a52fa99b5046a19d1f32131aeb8
+      internalID: 933260908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_129"
+      rect:
+        serializedVersion: 2
+        x: 681
+        y: 1656
+        width: 166
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 672b50e4173e31645ba38d78a4ba5044
+      internalID: -877815884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_130"
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 1444
+        width: 862
+        height: 183
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd34d63873526104f8bcc6e33749aa5e
+      internalID: 840066454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_131"
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 1626
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d75dfd2bfe75f9949bba83a4bb065c75
+      internalID: 219028832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_132"
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 1432
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17638146b0e6b8340ae14e01394e1f2a
+      internalID: 974202389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_133"
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 1106
+        width: 225
+        height: 299
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1bbe1cf0a4d9b154db749d034593aebb
+      internalID: 179597866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_134"
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 1404
+        width: 134
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44d064529a5cde34eb884eed263f1996
+      internalID: -11842375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_135"
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 1404
+        width: 16
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c719bdcdfd8897245b4e576e2ea6758b
+      internalID: 2040650936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_136"
+      rect:
+        serializedVersion: 2
+        x: 575
+        y: 1097
+        width: 268
+        height: 308
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b132f2ded00e6804eb557a7eb5bea204
+      internalID: 1472672863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_137"
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 1112
+        width: 14
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 419053af3ade84c4098f8dd603603b1a
+      internalID: 831225567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_138"
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 1167
+        width: 203
+        height: 233
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8a0ad0ca78d1f7449f5c39264841c4f
+      internalID: 983257063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_139"
+      rect:
+        serializedVersion: 2
+        x: 986
+        y: 820
+        width: 28
+        height: 514
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f232362c9b98b64dbb6dd004359ecc7
+      internalID: -1515545072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_140"
+      rect:
+        serializedVersion: 2
+        x: 1036
+        y: 876
+        width: 827
+        height: 517
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8560641da98678f4bb2e0df18cf76950
+      internalID: 318482053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_141"
+      rect:
+        serializedVersion: 2
+        x: 1889
+        y: 931
+        width: 14
+        height: 417
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76bee2f2b94c1cc45a12d263eb195011
+      internalID: 702587007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_142"
+      rect:
+        serializedVersion: 2
+        x: 542
+        y: 1070
+        width: 41
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 144837b2ad8e671468a3c69e2de121cd
+      internalID: 301925403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_143"
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 1102
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0f9e3a9ea02e3a448755e6d20ae5fa0
+      internalID: 838236250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_144"
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 1005
+        width: 44
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e39cdefc9e910f64b806f71d1ef0755c
+      internalID: -1407196151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_145"
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 1040
+        width: 805
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc11bb9f756d03b4bbc53ca75e1ead17
+      internalID: -151448804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_146"
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 778
+        width: 870
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a803c9a6b329a054abe1a3acbe3625f8
+      internalID: -1012002760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_147"
+      rect:
+        serializedVersion: 2
+        x: 959
+        y: 1015
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: daf68289339f5f146b4d34831f70e231
+      internalID: -11515835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_148"
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 987
+        width: 12
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e119d8a7b3060a34b845a0cba11f528d
+      internalID: 1710150512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_149"
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 820
+        width: 5
+        height: 153
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9849a983eba3e54409c3a9217a946bc3
+      internalID: 1618195188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_150"
+      rect:
+        serializedVersion: 2
+        x: 1048
+        y: 775
+        width: 150
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c35d5bffee41a846acd2b333913620f
+      internalID: 392118217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_151"
+      rect:
+        serializedVersion: 2
+        x: 1210
+        y: 775
+        width: 194
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec67ecddf43a05a469ff20c2ecdd2cb2
+      internalID: 1036187673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_152"
+      rect:
+        serializedVersion: 2
+        x: 1416
+        y: 775
+        width: 195
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb95191cab8fa9f44934bb2e08e055c0
+      internalID: 782271597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_153"
+      rect:
+        serializedVersion: 2
+        x: 1622
+        y: 764
+        width: 198
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a2524f32e166304d8b7a2061a85f027
+      internalID: -1467676579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_154"
+      rect:
+        serializedVersion: 2
+        x: 1834
+        y: 848
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56b0c058010ee8b46bbcfaeb690a4d36
+      internalID: -844399527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_155"
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 778
+        width: 28
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c74b58076fada0c4e9feb5a7517f1fdf
+      internalID: -1033472535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_156"
+      rect:
+        serializedVersion: 2
+        x: 975
+        y: 792
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e20c6a888d35b024caab144f8359a6df
+      internalID: -385591830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_157"
+      rect:
+        serializedVersion: 2
+        x: 1014
+        y: 764
+        width: 28
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78af9a0d2cc20884fa1c83c1c12b3dde
+      internalID: -205982210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_158"
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 764
+        width: 95
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b64e514c6e832ae46a7816de60949097
+      internalID: -1314312015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_159"
+      rect:
+        serializedVersion: 2
+        x: 959
+        y: 778
+        width: 13
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef2d78e31c61f03468a6f51f83c7e48e
+      internalID: -495456415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_160"
+      rect:
+        serializedVersion: 2
+        x: 1820
+        y: 737
+        width: 28
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c66dc2b43d38c143abce357e9ce2b6c
+      internalID: -139337318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_161"
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 653
+        width: 234
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f10e7e5804f68347bf72469f375235e
+      internalID: -1508669355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_162"
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 402
+        width: 574
+        height: 361
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf343340d94ce284483877defb8f6791
+      internalID: 1674305049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_163"
+      rect:
+        serializedVersion: 2
+        x: 1048
+        y: 664
+        width: 150
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c609eab10b096347835500c7cde0fc8
+      internalID: -1880268289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_164"
+      rect:
+        serializedVersion: 2
+        x: 1210
+        y: 664
+        width: 194
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d22ca4c0612b0c34b955a2bafeefa7e7
+      internalID: -135560121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_165"
+      rect:
+        serializedVersion: 2
+        x: 1416
+        y: 664
+        width: 196
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e4027b880e71a8419d295a4c65c81e1
+      internalID: 952098847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_166"
+      rect:
+        serializedVersion: 2
+        x: 1622
+        y: 664
+        width: 194
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1eb04d64ccf2f04cb17cae201906732
+      internalID: 132635259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_167"
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 514
+        width: 42
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8afd6ff95b76f443a21925c57e96907
+      internalID: 1504833103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_168"
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 546
+        width: 234
+        height: 92
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 642f24a90b7dbfb428402abfa2fe61c6
+      internalID: 899439742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_169"
+      rect:
+        serializedVersion: 2
+        x: 417
+        y: 361
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03ef7de6fc0c2e045beea2a4578a9c55
+      internalID: 1918150075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_170"
+      rect:
+        serializedVersion: 2
+        x: 556
+        y: 334
+        width: 41
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1937d6bfa46de5e4fa667e8fbfc0c017
+      internalID: 227493199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_171"
+      rect:
+        serializedVersion: 2
+        x: 583
+        y: 242
+        width: 417
+        height: 133
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 585ca56d1f0933042b8567d9d111fd96
+      internalID: -1203342265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_172"
+      rect:
+        serializedVersion: 2
+        x: 959
+        y: 348
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 856529ec0a5658c47a0d8a87748772c4
+      internalID: -1578562540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_173"
+      rect:
+        serializedVersion: 2
+        x: 973
+        y: 334
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76a0922c2e31a1143b89f92c5d8d6f82
+      internalID: 26668779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_174"
+      rect:
+        serializedVersion: 2
+        x: 556
+        y: 222
+        width: 58
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a423863a10ccda46a2e405eae9c79a7
+      internalID: -1689641552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_175"
+      rect:
+        serializedVersion: 2
+        x: 959
+        y: 236
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d97a647a5114d54c8964f63319bf8b3
+      internalID: -1188599756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_176"
+      rect:
+        serializedVersion: 2
+        x: 972
+        y: 250
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b23a8ed5c7da5a4bbf60779e019e637
+      internalID: -344316080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_177"
+      rect:
+        serializedVersion: 2
+        x: 945
+        y: 222
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0de9b0820a0b7b448a0a1e0fa7ceebc0
+      internalID: 1508394114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_178"
+      rect:
+        serializedVersion: 2
+        x: 585
+        y: 61
+        width: 384
+        height: 148
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03b2229509883224c8eef44a4cc6b8ba
+      internalID: -39909576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_179"
+      rect:
+        serializedVersion: 2
+        x: 986
+        y: 83
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ab55923e0842e749b0b5a8471e0b8ba
+      internalID: 175128945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "iPhone 14 Pro Max \u2013 45_180"
+      rect:
+        serializedVersion: 2
+        x: 931
+        y: 28
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e613bac070ed7134dad081e68fab4494
+      internalID: 1127690056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 606841c4bae5fde4d85d77c4e474a040
     internalID: 0
     vertices: []
     indices: 
@@ -121,8 +4103,191 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
-    nameFileIdTable: {}
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      "iPhone 14 Pro Max \u2013 45_0": 659418864
+      "iPhone 14 Pro Max \u2013 45_1": 169667170
+      "iPhone 14 Pro Max \u2013 45_10": 1991649794
+      "iPhone 14 Pro Max \u2013 45_100": 652634012
+      "iPhone 14 Pro Max \u2013 45_101": -1940654650
+      "iPhone 14 Pro Max \u2013 45_102": -1409876348
+      "iPhone 14 Pro Max \u2013 45_103": 1297995129
+      "iPhone 14 Pro Max \u2013 45_104": 1407515788
+      "iPhone 14 Pro Max \u2013 45_105": -1919817499
+      "iPhone 14 Pro Max \u2013 45_106": 559580247
+      "iPhone 14 Pro Max \u2013 45_107": 411650350
+      "iPhone 14 Pro Max \u2013 45_108": -143518958
+      "iPhone 14 Pro Max \u2013 45_109": 2114970031
+      "iPhone 14 Pro Max \u2013 45_11": -135379213
+      "iPhone 14 Pro Max \u2013 45_110": -2057834220
+      "iPhone 14 Pro Max \u2013 45_111": -508137398
+      "iPhone 14 Pro Max \u2013 45_112": -600742524
+      "iPhone 14 Pro Max \u2013 45_113": -883301452
+      "iPhone 14 Pro Max \u2013 45_114": -1860398021
+      "iPhone 14 Pro Max \u2013 45_115": 393754944
+      "iPhone 14 Pro Max \u2013 45_116": 537758162
+      "iPhone 14 Pro Max \u2013 45_117": -1469815306
+      "iPhone 14 Pro Max \u2013 45_118": 390975850
+      "iPhone 14 Pro Max \u2013 45_119": 856413409
+      "iPhone 14 Pro Max \u2013 45_12": 1609266927
+      "iPhone 14 Pro Max \u2013 45_120": 1429438284
+      "iPhone 14 Pro Max \u2013 45_121": 2071883029
+      "iPhone 14 Pro Max \u2013 45_122": 1050376307
+      "iPhone 14 Pro Max \u2013 45_123": 896793269
+      "iPhone 14 Pro Max \u2013 45_124": -986182211
+      "iPhone 14 Pro Max \u2013 45_125": 637839301
+      "iPhone 14 Pro Max \u2013 45_126": 1681660957
+      "iPhone 14 Pro Max \u2013 45_127": -561085396
+      "iPhone 14 Pro Max \u2013 45_128": 933260908
+      "iPhone 14 Pro Max \u2013 45_129": -877815884
+      "iPhone 14 Pro Max \u2013 45_13": -2036609865
+      "iPhone 14 Pro Max \u2013 45_130": 840066454
+      "iPhone 14 Pro Max \u2013 45_131": 219028832
+      "iPhone 14 Pro Max \u2013 45_132": 974202389
+      "iPhone 14 Pro Max \u2013 45_133": 179597866
+      "iPhone 14 Pro Max \u2013 45_134": -11842375
+      "iPhone 14 Pro Max \u2013 45_135": 2040650936
+      "iPhone 14 Pro Max \u2013 45_136": 1472672863
+      "iPhone 14 Pro Max \u2013 45_137": 831225567
+      "iPhone 14 Pro Max \u2013 45_138": 983257063
+      "iPhone 14 Pro Max \u2013 45_139": -1515545072
+      "iPhone 14 Pro Max \u2013 45_14": 1676741790
+      "iPhone 14 Pro Max \u2013 45_140": 318482053
+      "iPhone 14 Pro Max \u2013 45_141": 702587007
+      "iPhone 14 Pro Max \u2013 45_142": 301925403
+      "iPhone 14 Pro Max \u2013 45_143": 838236250
+      "iPhone 14 Pro Max \u2013 45_144": -1407196151
+      "iPhone 14 Pro Max \u2013 45_145": -151448804
+      "iPhone 14 Pro Max \u2013 45_146": -1012002760
+      "iPhone 14 Pro Max \u2013 45_147": -11515835
+      "iPhone 14 Pro Max \u2013 45_148": 1710150512
+      "iPhone 14 Pro Max \u2013 45_149": 1618195188
+      "iPhone 14 Pro Max \u2013 45_15": -222731071
+      "iPhone 14 Pro Max \u2013 45_150": 392118217
+      "iPhone 14 Pro Max \u2013 45_151": 1036187673
+      "iPhone 14 Pro Max \u2013 45_152": 782271597
+      "iPhone 14 Pro Max \u2013 45_153": -1467676579
+      "iPhone 14 Pro Max \u2013 45_154": -844399527
+      "iPhone 14 Pro Max \u2013 45_155": -1033472535
+      "iPhone 14 Pro Max \u2013 45_156": -385591830
+      "iPhone 14 Pro Max \u2013 45_157": -205982210
+      "iPhone 14 Pro Max \u2013 45_158": -1314312015
+      "iPhone 14 Pro Max \u2013 45_159": -495456415
+      "iPhone 14 Pro Max \u2013 45_16": 149440386
+      "iPhone 14 Pro Max \u2013 45_160": -139337318
+      "iPhone 14 Pro Max \u2013 45_161": -1508669355
+      "iPhone 14 Pro Max \u2013 45_162": 1674305049
+      "iPhone 14 Pro Max \u2013 45_163": -1880268289
+      "iPhone 14 Pro Max \u2013 45_164": -135560121
+      "iPhone 14 Pro Max \u2013 45_165": 952098847
+      "iPhone 14 Pro Max \u2013 45_166": 132635259
+      "iPhone 14 Pro Max \u2013 45_167": 1504833103
+      "iPhone 14 Pro Max \u2013 45_168": 899439742
+      "iPhone 14 Pro Max \u2013 45_169": 1918150075
+      "iPhone 14 Pro Max \u2013 45_17": 99622044
+      "iPhone 14 Pro Max \u2013 45_170": 227493199
+      "iPhone 14 Pro Max \u2013 45_171": -1203342265
+      "iPhone 14 Pro Max \u2013 45_172": -1578562540
+      "iPhone 14 Pro Max \u2013 45_173": 26668779
+      "iPhone 14 Pro Max \u2013 45_174": -1689641552
+      "iPhone 14 Pro Max \u2013 45_175": -1188599756
+      "iPhone 14 Pro Max \u2013 45_176": -344316080
+      "iPhone 14 Pro Max \u2013 45_177": 1508394114
+      "iPhone 14 Pro Max \u2013 45_178": -39909576
+      "iPhone 14 Pro Max \u2013 45_179": 175128945
+      "iPhone 14 Pro Max \u2013 45_18": 1888198544
+      "iPhone 14 Pro Max \u2013 45_180": 1127690056
+      "iPhone 14 Pro Max \u2013 45_19": -1830225796
+      "iPhone 14 Pro Max \u2013 45_2": 1939272897
+      "iPhone 14 Pro Max \u2013 45_20": -2134475216
+      "iPhone 14 Pro Max \u2013 45_21": -1660001062
+      "iPhone 14 Pro Max \u2013 45_22": 239936568
+      "iPhone 14 Pro Max \u2013 45_23": 1952685725
+      "iPhone 14 Pro Max \u2013 45_24": -201211786
+      "iPhone 14 Pro Max \u2013 45_25": 1923833903
+      "iPhone 14 Pro Max \u2013 45_26": -465439681
+      "iPhone 14 Pro Max \u2013 45_27": 1872007545
+      "iPhone 14 Pro Max \u2013 45_28": -952096974
+      "iPhone 14 Pro Max \u2013 45_29": -711628105
+      "iPhone 14 Pro Max \u2013 45_3": -1197793303
+      "iPhone 14 Pro Max \u2013 45_30": -324251685
+      "iPhone 14 Pro Max \u2013 45_31": 600680959
+      "iPhone 14 Pro Max \u2013 45_32": -915173217
+      "iPhone 14 Pro Max \u2013 45_33": -903734289
+      "iPhone 14 Pro Max \u2013 45_34": -1684246520
+      "iPhone 14 Pro Max \u2013 45_35": -1857342304
+      "iPhone 14 Pro Max \u2013 45_36": 1797741419
+      "iPhone 14 Pro Max \u2013 45_37": 940926910
+      "iPhone 14 Pro Max \u2013 45_38": -1042574360
+      "iPhone 14 Pro Max \u2013 45_39": 457306249
+      "iPhone 14 Pro Max \u2013 45_4": 17320548
+      "iPhone 14 Pro Max \u2013 45_40": -5967917
+      "iPhone 14 Pro Max \u2013 45_41": -1496905758
+      "iPhone 14 Pro Max \u2013 45_42": 499424729
+      "iPhone 14 Pro Max \u2013 45_43": 132897841
+      "iPhone 14 Pro Max \u2013 45_44": 1205432376
+      "iPhone 14 Pro Max \u2013 45_45": -1124336674
+      "iPhone 14 Pro Max \u2013 45_46": -526711148
+      "iPhone 14 Pro Max \u2013 45_47": 2091407740
+      "iPhone 14 Pro Max \u2013 45_48": -654094380
+      "iPhone 14 Pro Max \u2013 45_49": 1069541773
+      "iPhone 14 Pro Max \u2013 45_5": -1686511187
+      "iPhone 14 Pro Max \u2013 45_50": 350704154
+      "iPhone 14 Pro Max \u2013 45_51": 646284306
+      "iPhone 14 Pro Max \u2013 45_52": 191931948
+      "iPhone 14 Pro Max \u2013 45_53": -35235455
+      "iPhone 14 Pro Max \u2013 45_54": 1005320964
+      "iPhone 14 Pro Max \u2013 45_55": 1884443914
+      "iPhone 14 Pro Max \u2013 45_56": -289660452
+      "iPhone 14 Pro Max \u2013 45_57": 1706861142
+      "iPhone 14 Pro Max \u2013 45_58": 298920469
+      "iPhone 14 Pro Max \u2013 45_59": 1666788015
+      "iPhone 14 Pro Max \u2013 45_6": 1580623939
+      "iPhone 14 Pro Max \u2013 45_60": -759275899
+      "iPhone 14 Pro Max \u2013 45_61": 1311201904
+      "iPhone 14 Pro Max \u2013 45_62": 540048402
+      "iPhone 14 Pro Max \u2013 45_63": 1443093026
+      "iPhone 14 Pro Max \u2013 45_64": -1986205883
+      "iPhone 14 Pro Max \u2013 45_65": -837921663
+      "iPhone 14 Pro Max \u2013 45_66": -764818898
+      "iPhone 14 Pro Max \u2013 45_67": -1633590682
+      "iPhone 14 Pro Max \u2013 45_68": -1589523640
+      "iPhone 14 Pro Max \u2013 45_69": -1563416209
+      "iPhone 14 Pro Max \u2013 45_7": 2077530176
+      "iPhone 14 Pro Max \u2013 45_70": -671183599
+      "iPhone 14 Pro Max \u2013 45_71": -659170005
+      "iPhone 14 Pro Max \u2013 45_72": 905350410
+      "iPhone 14 Pro Max \u2013 45_73": 153209231
+      "iPhone 14 Pro Max \u2013 45_74": 332612298
+      "iPhone 14 Pro Max \u2013 45_75": 1258378153
+      "iPhone 14 Pro Max \u2013 45_76": 139077526
+      "iPhone 14 Pro Max \u2013 45_77": 1694707069
+      "iPhone 14 Pro Max \u2013 45_78": -167608296
+      "iPhone 14 Pro Max \u2013 45_79": -1150958364
+      "iPhone 14 Pro Max \u2013 45_8": 381996312
+      "iPhone 14 Pro Max \u2013 45_80": 2030061311
+      "iPhone 14 Pro Max \u2013 45_81": -457812467
+      "iPhone 14 Pro Max \u2013 45_82": -688936152
+      "iPhone 14 Pro Max \u2013 45_83": 874575507
+      "iPhone 14 Pro Max \u2013 45_84": 368691197
+      "iPhone 14 Pro Max \u2013 45_85": -992754644
+      "iPhone 14 Pro Max \u2013 45_86": -1707091163
+      "iPhone 14 Pro Max \u2013 45_87": -281463497
+      "iPhone 14 Pro Max \u2013 45_88": 1813414751
+      "iPhone 14 Pro Max \u2013 45_89": -345623167
+      "iPhone 14 Pro Max \u2013 45_9": 937204399
+      "iPhone 14 Pro Max \u2013 45_90": 2064377634
+      "iPhone 14 Pro Max \u2013 45_91": 1268366795
+      "iPhone 14 Pro Max \u2013 45_92": 1357836549
+      "iPhone 14 Pro Max \u2013 45_93": 1464324266
+      "iPhone 14 Pro Max \u2013 45_94": 733161648
+      "iPhone 14 Pro Max \u2013 45_95": 1183305321
+      "iPhone 14 Pro Max \u2013 45_96": 1255588560
+      "iPhone 14 Pro Max \u2013 45_97": 1537430595
+      "iPhone 14 Pro Max \u2013 45_98": -2050141038
+      "iPhone 14 Pro Max \u2013 45_99": -1019292061
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
