@@ -16,10 +16,10 @@
   <Project Path="MapboxBaseModule.Editor.csproj" />
   <Project Path="MapboxGeocodingApi.csproj" />
   <Project Path="MapboxCustomImageryModule.Editor.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="MapboxVectorModule.Editor.csproj" />
   <Project Path="MapboxDebug.Editor.csproj" />
   <Project Path="MapboxComponentSystem.Editor.csproj" />
   <Project Path="MapboxLocationModule.Editor.csproj" />
-  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="MapboxUnitySDK.Editor.csproj" />
 </Solution>
