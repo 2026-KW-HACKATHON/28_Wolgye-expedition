@@ -470,14 +470,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ARRandomSpawner
   raycastManager: {fileID: 1514759035}
-  planeManager: {fileID: 1514759036}
-  anchorManager: {fileID: 1514759037}
   arCamera: {fileID: 2104272197}
   spawnPrefab: {fileID: 5823622849871808075, guid: e2f453ba574746344bbd4c7fbe434855, type: 3}
   retryInterval: 0.25
   searchTimeout: 5
-  minSpawnDistance: 1
-  maxSpawnDistance: 4
 --- !u!4 &1885253022
 Transform:
   m_ObjectHideFlags: 0
@@ -782,7 +778,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.XR.ARFoundation::UnityEngine.XR.ARFoundation.AROcclusionManager
   m_HumanSegmentationStencilMode: 0
   m_HumanSegmentationDepthMode: 0
-  m_EnvironmentDepthMode: 1
+  m_EnvironmentDepthMode: 0
   m_EnvironmentDepthTemporalSmoothing: 1
   m_OcclusionPreferenceMode: 0
 --- !u!1660057539 &9223372036854775807
