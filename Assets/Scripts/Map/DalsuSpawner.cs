@@ -27,6 +27,17 @@ public class DalsuSpawner : MonoBehaviour
     [SerializeField]
     private float _catchRadius = 10f;
 
+    [Header("Rarity Probability")]
+    [SerializeField]
+    private float _rarity1Probability = 80f;
+
+    [SerializeField]
+    private float _rarity2Probability = 40f;
+
+    [SerializeField]
+    private float _rarity3Probability = 10f;
+
+
     private readonly Dictionary<string, GameObject> _spawnedDalsu = new();
     private readonly HashSet<string> _caughtDalsu = new();
 
@@ -138,12 +149,22 @@ public class DalsuSpawner : MonoBehaviour
             {
                 if (distance <= data.spawnRadius)
                 {
-                    Debug.Log(
-                        $"[DalsuSpawner] Spawn 조건 만족! " +
-                        $"{data.dalsuName}"
-                    );
+                    if (RollSpawnProbability(data.rarity))
+                    {
+                        Debug.Log(
+                            $"[DalsuSpawner] Spawn 성공! " +
+                            $"{data.dalsuName} / rarity = {data.rarity}"
+                        );
 
-                    Spawn(data, dalsuLocation);
+                        Spawn(data, dalsuLocation);
+                    }
+                    else
+                    {
+                        Debug.Log(
+                            $"[DalsuSpawner] Spawn 실패! " +
+                            $"{data.dalsuName} / rarity = {data.rarity}"
+                        );
+                    }
                 }
             }
             else
@@ -331,4 +352,25 @@ public class DalsuSpawner : MonoBehaviour
             Mathf.Asin(Mathf.Sqrt(h));
     }
 
+    private bool RollSpawnProbability(int rarity)
+    {
+        float probability = rarity switch
+        {
+            1 => _rarity1Probability,
+            2 => _rarity2Probability,
+            3 => _rarity3Probability,
+            _ => 0f
+        };
+
+        float roll = Random.Range(0f, 100f);
+
+        //Debug.Log(
+        //    $"[DalsuSpawner] 확률 판정 / " +
+        //    $"rarity = {rarity} / " +
+        //    $"probability = {probability}% / " +
+        //    $"roll = {roll:F1}"
+        //);
+
+        return roll < probability;
+    }
 }

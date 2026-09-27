@@ -16,7 +16,7 @@ MonoBehaviour:
   dalsuName: 
   type: 
   description: 
-  rarity: 0
+  rarity: 1
   icon: {fileID: 0}
   prefab: {fileID: 0}
   latitude: 37.619496
