@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 using Unity.Cinemachine; // Cinemachine 3.x 네임스페이스 (2.x의 "Cinemachine"과 다름)
 
 /// <summary>
@@ -7,36 +8,37 @@ using Unity.Cinemachine; // Cinemachine 3.x 네임스페이스 (2.x의 "Cinemachine"과 
 /// </summary>
 public class CameraTargetSwitcher : MonoBehaviour
 {
+    public List<Transform> targets = new List<Transform>();
+
     [SerializeField] private CinemachineCamera cinemachineCamera;
-    [SerializeField] private Transform[] targets;
     [SerializeField] private bool alsoLookAt = true;
 
     private int currentIndex;
 
     private void Start()
     {
-        if (targets != null && targets.Length > 0)
+        if (targets != null && targets.Count > 0)
             FocusOnIndex(0);
     }
 
     // 버튼 OnClick: 다음 타겟으로 순환
     public void NextTarget()
     {
-        if (targets.Length == 0) return;
-        FocusOnIndex((currentIndex + 1) % targets.Length);
+        if (targets.Count == 0) return;
+        FocusOnIndex((currentIndex + 1) % targets.Count);
     }
 
     // 버튼 OnClick: 이전 타겟으로 순환
     public void PreviousTarget()
     {
-        if (targets.Length == 0) return;
-        FocusOnIndex((currentIndex - 1 + targets.Length) % targets.Length);
+        if (targets.Count == 0) return;
+        FocusOnIndex((currentIndex - 1 + targets.Count) % targets.Count);
     }
 
     // 버튼 OnClick: 인덱스로 지정 (Inspector에서 int 값 입력)
     public void FocusOnIndex(int index)
     {
-        if (index < 0 || index >= targets.Length) return;
+        if (index < 0 || index >= targets.Count) return;
         currentIndex = index;
         FocusOn(targets[index]);
     }
