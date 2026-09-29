@@ -25,6 +25,8 @@ public class DalsuSpawnManager : MonoBehaviour
     [SerializeField] private CameraTargetSwitcher cts;
     [SerializeField] private DalsuListManager dlm;
 
+    [SerializeField] private GameObject aiParentPrefab;
+
     private void Start()
     {
         ReadOwnDalsuJson();
@@ -52,12 +54,19 @@ public class DalsuSpawnManager : MonoBehaviour
         {
             pos = new Vector3(Random.Range(-18f, 22f), 1.22f, Random.Range(-37f, 3f));
             rot = new Vector3(0, Random.Range(0, 180f), 0);
-            GameObject prefab = Instantiate(dalsuDatas[dalsu.id].prefab, pos, Quaternion.Euler(rot));
 
-            OwnDalsuData odd = prefab.GetComponent<OwnDalsuData>();
+            GameObject parentPrefab = Instantiate(aiParentPrefab, pos, Quaternion.Euler(rot));
+            GameObject prefab = Instantiate(dalsuDatas[dalsu.id].prefab, parentPrefab.transform);
+            prefab.transform.localPosition = new Vector3(0, -0.05f, 0);
+            prefab.transform.localEulerAngles = new Vector3(0, 90, 0); 
+
+            OwnDalsuData odd = parentPrefab.GetComponent<OwnDalsuData>();
             odd.dalsuData = dalsuDatas[dalsu.id];
-            cts.targets.Add(prefab.transform);
+            cts.targets.Add(parentPrefab.transform);
             odd.listIndex = cts.targets.Count - 1;
+
+            AgentController ac = parentPrefab.GetComponent<AgentController>();
+            ac.animator = prefab.GetComponent<Animator>();
 
             dlm.AddDalsuList(odd);
         }

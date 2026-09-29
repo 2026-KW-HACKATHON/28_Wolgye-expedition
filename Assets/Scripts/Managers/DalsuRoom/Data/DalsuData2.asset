@@ -18,7 +18,7 @@ MonoBehaviour:
   description: 
   rarity: 0
   icon: {fileID: 21300000, guid: 9e851a30bcbccfc4caf575aa75aa06c0, type: 3}
-  prefab: {fileID: 7872036971617125483, guid: 86ad0e4d4774f89459ce7bcc5a8c5adc, type: 3}
+  prefab: {fileID: 72356215555311609, guid: c5d3ce35aefea714487f1d2e9aec424a, type: 3}
   latitude: 0
   longitude: 0
   spawnRadius: 30

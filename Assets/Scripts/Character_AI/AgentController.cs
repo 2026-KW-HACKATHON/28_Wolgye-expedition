@@ -6,6 +6,7 @@ public enum MoveState
     IDLE,
     JUMP,
     WALK,
+    SIT,
 }
 
 public class AgentController : MonoBehaviour
@@ -17,7 +18,7 @@ public class AgentController : MonoBehaviour
     private NavMeshAgent agent; // NavMeshAgent를 저장할 변수
     private float timeSinceLastUpdate; // 마지막으로 목표 위치를 갱신했던 시간
 
-    [SerializeField] private Animator animator;
+    public Animator animator;
     [SerializeField] private MoveState moveState = MoveState.IDLE;
 
     void Start()
@@ -29,6 +30,8 @@ public class AgentController : MonoBehaviour
 
     void Update()
     {
+        if (animator == null) return;
+
         timeSinceLastUpdate += Time.deltaTime; // 시간 값을 갱신합니다.
 
         if (timeSinceLastUpdate >= updateInterval) // 설정한 시간 간격이 지났는지 확인합니다.
@@ -38,21 +41,32 @@ public class AgentController : MonoBehaviour
             if (state < 0.1f)
             {
                 moveState = MoveState.IDLE;
+                animator.SetBool("Sitting", false);
                 animator.SetBool("Walk", false);
                 agent.ResetPath();
             }
-            else if (state < 0.4f)
+            else if (state < 0.3f)
             {
                 moveState = MoveState.JUMP;
                 agent.ResetPath();
+                animator.SetBool("Sitting", false);
                 animator.SetTrigger("Jump");
                 timeSinceLastUpdate = updateInterval / 2f;
+            }
+            else if(state < 0.5f)
+            {
+                moveState = MoveState.SIT;
+                agent.ResetPath();
+                animator.SetTrigger("Sit");
+                animator.SetBool("Sitting", true);
+                timeSinceLastUpdate = 0f;
             }
             else
             {
                 moveState = MoveState.WALK;
                 Vector3 randomPosition = GetRandomPositionOnNavMesh(); // NavMesh 위의 랜덤한 위치를 가져옵니다.
                 agent.SetDestination(randomPosition); // NavMeshAgent의 목표 위치를 랜덤 위치로 설정합니다.
+                animator.SetBool("Sitting", false);
                 animator.SetBool("Walk", true);
                 timeSinceLastUpdate = 0f; // 시간 값을 초기화합니다.
             }
