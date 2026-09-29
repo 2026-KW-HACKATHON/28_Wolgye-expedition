@@ -15,6 +15,8 @@ public class ReturnListManager : MonoBehaviour
         public bool selected;
     }
 
+    [SerializeField] private DalsuRoom_UIManager uiManager;
+
     [SerializeField] private GameObject listPrefab;
     [SerializeField] private Transform listParent;
     [SerializeField] private CameraTargetSwitcher cameraTargetSwitcher;
@@ -68,6 +70,21 @@ public class ReturnListManager : MonoBehaviour
     // 확인 버튼 OnClick: 선택된 달수들을 data.json에서 삭제하고 화면/씬에서 제거한다.
     public void ConfirmReturn()
     {
+        if (uiManager == null) return;
+
+        bool isSelected = false;
+        foreach(Entry entry in entries)
+        {
+            if (entry.selected)
+            {
+                isSelected = true;
+                break;
+            }
+        }
+        if (!isSelected) return;
+
+        uiManager.OpenReturnComplete();
+
         for (int i = entries.Count - 1; i >= 0; i--)
         {
             Entry entry = entries[i];

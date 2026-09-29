@@ -30,6 +30,7 @@ public class DalsuRoom_UIManager : MonoBehaviour
     [SerializeField] private PanelUI decorate = new PanelUI();   // 방 꾸미기
     [SerializeField] private PanelUI dalsuList = new PanelUI();  // 달수 리스트
     [SerializeField] private PanelUI returnBack = new PanelUI(); // 돌려보내기
+    [SerializeField] private GameObject returnCompletePanel;
 
     [Header("Camera")]
     [SerializeField] private CameraModeSwitcher cameraModeSwitcher;
@@ -62,6 +63,17 @@ public class DalsuRoom_UIManager : MonoBehaviour
     // ── 돌려보내기 ──
     public void OpenReturn() => Open(returnBack);
     public void CloseReturn() => Close(returnBack);
+
+    // ── 돌려보내기 완료 ──
+    public void OpenReturnComplete()
+    {
+        CloseAll(true);
+        SetActive(returnCompletePanel, true);
+    }
+    public void CloseReturnComplete()
+    {
+        SetActive(returnCompletePanel, false);
+    }
 
     // 모든 화면 닫기 (버튼 OnClick용: 애니메이션 재생)
     public void CloseAll() => CloseAll(false);
@@ -149,5 +161,10 @@ public class DalsuRoom_UIManager : MonoBehaviour
         if (!string.IsNullOrEmpty(oppositeTrigger))
             ui.animator.ResetTrigger(oppositeTrigger);
         ui.animator.SetTrigger(trigger);
+    }
+
+    private void SetActive(GameObject gameObject, bool boolean)
+    {
+        gameObject.SetActive(boolean);
     }
 }
