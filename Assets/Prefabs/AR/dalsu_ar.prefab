@@ -368,6 +368,7 @@ GameObject:
   - component: {fileID: 6292384336893586326}
   - component: {fileID: 7465939945994609242}
   - component: {fileID: 5907390963261067722}
+  - component: {fileID: 4168253912790769218}
   m_Layer: 0
   m_Name: dalsu_ar
   m_TagString: Untagged
@@ -433,11 +434,23 @@ MonoBehaviour:
   stopWalkingAngle: 8
   modelRotationOffsetY: 90
   hipLookSpeed: 6
-  maxLookUp: 65
+  maxLookUp: 60
   maxLookDown: 15
   lookUpThreshold: 50
   lookDownThreshold: 15
   lookTransitionRange: 8
+--- !u!114 &4168253912790769218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6636294413883961644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a998cf396797b6f4180c1b0dd83c5c3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DalsooCatchable
 --- !u!1 &7043771983901948825
 GameObject:
   m_ObjectHideFlags: 0
