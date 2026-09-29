@@ -406,7 +406,7 @@ MonoBehaviour:
   <trackablesChanged>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
-  m_RaycastPrefab: {fileID: 0}
+  m_RaycastPrefab: {fileID: 6636294413883961644, guid: 6023c5f9fe7c1ab45a0950ec420f85e3, type: 3}
 --- !u!114 &1514759036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -469,11 +469,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cb78a82895d9ab4b911d1ff961fc202, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ARRandomSpawner
-  raycastManager: {fileID: 1514759035}
+  planeManager: {fileID: 1514759036}
   arCamera: {fileID: 2104272197}
-  spawnPrefab: {fileID: 5823622849871808075, guid: e2f453ba574746344bbd4c7fbe434855, type: 3}
+  spawnPrefab: {fileID: 6636294413883961644, guid: 6023c5f9fe7c1ab45a0950ec420f85e3, type: 3}
+  visualYOffset: 0
+  minSpawnDistance: 1
+  maxSpawnDistance: 4
+  minimumBelowCamera: 0.5
+  visibilityCheckHeight: 0.5
+  screenPadding: 0.05
+  samplesPerPlane: 30
   retryInterval: 0.25
-  searchTimeout: 5
 --- !u!4 &1885253022
 Transform:
   m_ObjectHideFlags: 0
@@ -776,11 +782,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b15f82cc229284894964d2d30806969d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.XR.ARFoundation::UnityEngine.XR.ARFoundation.AROcclusionManager
-  m_HumanSegmentationStencilMode: 0
-  m_HumanSegmentationDepthMode: 0
-  m_EnvironmentDepthMode: 0
+  m_HumanSegmentationStencilMode: 3
+  m_HumanSegmentationDepthMode: 2
+  m_EnvironmentDepthMode: 1
   m_EnvironmentDepthTemporalSmoothing: 1
-  m_OcclusionPreferenceMode: 0
+  m_OcclusionPreferenceMode: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
