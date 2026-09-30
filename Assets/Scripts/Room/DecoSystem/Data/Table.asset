@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f451d7ea7ee4a3c4a9a1ac675d9af8cd, type: 3}
-  m_Name: Chair
+  m_Name: Table
   m_EditorClassIdentifier: Assembly-CSharp::FurnitureData
-  id: Chair
-  displayName: "\uC758\uC790"
+  id: Table
+  displayName: "\uD14C\uC774\uBE14"
   icon: {fileID: 21300000, guid: 9e851a30bcbccfc4caf575aa75aa06c0, type: 3}
-  prefab: {fileID: 4037304119058589237, guid: be15b46cd3f738142a5706256353b6f1, type: 3}
+  prefab: {fileID: 5445785983465497160, guid: 6e8b1d63aebe9934ba082050285290f5, type: 3}
   size: {x: 1, y: 1}

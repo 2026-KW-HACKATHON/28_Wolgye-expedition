@@ -92,8 +92,8 @@ public class OverviewCameraPan : MonoBehaviour
 
     private void Update()
     {
-        // 팔로우 모드이거나 카메라 전환(블렌드) 중에는 조작 막기
-        if ((modeSwitcher != null && modeSwitcher.IsFollowing) ||
+        // 팔로우 모드/방 꾸미기 모드이거나 카메라 전환(블렌드) 중에는 조작 막기
+        if ((modeSwitcher != null && (modeSwitcher.IsFollowing || modeSwitcher.IsDecorating)) ||
             (brain != null && brain.IsBlending))
         {
             isDragging = false;

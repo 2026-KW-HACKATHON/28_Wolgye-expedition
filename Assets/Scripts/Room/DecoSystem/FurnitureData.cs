@@ -10,6 +10,7 @@ public class FurnitureData : ScriptableObject
     [Tooltip("저장/불러오기에 쓰이는 고유 ID. 한 번 정하면 바꾸지 마세요.")]
     [SerializeField] private string id;
     [SerializeField] private string displayName;
+    [SerializeField] private Sprite icon;
 
     [Tooltip("피벗 규칙: footprint 중앙, 바닥 높이(y=0)")]
     [SerializeField] private GameObject prefab;
@@ -19,6 +20,7 @@ public class FurnitureData : ScriptableObject
 
     public string Id => id;
     public string DisplayName => displayName;
+    public Sprite Icon => icon;
     public GameObject Prefab => prefab;
     public Vector2Int Size => size;
 

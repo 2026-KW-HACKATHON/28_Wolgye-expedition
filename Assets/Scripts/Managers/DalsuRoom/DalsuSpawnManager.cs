@@ -28,6 +28,15 @@ public class DalsuSpawnManager : MonoBehaviour
  
     [SerializeField] private GameObject aiParentPrefab;
 
+    [Tooltip("방 꾸미기 중 달수 캐릭터를 얼마나 흐리게 보일지 (0=완전 투명, 1=원래대로)")]
+    [SerializeField, Range(0f, 1f)] private float decorateFadeAlpha = 0.35f;
+
+    // 스폰된 모든 달수 캐릭터. 방 꾸미기 화면 등에서 통째로 숨기거나 다시 보여줄 때 사용한다.
+    private readonly List<GameObject> spawnedDalsus = new List<GameObject>();
+
+    // 가구 배치 시 달수와 겹치는지 확인하는 용도 등으로, 밖에서 읽기 전용으로 참조한다.
+    public IReadOnlyList<GameObject> SpawnedDalsus => spawnedDalsus;
+
     private void Start()
     {
         ReadOwnDalsuJson();
@@ -93,6 +102,41 @@ public class DalsuSpawnManager : MonoBehaviour
 
             dlm.AddDalsuList(odd);
             rlm.AddReturnList(odd);
+
+            spawnedDalsus.Add(parentPrefab);
+        }
+    }
+
+    // 방 꾸미기 화면 등에서 달수 캐릭터를 없애지 않고, 반투명하게 보이거나 다시 원래대로 보이게 한다.
+    // (배치 작업을 방해하지 않으면서도 자리는 그대로 눈에 보이므로, 그 위에 가구를 놓으려 할 때 왜 막히는지 알 수 있다.)
+    public void SetDalsusFaded(bool faded)
+    {
+        float alpha = faded ? decorateFadeAlpha : 1f;
+
+        foreach (GameObject dalsu in spawnedDalsus)
+        {
+            if (dalsu != null)
+                SetRenderersFaded(dalsu, alpha);
+        }
+    }
+
+    private static void SetRenderersFaded(GameObject root, float alpha)
+    {
+        foreach (Renderer renderer in root.GetComponentsInChildren<Renderer>(true))
+        {
+            // renderer.materials는 접근하는 순간 공유 에셋이 아닌, 이 렌더러만의 머티리얼 인스턴스를 만들어준다.
+            // (다른 달수나 원본 에셋의 머티리얼에는 영향을 주지 않는다.)
+            foreach (Material material in renderer.materials)
+                SetMaterialAlpha(material, alpha);
+        }
+    }
+
+    // 머티리얼은 이미 Transparent로 설정돼 있다는 전제 하에, 알파값만 바꾼다.
+    private static void SetMaterialAlpha(Material material, float alpha)
+    {
+        if (material.HasProperty("_Alpha"))
+        {
+            material.SetFloat("_Alpha", alpha);
         }
     }
 }

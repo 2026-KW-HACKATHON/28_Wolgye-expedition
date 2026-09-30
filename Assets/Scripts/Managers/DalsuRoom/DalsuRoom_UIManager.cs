@@ -35,6 +35,10 @@ public class DalsuRoom_UIManager : MonoBehaviour
     [Header("Camera")]
     [SerializeField] private CameraModeSwitcher cameraModeSwitcher;
 
+    [Header("Deco")]
+    [Tooltip("방 꾸미기 화면을 여는 동안 씬의 달수 캐릭터를 반투명하게 만든다.")]
+    [SerializeField] private DalsuSpawnManager spawnManager;
+
     private void Awake()
     {
         Prepare(decorate);
@@ -48,8 +52,29 @@ public class DalsuRoom_UIManager : MonoBehaviour
     }
 
     // ── 방 꾸미기 ──
-    public void OpenDecorate() => Open(decorate);
-    public void CloseDecorate() => Close(decorate);
+    public void OpenDecorate()
+    {
+        Open(decorate);
+
+        // 배치 작업에 방해되지 않도록 달수 캐릭터를 반투명하게 만들고, 위에서 수직으로 내려다보는 카메라로 전환
+        if (spawnManager != null)
+            spawnManager.SetDalsusFaded(true);
+        if (cameraModeSwitcher != null)
+            cameraModeSwitcher.ShowDecorate();
+    }
+
+    public void CloseDecorate()
+    {
+        Close(decorate);
+
+        // 흐리게 만들었던 달수 캐릭터를 다시 원래대로 되돌리고, Overview 카메라로 복귀
+        if (spawnManager != null)
+            spawnManager.SetDalsusFaded(false);
+        ShowOverview();
+    }
+
+    // 방 꾸미기 화면이 켜져 있는 동안에만 배치 입력을 받도록, PlacementController 등에서 참조한다.
+    public bool IsDecoratePanelActive => decorate.panel != null && decorate.panel.activeSelf;
 
     // ── 달수 리스트 ──
     public void OpenDalsuList() => Open(dalsuList);
