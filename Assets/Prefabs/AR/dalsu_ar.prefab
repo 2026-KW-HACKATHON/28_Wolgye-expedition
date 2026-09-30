@@ -369,6 +369,7 @@ GameObject:
   - component: {fileID: 7465939945994609242}
   - component: {fileID: 5907390963261067722}
   - component: {fileID: 4168253912790769218}
+  - component: {fileID: 1188965312977222708}
   m_Layer: 0
   m_Name: dalsu_ar
   m_TagString: Untagged
@@ -451,6 +452,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a998cf396797b6f4180c1b0dd83c5c3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DalsooCatchable
+--- !u!114 &1188965312977222708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6636294413883961644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b796a0f2cbf793048a3bf2615c5bfcd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DalsooBehaviorController
+  animator: {fileID: 7465939945994609242}
+  lookController: {fileID: 0}
+  arCamera: {fileID: 0}
+  minIdleTime: 5
+  maxIdleTime: 10
+  lookAtCameraChance: 0.35
+  minLookTime: 4
+  maxLookTime: 5
+  wanderWeight: 45
+  turnWeight: 30
+  sitWeight: 25
+  approachCameraWeight: 15
+  minTurnAngle: 40
+  maxTurnAngle: 140
+  turnSpeed: 100
+  walkSpeed: 0.2
+  minWanderDistance: 0.35
+  maxWanderDistance: 1.5
+  destinationAttempts: 30
+  planeEdgeMargin: 0.15
+  stopAtPlaneEdge: 1
+  minApproachDistance: 0.4
+  maxApproachDistance: 1
+  cameraStopDistance: 1.2
+  minApproachLookTime: 3
+  maxApproachLookTime: 4
+  minSitTime: 17
+  maxSitTime: 21
+  standUpWaitTime: 1
 --- !u!1 &7043771983901948825
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ public class DalsooLookController : MonoBehaviour
     [SerializeField] private float turnSpeed = 120f;
     [SerializeField] private float stopWalkingAngle = 8f;
 
-    [Tooltip("¸ğµ¨ Á¤¸éÀÌ ¹İ´ë¸é 180")]
+    [Tooltip("ëª¨ë¸ ì •ë©´ì´ ë°˜ëŒ€ë©´ 180")]
     [SerializeField] private float modelRotationOffsetY = 0f;
 
     [Header("Hip Look Up / Down")]
@@ -23,12 +23,19 @@ public class DalsooLookController : MonoBehaviour
     [SerializeField] private float lookUpThreshold = 30f;
     [SerializeField] private float lookDownThreshold = 15f;
 
-    [Tooltip("ÀÓ°è°¢À» ³ÑÀº µÚ ¸î µµ ¾È¿¡ ÃÖ´ë È¸Àü±îÁö °¥Áö")]
+    [Tooltip("ì„ê³„ê°ì„ ë„˜ì€ ë’¤ ëª‡ ë„ ì•ˆì— ìµœëŒ€ íšŒì „ê¹Œì§€ ê°ˆì§€")]
     [SerializeField] private float lookTransitionRange = 3f;
 
     private float currentHipPitch = 0f;
 
     private Quaternion lastHipAnimationRotation;
+
+    private bool lookAtCameraEnabled = true;
+
+    public void SetLookAtCamera(bool enabled)
+    {
+        lookAtCameraEnabled = enabled;
+    }
 
     private void Start()
     {
@@ -38,11 +45,17 @@ public class DalsooLookController : MonoBehaviour
 
     private void Update()
     {
+        if (!lookAtCameraEnabled)
+            return;
+
         RotateWholeBody();
     }
 
     private void LateUpdate()
     {
+        if (!lookAtCameraEnabled)
+            return;
+
         RotateHipTowardCamera();
     }
 
@@ -69,7 +82,7 @@ public class DalsooLookController : MonoBehaviour
         bool isTurning = angle > stopWalkingAngle;
 
         if (animator != null)
-            animator.SetBool("IsWalking", isTurning);
+            animator.SetBool("Walk", isTurning);
 
         transform.rotation =
             Quaternion.RotateTowards(
@@ -84,7 +97,7 @@ public class DalsooLookController : MonoBehaviour
         if (hip == null || arCamera == null)
             return;
 
-        // Animator°¡ ¸¸µç ÇöÀç Hip ÀÚ¼¼
+        // Animatorê°€ ë§Œë“  í˜„ì¬ Hip ìì„¸
         Quaternion animatedRotation = hip.rotation;
 
         Vector3 toCamera =
@@ -93,7 +106,7 @@ public class DalsooLookController : MonoBehaviour
         float horizontalDistance =
             new Vector2(toCamera.x, toCamera.z).magnitude;
 
-        // ½ÇÁ¦ Ä«¸Ş¶ó¿Í ´Ş¼ö »çÀÌÀÇ »óÇÏ °¢µµ
+        // ì‹¤ì œ ì¹´ë©”ë¼ì™€ ë‹¬ìˆ˜ ì‚¬ì´ì˜ ìƒí•˜ ê°ë„
         float rawPitch =
             Mathf.Atan2(
                 toCamera.y,
@@ -105,7 +118,7 @@ public class DalsooLookController : MonoBehaviour
 
         if (rawPitch > lookUpThreshold)
         {
-            // ÀÓ°è°¢À» ³ÑÀ¸¸é ½ÇÁ¦ Ä«¸Ş¶ó °¢µµ¸¦ ±×´ë·Î »ç¿ë
+            // ì„ê³„ê°ì„ ë„˜ìœ¼ë©´ ì‹¤ì œ ì¹´ë©”ë¼ ê°ë„ë¥¼ ê·¸ëŒ€ë¡œ ì‚¬ìš©
             targetHipPitch = rawPitch;
 
             targetHipPitch = Mathf.Min(
@@ -124,11 +137,11 @@ public class DalsooLookController : MonoBehaviour
         }
 
 
-        // Æò¹üÇÑ °¢µµ¿¡¼­´Â targetHipPitch = 0
-        // ¡æ Á¤¸é À¯Áö
+        // í‰ë²”í•œ ê°ë„ì—ì„œëŠ” targetHipPitch = 0
+        // â†’ ì •ë©´ ìœ ì§€
 
 
-        // ºÎµå·´°Ô µû¶ó°¡±â
+        // ë¶€ë“œëŸ½ê²Œ ë”°ë¼ê°€ê¸°
         currentHipPitch =
             Mathf.Lerp(
                 currentHipPitch,
@@ -137,14 +150,14 @@ public class DalsooLookController : MonoBehaviour
             );
 
 
-        // ´Ş¼öÀÇ ½ÇÁ¦ ¾ó±¼ ¹æÇâ
+        // ë‹¬ìˆ˜ì˜ ì‹¤ì œ ì–¼êµ´ ë°©í–¥
         Vector3 faceDirection = transform.right;
 
         faceDirection.y = 0f;
         faceDirection.Normalize();
 
 
-        // ÇöÀç Àß ¸Â¾Ò´ø À§/¾Æ·¡ È¸ÀüÃà
+        // í˜„ì¬ ì˜ ë§ì•˜ë˜ ìœ„/ì•„ë˜ íšŒì „ì¶•
         Vector3 pitchAxis =
             Vector3.Cross(
                 Vector3.up,

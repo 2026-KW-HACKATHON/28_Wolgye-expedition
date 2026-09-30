@@ -13,24 +13,24 @@ public class ARRandomSpawner : MonoBehaviour
     [Header("Dalsoo")]
     [SerializeField] private GameObject spawnPrefab;
 
-    [Tooltip("´Ş¼ö ¸ğµ¨ÀÇ ¹ß À§Ä¡ º¸Á¤")]
+    [Tooltip("ë‹¬ìˆ˜ ëª¨ë¸ì˜ ë°œ ìœ„ì¹˜ ë³´ì •")]
     [SerializeField] private float visualYOffset = 0f;
 
     [Header("Spawn Area")]
-    [Tooltip("Ä«¸Ş¶ó¿Í ÃÖ¼Ò °Å¸®")]
+    [Tooltip("ì¹´ë©”ë¼ì™€ ìµœì†Œ ê±°ë¦¬")]
     [SerializeField] private float minSpawnDistance = 1.0f;
 
-    [Tooltip("Ä«¸Ş¶ó¿Í ÃÖ´ë °Å¸®")]
+    [Tooltip("ì¹´ë©”ë¼ì™€ ìµœëŒ€ ê±°ë¦¬")]
     [SerializeField] private float maxSpawnDistance = 4.0f;
 
-    [Tooltip("ÈŞ´ëÆùº¸´Ù ÀÌ Á¤µµ ÀÌ»ó ¾Æ·¡¿¡ ÀÖ´Â Plane¸¸ ¹Ù´ÚÀ¸·Î Ãë±Ş")]
+    [Tooltip("íœ´ëŒ€í°ë³´ë‹¤ ì´ ì •ë„ ì´ìƒ ì•„ë˜ì— ìˆëŠ” Planeë§Œ ë°”ë‹¥ìœ¼ë¡œ ì·¨ê¸‰")]
     [SerializeField] private float minimumBelowCamera = 0.5f;
 
     [Header("Hidden Spawn")]
-    [Tooltip("Ä³¸¯ÅÍÀÇ ´ë·«ÀûÀÎ ³ôÀÌ. È­¸é ¹ÛÀÎÁö °Ë»çÇÒ ¶§ »ç¿ë")]
+    [Tooltip("ìºë¦­í„°ì˜ ëŒ€ëµì ì¸ ë†’ì´. í™”ë©´ ë°–ì¸ì§€ ê²€ì‚¬í•  ë•Œ ì‚¬ìš©")]
     [SerializeField] private float visibilityCheckHeight = 0.5f;
 
-    [Tooltip("È­¸é °¡ÀåÀÚ¸® ¹Ù·Î ¿·¿¡ »ı±â´Â °ÍÀ» ¸·´Â ¿©À¯°ª")]
+    [Tooltip("í™”ë©´ ê°€ì¥ìë¦¬ ë°”ë¡œ ì˜†ì— ìƒê¸°ëŠ” ê²ƒì„ ë§‰ëŠ” ì—¬ìœ ê°’")]
     [SerializeField] private float screenPadding = 0.05f;
 
     [SerializeField] private int samplesPerPlane = 30;
@@ -42,45 +42,50 @@ public class ARRandomSpawner : MonoBehaviour
 
     private IEnumerator Start()
     {
-        // AR Tracking ½ÃÀÛ ±â´Ù¸®±â
+        // AR Tracking ì‹œì‘ ê¸°ë‹¤ë¦¬ê¸°
         while (ARSession.state != ARSessionState.SessionTracking)
         {
             yield return null;
         }
 
-        Debug.Log("AR Tracking ½ÃÀÛ");
+        Debug.Log("AR Tracking ì‹œì‘");
 
         yield return new WaitForSeconds(1f);
 
-        // È­¸é ¹ÛÀÇ ¾ÈÀüÇÑ ¹Ù´ÚÀ» Ã£À» ¶§±îÁö °è¼Ó Å½»ö
+        // í™”ë©´ ë°–ì˜ ì•ˆì „í•œ ë°”ë‹¥ì„ ì°¾ì„ ë•Œê¹Œì§€ ê³„ì† íƒìƒ‰
         while (spawnedObject == null)
         {
-            if (TryFindHiddenFloorPosition(out Vector3 spawnPosition))
+            if (TryFindHiddenFloorPosition(out Vector3 spawnPosition, out ARPlane spawnPlane))
             {
-                SpawnDalsoo(spawnPosition);
+                SpawnDalsoo(
+                    spawnPosition,
+                    spawnPlane
+                );
+
                 yield break;
             }
 
-            Debug.Log("È­¸é ¹ÛÀÇ ÀÎ½ÄµÈ ¹Ù´ÚÀ» Ã£´Â Áß...");
+            Debug.Log("í™”ë©´ ë°–ì˜ ì¸ì‹ëœ ë°”ë‹¥ì„ ì°¾ëŠ” ì¤‘...");
             yield return new WaitForSeconds(retryInterval);
         }
     }
 
-    private bool TryFindHiddenFloorPosition(out Vector3 result)
+    private bool TryFindHiddenFloorPosition(out Vector3 result, out ARPlane resultPlane)
     {
         result = Vector3.zero;
+        resultPlane = null;
 
         if (planeManager == null || arCamera == null)
             return false;
 
         foreach (ARPlane plane in planeManager.trackables)
         {
-            // ´Ù¸¥ Plane¿¡ Èí¼öµÈ PlaneÀº Á¦¿Ü
+            // ë‹¤ë¥¸ Planeì— í¡ìˆ˜ëœ Planeì€ ì œì™¸
             if (plane.subsumedBy != null)
                 continue;
 
-            // À§¸¦ ÇâÇÏ´Â ¼öÆò Plane¸¸ »ç¿ë
-            // = ¹Ù´Ú/Å×ÀÌºí ÈÄº¸
+            // ìœ„ë¥¼ í–¥í•˜ëŠ” ìˆ˜í‰ Planeë§Œ ì‚¬ìš©
+            // = ë°”ë‹¥/í…Œì´ë¸” í›„ë³´
             if (plane.alignment != PlaneAlignment.HorizontalUp)
                 continue;
 
@@ -89,7 +94,7 @@ public class ARRandomSpawner : MonoBehaviour
             if (!boundary.IsCreated || boundary.Length < 3)
                 continue;
 
-            // Plane polygonÀÇ »ç°¢ ¹üÀ§ °è»ê
+            // Plane polygonì˜ ì‚¬ê° ë²”ìœ„ ê³„ì‚°
             Vector2 min = boundary[0];
             Vector2 max = boundary[0];
 
@@ -99,7 +104,7 @@ public class ARRandomSpawner : MonoBehaviour
                 max = Vector2.Max(max, boundary[i]);
             }
 
-            // Plane ³»ºÎ¸¦ ¿©·¯ ¹ø ·£´ı »ùÇÃ¸µ
+            // Plane ë‚´ë¶€ë¥¼ ì—¬ëŸ¬ ë²ˆ ëœë¤ ìƒ˜í”Œë§
             for (int attempt = 0; attempt < samplesPerPlane; attempt++)
             {
                 Vector2 localPoint = new Vector2(
@@ -107,7 +112,7 @@ public class ARRandomSpawner : MonoBehaviour
                     Random.Range(min.y, max.y)
                 );
 
-                // ½ÇÁ¦ Plane polygon ³»ºÎ°¡ ¾Æ´Ï¸é ¹ö¸²
+                // ì‹¤ì œ Plane polygon ë‚´ë¶€ê°€ ì•„ë‹ˆë©´ ë²„ë¦¼
                 if (!IsPointInsidePolygon(localPoint, boundary))
                     continue;
 
@@ -115,14 +120,14 @@ public class ARRandomSpawner : MonoBehaviour
                     new Vector3(localPoint.x, 0f, localPoint.y)
                 );
 
-                // Å×ÀÌºí °°Àº ³ôÀº Æò¸éÀ» ¾î´À Á¤µµ Á¦¿Ü
+                // í…Œì´ë¸” ê°™ì€ ë†’ì€ í‰ë©´ì„ ì–´ëŠ ì •ë„ ì œì™¸
                 float belowCamera =
                     arCamera.transform.position.y - worldPoint.y;
 
                 if (belowCamera < minimumBelowCamera)
                     continue;
 
-                // ³Ê¹« °¡±îÀÌ / ³Ê¹« ¸Ö¸® Á¦¿Ü
+                // ë„ˆë¬´ ê°€ê¹Œì´ / ë„ˆë¬´ ë©€ë¦¬ ì œì™¸
                 Vector3 horizontalDifference =
                     worldPoint - arCamera.transform.position;
 
@@ -136,14 +141,15 @@ public class ARRandomSpawner : MonoBehaviour
                     continue;
                 }
 
-                // Ä³¸¯ÅÍ ¹ß + ¸öÅëÀÌ ÇöÀç È­¸é ¾È¿¡ ÀÖÀ¸¸é Á¦¿Ü
+                // ìºë¦­í„° ë°œ + ëª¸í†µì´ í˜„ì¬ í™”ë©´ ì•ˆì— ìˆìœ¼ë©´ ì œì™¸
                 if (IsCurrentlyVisible(worldPoint))
                     continue;
 
                 result = worldPoint;
+                resultPlane = plane;
 
                 Debug.Log(
-                    $"È­¸é ¹Û Spawn À§Ä¡ ¹ß°ß! °Å¸®: {distance:F2}m"
+                    $"í™”ë©´ ë°– Spawn ìœ„ì¹˜ ë°œê²¬! ê±°ë¦¬: {distance:F2}m"
                 );
 
                 return true;
@@ -155,11 +161,11 @@ public class ARRandomSpawner : MonoBehaviour
 
     private bool IsCurrentlyVisible(Vector3 floorPosition)
     {
-        // ¹ß À§Ä¡
+        // ë°œ ìœ„ì¹˜
         Vector3 bottomViewport =
             arCamera.WorldToViewportPoint(floorPosition);
 
-        // Ä³¸¯ÅÍ ¸ö °¡¿îµ¥ Á¤µµ
+        // ìºë¦­í„° ëª¸ ê°€ìš´ë° ì •ë„
         Vector3 centerPosition =
             floorPosition + Vector3.up * visibilityCheckHeight;
 
@@ -169,13 +175,13 @@ public class ARRandomSpawner : MonoBehaviour
         bool bottomVisible = IsViewportPointVisible(bottomViewport);
         bool centerVisible = IsViewportPointVisible(centerViewport);
 
-        // Á¶±İÀÌ¶óµµ È­¸é¿¡ º¸ÀÏ °¡´É¼ºÀÌ ÀÖÀ¸¸é SpawnÇÏÁö ¾ÊÀ½
+        // ì¡°ê¸ˆì´ë¼ë„ í™”ë©´ì— ë³´ì¼ ê°€ëŠ¥ì„±ì´ ìˆìœ¼ë©´ Spawní•˜ì§€ ì•ŠìŒ
         return bottomVisible || centerVisible;
     }
 
     private bool IsViewportPointVisible(Vector3 viewport)
     {
-        // Ä«¸Ş¶ó µÚÂÊÀÌ¸é È­¸é ¹Û
+        // ì¹´ë©”ë¼ ë’¤ìª½ì´ë©´ í™”ë©´ ë°–
         if (viewport.z <= 0f)
             return false;
 
@@ -185,12 +191,12 @@ public class ARRandomSpawner : MonoBehaviour
                viewport.y <= 1f + screenPadding;
     }
 
-    private void SpawnDalsoo(Vector3 position)
+    private void SpawnDalsoo(Vector3 position, ARPlane spawnPlane)
     {
         if (spawnedObject != null)
             return;
 
-        // Anchor¿Í ´Ş¼ö¸¦ ºĞ¸®ÇÑ´Ù.
+        // Anchorì™€ ë‹¬ìˆ˜ë¥¼ ë¶„ë¦¬í•œë‹¤.
         anchorRoot = new GameObject("DalsooAnchor");
 
         anchorRoot.transform.SetPositionAndRotation(
@@ -198,10 +204,10 @@ public class ARRandomSpawner : MonoBehaviour
             Quaternion.identity
         );
 
-        // ÀÌ TransformÀº ÀÌÈÄ Á÷Á¢ ¿òÁ÷ÀÌ°Å³ª È¸Àü½ÃÅ°Áö ¾Ê´Â´Ù.
+        // ì´ Transformì€ ì´í›„ ì§ì ‘ ì›€ì§ì´ê±°ë‚˜ íšŒì „ì‹œí‚¤ì§€ ì•ŠëŠ”ë‹¤.
         anchorRoot.AddComponent<ARAnchor>();
 
-        // ´Ş¼ö´Â AnchorÀÇ ÀÚ½Ä
+        // ë‹¬ìˆ˜ëŠ” Anchorì˜ ìì‹
         spawnedObject = Instantiate(
             spawnPrefab,
             anchorRoot.transform
@@ -213,7 +219,20 @@ public class ARRandomSpawner : MonoBehaviour
         spawnedObject.transform.localRotation =
             Quaternion.identity;
 
-        Debug.Log("´Ş¼ö ¸ô·¡ »ı¼º ¿Ï·á!");
+        DalsooBehaviorController behavior =
+            spawnedObject.GetComponentInChildren<DalsooBehaviorController>(true);
+
+        if (behavior != null)
+        {
+            Debug.Log("âœ… ë‹¬ìˆ˜ Behavior ì°¾ìŒ! Initialize ì‹œì‘");
+            behavior.Initialize(spawnPlane);
+        }
+        else
+        {
+            Debug.LogError("âŒ DalsooBehaviorControllerë¥¼ ëª» ì°¾ì•˜ìŠµë‹ˆë‹¤!");
+        }
+
+        Debug.Log("ë‹¬ìˆ˜ ëª°ë˜ ìƒì„± ì™„ë£Œ!");
     }
 
     private bool IsPointInsidePolygon(
