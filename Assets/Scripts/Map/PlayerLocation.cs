@@ -188,11 +188,10 @@ public class PlayerLocation : MonoBehaviour
             _lastMapLocation = currentLocation;
 
             SetPlayerMoving();
+
+            UpdatePlayerPosition();
         }
-
-        // Player는 항상 중앙
-        UpdatePlayerPosition();
-
+        
         // Dalsu 갱신
         UpdateDalsuLocation(currentLocation);
     }
