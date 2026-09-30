@@ -47,6 +47,7 @@ public class PlayerLocation : MonoBehaviour
 
     private int _gpsUpdateCount;
 
+    private Coroutine _mapMoveCoroutine;
     private Coroutine _moveAnimationCoroutine;
 
 
@@ -181,17 +182,29 @@ public class PlayerLocation : MonoBehaviour
                 _mapBehaviour.MapboxMap.MapInformation.Bearing
             );
 
-            _mapBehaviour.MapboxMap.ChangeView(
-                currentLocation
-            );
+            // 이전 이동이 아직 진행 중이라면 중단
+            if (_mapMoveCoroutine != null)
+            {
+                StopCoroutine(_mapMoveCoroutine);
+            }
+
+            // 이전 위치 → 현재 GPS 위치까지 보간 이동
+            _mapMoveCoroutine =
+                StartCoroutine(
+                    MoveMapSmoothly(
+                        _lastMapLocation,
+                        currentLocation
+                    )
+                );
 
             _lastMapLocation = currentLocation;
 
+            // 이동하는 동안 Walk
             SetPlayerMoving();
 
             UpdatePlayerPosition();
         }
-        
+
         // Dalsu 갱신
         UpdateDalsuLocation(currentLocation);
     }
@@ -396,30 +409,74 @@ public class PlayerLocation : MonoBehaviour
         return (float)((bearing + 360.0) % 360.0);
     }
 
+    private IEnumerator MoveMapSmoothly(
+    LatitudeLongitude start,
+    LatitudeLongitude target)
+    {
+        float elapsed = 0f;
+
+        while (elapsed < _moveAnimationDuration)
+        {
+            elapsed += Time.deltaTime;
+
+            float t =
+                Mathf.Clamp01(
+                    elapsed / _moveAnimationDuration
+                );
+
+            LatitudeLongitude current =
+                new LatitudeLongitude(
+                    Mathf.Lerp(
+                        (float)start.Latitude,
+                        (float)target.Latitude,
+                        t
+                    ),
+                    Mathf.Lerp(
+                        (float)start.Longitude,
+                        (float)target.Longitude,
+                        t
+                    )
+                );
+
+            _mapBehaviour.MapboxMap.ChangeView(
+                current
+            );
+
+            yield return null;
+        }
+
+        // 마지막에는 정확히 목표 위치
+        _mapBehaviour.MapboxMap.ChangeView(
+            target
+        );
+
+        _mapMoveCoroutine = null;
+    }
+
 
 #if UNITY_EDITOR
     [ContextMenu("Test GPS / North")]
     private void TestGPSNorth()
     {
-        TestGPSMove(0.00005, 0.0);
+        TestGPSMove(0.0001, 0.0);
     }
 
     [ContextMenu("Test GPS / East")]
     private void TestGPSEast()
     {
-        TestGPSMove(0.0, 0.00005);
+        TestGPSMove(0.0, 0.0001);
     }
 
     [ContextMenu("Test GPS / South")]
     private void TestGPSSouth()
     {
-        TestGPSMove(-0.00005, 0.0);
+        TestGPSMove(-0.0001, 0.0);
     }
 
     [ContextMenu("Test GPS / West")]
     private void TestGPSWest()
     {
-        TestGPSMove(0.0, -0.00005);
+        TestGPSMove(0.0, -0.0001);
     }
 
     private void TestGPSMove(
@@ -463,13 +520,25 @@ public class PlayerLocation : MonoBehaviour
                 mapBearing
             );
 
-            _mapBehaviour.MapboxMap.ChangeView(
-                currentLocation
-            );
+            // 이전 이동이 아직 진행 중이라면 중단
+            if (_mapMoveCoroutine != null)
+            {
+                StopCoroutine(_mapMoveCoroutine);
+            }
+
+            // 이전 위치 → 현재 테스트 위치까지 보간 이동
+            _mapMoveCoroutine =
+                StartCoroutine(
+                    MoveMapSmoothly(
+                        _lastMapLocation,
+                        currentLocation
+                    )
+                );
 
             _lastMapLocation =
                 currentLocation;
 
+            // 이동하는 동안 Walk
             SetPlayerMoving();
         }
     }

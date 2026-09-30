@@ -46,17 +46,17 @@ public class DalsuSpawner : MonoBehaviour
 
     public void UpdateLocation(LatitudeLongitude location)
     {
-        Debug.Log(
-        $"[DalsuSpawner] 위치 업데이트 / " +
-        $"Lat = {location.Latitude}, " +
-        $"Lon = {location.Longitude}"
-    );
+        //Debug.Log(
+        //$"[DalsuSpawner] 위치 업데이트 / " +
+        //$"Lat = {location.Latitude}, " +
+        //$"Lon = {location.Longitude}"
+        //);
 
         _currentLocation = location;
         _hasLocation = true;
 
         CheckDalsuSpawn();
-        RefreshSpawnedPositions();
+        //RefreshSpawnedPositions();
     }
 
     public void OnDalsuCaught(string id)

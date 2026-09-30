@@ -358,7 +358,7 @@ MonoBehaviour:
     DesiredAccuracyInMeters: 1
     UpdateDistanceInMeters: 0
     UpdateTimeInMilliSeconds: 500
-  EditorLatitudeLongitude: 37.619496, 127.059696
+  EditorLatitudeLongitude: 37.6196823, 127.058754
   _dontDestroyOnLoad: 0
 --- !u!1 &351425070
 GameObject:
