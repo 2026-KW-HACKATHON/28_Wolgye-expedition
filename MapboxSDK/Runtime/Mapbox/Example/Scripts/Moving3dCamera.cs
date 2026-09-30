@@ -29,6 +29,9 @@ namespace Mapbox.Example.Scripts.MapInput
         [Tooltip("Right-click rotation sensitivity. Higher = faster rotation. Default: 50")]
         public float RotationSpeed = 50.0f;
 
+        [Tooltip("사용자 마우스/터치 입력으로 카메라를 움직일지 여부")]
+        public bool EnableUserInput = true;
+
         private Vector3 _previousScreenPosition;
         private Vector3 _dragOrigin;
         private Vector3 _targetPosition;
@@ -69,6 +72,11 @@ namespace Mapbox.Example.Scripts.MapInput
         public override CameraOutput UpdateCamera(IMapInformation mapInformation)
         {
             _output.Reset();
+            UpdateInputState();
+
+            if (!EnableUserInput)
+                return _output;
+
             UpdateInputState();
 
             if (IsPointerOverUI())
