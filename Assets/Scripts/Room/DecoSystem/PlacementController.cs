@@ -18,6 +18,9 @@ public class OwnFurnitures
 public class OwnFurniture
 {
     public string id;
+
+    // 소지한 수량. 이 수량만큼만 동시에 배치할 수 있다.
+    public int count;
 }
 
 public class PlacementController : MonoBehaviour
@@ -89,17 +92,31 @@ public class PlacementController : MonoBehaviour
         if (ownFurnitures.furnitures == null) ownFurnitures.furnitures = new List<OwnFurniture>();
     }
 
-    // 소지하고 있는 가구인지 확인한다.
-    private bool IsOwned(FurnitureData data)
+    // 소지하고 있는 수량을 반환한다. 소지하지 않았으면 0.
+    private int GetOwnedCount(FurnitureData data)
     {
-        if (data == null) return false;
+        if (data == null || ownFurnitures?.furnitures == null) return 0;
 
         foreach (OwnFurniture owned in ownFurnitures.furnitures)
         {
             if (owned != null && owned.id == data.Id)
-                return true;
+                return owned.count;
         }
-        return false;
+        return 0;
+    }
+
+    // 지금 씬에 배치되어 있는 수량을 센다 (grid에 실제로 놓여 있는 개수 기준).
+    private int CountPlaced(FurnitureData data)
+    {
+        if (data == null || grid == null) return 0;
+
+        int count = 0;
+        foreach (PlacedFurniture placed in grid.AllFurniture)
+        {
+            if (placed != null && placed.Data != null && placed.Data.Id == data.Id)
+                count++;
+        }
+        return count;
     }
 
     // 소지한 가구 하나당 버튼을 하나씩 만들어 클릭으로 선택하게 한다.
@@ -110,7 +127,7 @@ public class PlacementController : MonoBehaviour
         for (int i = 0; i < furnitureList.Length; i++)
         {
             FurnitureData data = furnitureList[i];
-            if (!IsOwned(data)) continue; // 소지하지 않은 가구는 버튼을 만들지 않는다.
+            if (GetOwnedCount(data) <= 0) continue; // 소지 수량이 없으면 버튼을 만들지 않는다.
 
             int index = i; // 람다 캡처용 지역 변수
 
@@ -169,7 +186,8 @@ public class PlacementController : MonoBehaviour
 
         Vector2Int size = CurrentSize;
         Vector2Int origin = grid.GetFootprintOrigin(point, size);
-        bool valid = Selected != null && grid.CanPlace(origin, size) && !IsDalsuBlocking(origin, size);
+        bool hasRemaining = Selected != null && CountPlaced(Selected) < GetOwnedCount(Selected);
+        bool valid = hasRemaining && grid.CanPlace(origin, size) && !IsDalsuBlocking(origin, size);
 
         UpdateHighlight(origin, size, valid);
         UpdateGhost(origin, size, valid);
@@ -239,6 +257,12 @@ public class PlacementController : MonoBehaviour
     private void TryPlace(Vector2Int origin)
     {
         if (Selected == null) return;
+
+        if (CountPlaced(Selected) >= GetOwnedCount(Selected))
+        {
+            Debug.Log($"{Selected.DisplayName}: 소지 수량을 모두 배치했습니다.");
+            return;
+        }
 
         if (grid.PlaceFurniture(Selected, origin, rotation) == null)
             Debug.Log($"Cannot place {Selected.DisplayName} at {origin} (rotation {rotation})");
