@@ -38,11 +38,32 @@ public class DalsuSpawner : MonoBehaviour
     private float _rarity3Probability = 10f;
 
 
+    private readonly Dictionary<string, DalsuData> _dalsuDataById = new();
     private readonly Dictionary<string, GameObject> _spawnedDalsu = new();
     private readonly HashSet<string> _caughtDalsu = new();
 
     private LatitudeLongitude _currentLocation;
     private bool _hasLocation;
+
+    private void Awake()
+    {
+        foreach (DalsuData data in _dalsuDatas)
+        {
+            if (data == null)
+                continue;
+
+            if (_dalsuDataById.ContainsKey(data.id))
+            {
+                Debug.LogWarning(
+                    $"[DalsuSpawner] 중복된 Dalsu ID가 있습니다. id = {data.id}"
+                );
+
+                continue;
+            }
+
+            _dalsuDataById.Add(data.id, data);
+        }
+    }
 
     public void UpdateLocation(LatitudeLongitude location)
     {
@@ -72,15 +93,25 @@ public class DalsuSpawner : MonoBehaviour
             return;
         }
 
-        _spawnedDalsu.Remove(id);
+        if (!_dalsuDataById.TryGetValue(
+                id,
+                out DalsuData caughtDalsu))
+        {
+            Debug.LogError(
+                $"[DalsuSpawner] DalsuData를 찾을 수 없습니다. id = {id}"
+            );
 
+            return;
+        }
+
+        _spawnedDalsu.Remove(id);
         _caughtDalsu.Add(id);
+
+        DalsuCaptureContext.Set(caughtDalsu);
 
         Destroy(instance);
 
-        Debug.Log(
-            $"[DalsuSpawner] Dalsu 잡기 완료 / id = {id}"
-        );
+        // TODO: AR 화면으로 이동
     }
 
     private void CheckDalsuSpawn()
