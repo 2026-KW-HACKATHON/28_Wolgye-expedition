@@ -77,7 +77,6 @@ public class DalsuSpawner : MonoBehaviour
         _hasLocation = true;
 
         CheckDalsuSpawn();
-        //RefreshSpawnedPositions();
     }
 
     public void OnDalsuCaught(string id)
@@ -283,7 +282,7 @@ public class DalsuSpawner : MonoBehaviour
         Debug.Log($"Dalsu Despawn : {data.dalsuName}");
     }
 
-    private void RefreshSpawnedPositions()
+    public void RefreshSpawnedPositions()
     {
         foreach (DalsuData data in _dalsuDatas)
         {

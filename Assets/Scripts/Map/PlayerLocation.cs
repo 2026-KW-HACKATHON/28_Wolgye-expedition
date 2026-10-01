@@ -28,9 +28,6 @@ public class PlayerLocation : MonoBehaviour
     [SerializeField]
     private float _moveAnimationDuration = 1f;
 
-    [SerializeField]
-    private float _rotationSpeed = 10f;
-
     [Header("Debug")]
     [SerializeField]
     private TMPro.TextMeshProUGUI _debugText;
@@ -438,9 +435,13 @@ public class PlayerLocation : MonoBehaviour
                     )
                 );
 
+            // 지도 이동
             _mapBehaviour.MapboxMap.ChangeView(
                 current
             );
+
+            // 현재 지도 기준으로 Dalsu 위치 갱신
+            _dalsuSpawner?.RefreshSpawnedPositions();
 
             yield return null;
         }
@@ -449,6 +450,9 @@ public class PlayerLocation : MonoBehaviour
         _mapBehaviour.MapboxMap.ChangeView(
             target
         );
+
+        // 마지막 위치 기준으로 한 번 더 갱신
+        _dalsuSpawner?.RefreshSpawnedPositions();
 
         _mapMoveCoroutine = null;
     }
