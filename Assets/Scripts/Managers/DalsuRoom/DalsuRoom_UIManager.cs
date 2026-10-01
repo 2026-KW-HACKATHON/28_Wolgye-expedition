@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DalsuRoom_UIManager : MonoBehaviour
 {
@@ -39,6 +40,8 @@ public class DalsuRoom_UIManager : MonoBehaviour
     [Tooltip("방 꾸미기 화면을 여는 동안 씬의 달수 캐릭터를 통째로 숨겼다가, 닫히면 빈 자리에 다시 불러온다.")]
     [SerializeField] private DalsuSpawnManager spawnManager;
 
+    [Header("MainScene")]
+    [SerializeField] private string mainScene;
     private void Awake()
     {
         Prepare(decorate);
@@ -191,5 +194,10 @@ public class DalsuRoom_UIManager : MonoBehaviour
     private void SetActive(GameObject gameObject, bool boolean)
     {
         gameObject.SetActive(boolean);
+    }
+
+    public void PrevBtn()
+    {
+        SceneManager.LoadScene(mainScene);
     }
 }
