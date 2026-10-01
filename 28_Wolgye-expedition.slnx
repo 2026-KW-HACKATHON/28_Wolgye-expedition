@@ -10,6 +10,7 @@
   <Project Path="MapboxExamples.csproj" />
   <Project Path="MapboxCustomImageryModule.csproj" />
   <Project Path="MapboxLocationModule.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
   <Project Path="MapboxExamples.Editor.csproj" />
   <Project Path="MapboxImageryModule.csproj" />
@@ -20,6 +21,5 @@
   <Project Path="MapboxDebug.Editor.csproj" />
   <Project Path="MapboxComponentSystem.Editor.csproj" />
   <Project Path="MapboxLocationModule.Editor.csproj" />
-  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="MapboxUnitySDK.Editor.csproj" />
 </Solution>

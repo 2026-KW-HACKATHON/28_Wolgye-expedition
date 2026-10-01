@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f5c34f0a8ded4447b1377c811bb08d0, type: 3}
+  m_Name: dalsu_raccoon
+  m_EditorClassIdentifier: Assembly-CSharp::DalsuData
+  id: Dalsu_002
+  dalsuName: "\uB2EC\uC218"
+  type: 
+  description: 
+  rarity: 0
+  icon: {fileID: 0}
+  prefab: {fileID: 6636294413883961644, guid: d806b464e22da3342afc52980c2510dc, type: 3}
+  latitude: 0
+  longitude: 0
+  spawnRadius: 30
