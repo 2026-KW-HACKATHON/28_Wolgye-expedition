@@ -1,31 +1,51 @@
+using System;
 using UnityEngine;
 
 public class DalsooCatchable : MonoBehaviour
 {
     public static DalsooCatchable Current { get; private set; }
 
+    public event Action<DalsooCatchable> OnCaught;
+
+    private DalsuActor actor;
+
+    public DalsuActor Actor => actor;
+    public DalsuData Data => actor != null ? actor.Data : null;
+
+
     private void Awake()
     {
         Current = this;
+
+        actor =
+            GetComponent<DalsuActor>();
+
+        if (actor == null)
+        {
+            actor =
+                GetComponentInParent<DalsuActor>();
+        }
     }
+
 
     private void OnDestroy()
     {
         if (Current == this)
+        {
             Current = null;
+        }
     }
+
 
     public void Catch()
     {
-        Debug.Log("´Þ¼ö Àâ±â ¼º°ø!");
+        Debug.Log(
+            Data != null
+                ? $"[DALSU] ìž¡ê¸° ì„±ê³µ / ID={Data.id}, Name={Data.dalsuName}"
+                : "[DALSU] ìž¡ê¸° ì„±ê³µ"
+        );
 
-        // ³ªÁß¿¡ ¿©±â¼­
-        // µµ°¨ µî·Ï
-        // ÀâÀº °³¼ö +1
-        // È¿°úÀ½
-        // ÆÄÆ¼Å¬
-        // UI Ç¥½Ã
-        // µîÀ» ³ÖÀ¸¸é µÊ.
+        OnCaught?.Invoke(this);
 
         Destroy(gameObject);
     }

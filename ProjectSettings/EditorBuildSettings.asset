@@ -14,6 +14,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Samples/Mapbox Unity SDK/3.1.1/MapboxComponents/Map.unity
     guid: e80a52bde674545049e5b12142766d4f
+  - enabled: 0
+    path: Assets/Scenes/QR-AR.unity
+    guid: 6dc22652708f50749a3ecdb08106224b
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 5e4ce36c52104af479dca755f5136b73, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

@@ -1,37 +1,88 @@
 using System.IO;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CatchResultUI : MonoBehaviour
 {
-    [Header("UI")]
+    [Header("Photo")]
     [SerializeField] private RawImage photoPreview;
+
+    [Header("Dalsu Info")]
+    [SerializeField] private TMP_Text caughtText;
+    [SerializeField] private Image dalsuIcon;
 
     private string currentTempPhotoPath;
     private Texture2D previewTexture;
 
+    private DalsuData caughtDalsuData;
 
-    public void Show(string tempPhotoPath)
+
+    public void Show(
+        string photoPath,
+        DalsuData data)
     {
-        currentTempPhotoPath = tempPhotoPath;
+        currentTempPhotoPath =
+            photoPath;
 
-        LoadPreview();
+        caughtDalsuData =
+            data;
+
+
+        LoadPreview(photoPath);
+
+        UpdateDalsuInfo();
+
 
         gameObject.SetActive(true);
     }
 
 
-    private void LoadPreview()
+    private void UpdateDalsuInfo()
     {
-        if (string.IsNullOrEmpty(currentTempPhotoPath))
+        if (caughtDalsuData == null)
+        {
+            if (caughtText != null)
+            {
+                caughtText.text =
+                    "Îã¨ÏàòÎ•º Ïû°ÏïòÎã§!";
+            }
+
             return;
+        }
 
-        if (!File.Exists(currentTempPhotoPath))
+
+        if (caughtText != null)
+        {
+            caughtText.text =
+                $"{caughtDalsuData.dalsuName}ÏùÑ(Î•º) Ïû°ÏïòÎã§!";
+        }
+
+
+        if (dalsuIcon != null)
+        {
+            dalsuIcon.sprite =
+                caughtDalsuData.icon;
+
+            dalsuIcon.enabled =
+                caughtDalsuData.icon != null;
+        }
+    }
+
+
+    private void LoadPreview(
+        string path)
+    {
+        if (
+            string.IsNullOrEmpty(path)
+            || !File.Exists(path))
+        {
+            Debug.LogError(
+                "[DALSU] Í≤∞Í≥º ÏÇ¨ÏßÑ ÌååÏùºÏù¥ ÏóÜÏäµÎãàÎã§."
+            );
+
             return;
-
-
-        byte[] imageBytes =
-            File.ReadAllBytes(currentTempPhotoPath);
+        }
 
 
         if (previewTexture != null)
@@ -40,30 +91,44 @@ public class CatchResultUI : MonoBehaviour
         }
 
 
+        byte[] bytes =
+            File.ReadAllBytes(path);
+
+
         previewTexture =
             new Texture2D(2, 2);
 
-        previewTexture.LoadImage(imageBytes);
+
+        bool success =
+            previewTexture.LoadImage(bytes);
+
+
+        if (!success)
+        {
+            Debug.LogError(
+                "[DALSU] ÏÇ¨ÏßÑ Preview Î°úÎìú Ïã§Ìå®"
+            );
+
+            return;
+        }
 
 
         if (photoPreview != null)
         {
-            photoPreview.texture = previewTexture;
+            photoPreview.texture =
+                previewTexture;
         }
     }
 
 
-    // ============================
-    // ¿˙¿Â πˆ∆∞
-    // ============================
-
     public void OnSaveButton()
     {
-        if (string.IsNullOrEmpty(currentTempPhotoPath))
+        if (
+            string.IsNullOrEmpty(
+                currentTempPhotoPath))
+        {
             return;
-
-        if (!File.Exists(currentTempPhotoPath))
-            return;
+        }
 
 
         bool success =
@@ -72,60 +137,65 @@ public class CatchResultUI : MonoBehaviour
             );
 
 
-        if (success)
+        if (!success)
         {
-            Debug.Log("ªÁ¡¯¿ª ∞∂∑Ø∏Æø° ¿˙¿Â«ﬂΩ¿¥œ¥Ÿ.");
+            Debug.LogError(
+                "[DALSU] Í∞§Îü¨Î¶¨ Ï†ÄÏû• Ïã§Ìå®"
+            );
 
-            DeleteTempPhoto();
-            CloseUI();
+            return;
         }
-        else
-        {
-            Debug.LogError("ªÁ¡¯ ¿˙¿Â Ω«∆–");
-        }
-    }
 
-
-    // ============================
-    // æ» «‘ πˆ∆∞
-    // ============================
-
-    public void OnDiscardButton()
-    {
-        Debug.Log("ªÁ¡¯¿ª ¿˙¿Â«œ¡ˆ æ Ω¿¥œ¥Ÿ.");
 
         DeleteTempPhoto();
 
-        CloseUI();
+        Close();
+    }
+
+
+    public void OnDiscardButton()
+    {
+        DeleteTempPhoto();
+
+        Close();
     }
 
 
     private void DeleteTempPhoto()
     {
-        if (!string.IsNullOrEmpty(currentTempPhotoPath))
+        if (
+            !string.IsNullOrEmpty(
+                currentTempPhotoPath)
+            &&
+            File.Exists(
+                currentTempPhotoPath))
         {
-            if (File.Exists(currentTempPhotoPath))
-            {
-                File.Delete(currentTempPhotoPath);
-            }
+            File.Delete(
+                currentTempPhotoPath
+            );
         }
+
 
         currentTempPhotoPath = null;
     }
 
 
-    private void CloseUI()
+    private void Close()
     {
-        if (photoPreview != null)
-            photoPreview.texture = null;
-
-
         if (previewTexture != null)
         {
             Destroy(previewTexture);
             previewTexture = null;
         }
 
+
+        if (photoPreview != null)
+        {
+            photoPreview.texture = null;
+        }
+
+
+        caughtDalsuData = null;
 
         gameObject.SetActive(false);
     }

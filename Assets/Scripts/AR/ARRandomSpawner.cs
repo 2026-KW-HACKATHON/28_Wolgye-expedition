@@ -10,52 +10,93 @@ public class ARRandomSpawner : MonoBehaviour
     [SerializeField] private ARPlaneManager planeManager;
     [SerializeField] private Camera arCamera;
 
-    [Header("Dalsoo")]
-    [SerializeField] private GameObject spawnPrefab;
+    [Header("Dalsu Runtime")]
+    [SerializeField] private GameObject dalsuRuntimePrefab;
 
-    [Tooltip("달수 모델의 발 위치 보정")]
+    [Header("Dalsu Data")]
+    [SerializeField] private DalsuDatabase dalsuDatabase;
+
+    [Tooltip("테스트할 달수 ID")]
+    [SerializeField] private string spawnDalsuId = "Dalsu_001";
+
+    [Header("Visual")]
     [SerializeField] private float visualYOffset = 0f;
 
     [Header("Spawn Area")]
-    [Tooltip("카메라와 최소 거리")]
     [SerializeField] private float minSpawnDistance = 1.0f;
-
-    [Tooltip("카메라와 최대 거리")]
     [SerializeField] private float maxSpawnDistance = 4.0f;
-
-    [Tooltip("휴대폰보다 이 정도 이상 아래에 있는 Plane만 바닥으로 취급")]
     [SerializeField] private float minimumBelowCamera = 0.5f;
 
     [Header("Hidden Spawn")]
-    [Tooltip("캐릭터의 대략적인 높이. 화면 밖인지 검사할 때 사용")]
     [SerializeField] private float visibilityCheckHeight = 0.5f;
-
-    [Tooltip("화면 가장자리 바로 옆에 생기는 것을 막는 여유값")]
     [SerializeField] private float screenPadding = 0.05f;
-
     [SerializeField] private int samplesPerPlane = 30;
-
     [SerializeField] private float retryInterval = 0.25f;
 
     private GameObject spawnedObject;
     private GameObject anchorRoot;
 
+    private DalsuData currentDalsuData;
+
+
     private IEnumerator Start()
     {
-        // AR Tracking 시작 기다리기
-        while (ARSession.state != ARSessionState.SessionTracking)
+        // -----------------------------------------
+        // 먼저 달수 데이터 찾기
+        // -----------------------------------------
+
+        currentDalsuData = dalsuDatabase.GetById(spawnDalsuId);
+
+        if (currentDalsuData == null)
+        {
+            Debug.LogError(
+                $"[DALSU] ARSpawner에서 DalsuData를 찾을 수 없음: {spawnDalsuId}"
+            );
+
+            yield break;
+        }
+
+
+        if (dalsuRuntimePrefab == null)
+        {
+            Debug.LogError(
+                "[DALSU] ARSpawner의 DalsuRuntimePrefab이 연결되지 않았습니다."
+            );
+
+            yield break;
+        }
+
+
+        // -----------------------------------------
+        // AR Tracking 대기
+        // -----------------------------------------
+
+        while (
+            ARSession.state
+            != ARSessionState.SessionTracking)
         {
             yield return null;
         }
 
-        Debug.Log("AR Tracking 시작");
+
+        Debug.Log(
+            "[DALSU] AR Tracking 시작"
+        );
+
 
         yield return new WaitForSeconds(1f);
 
-        // 화면 밖의 안전한 바닥을 찾을 때까지 계속 탐색
+
+        // -----------------------------------------
+        // 화면 밖 바닥 찾기
+        // -----------------------------------------
+
         while (spawnedObject == null)
         {
-            if (TryFindHiddenFloorPosition(out Vector3 spawnPosition, out ARPlane spawnPlane))
+            if (
+                TryFindHiddenFloorPosition(
+                    out Vector3 spawnPosition,
+                    out ARPlane spawnPlane))
             {
                 SpawnDalsoo(
                     spawnPosition,
@@ -65,175 +106,339 @@ public class ARRandomSpawner : MonoBehaviour
                 yield break;
             }
 
-            Debug.Log("화면 밖의 인식된 바닥을 찾는 중...");
-            yield return new WaitForSeconds(retryInterval);
+
+            Debug.Log(
+                "[DALSU] 화면 밖의 인식된 바닥 찾는 중..."
+            );
+
+
+            yield return new WaitForSeconds(
+                retryInterval
+            );
         }
     }
 
-    private bool TryFindHiddenFloorPosition(out Vector3 result, out ARPlane resultPlane)
+
+
+
+    // ==================================================
+    // 화면 밖 Plane 위치 찾기
+    // ==================================================
+
+    private bool TryFindHiddenFloorPosition(
+        out Vector3 result,
+        out ARPlane resultPlane)
     {
         result = Vector3.zero;
         resultPlane = null;
 
-        if (planeManager == null || arCamera == null)
-            return false;
 
-        foreach (ARPlane plane in planeManager.trackables)
+        if (
+            planeManager == null
+            || arCamera == null)
         {
-            // 다른 Plane에 흡수된 Plane은 제외
+            return false;
+        }
+
+
+        foreach (
+            ARPlane plane
+            in planeManager.trackables)
+        {
             if (plane.subsumedBy != null)
                 continue;
 
-            // 위를 향하는 수평 Plane만 사용
-            // = 바닥/테이블 후보
-            if (plane.alignment != PlaneAlignment.HorizontalUp)
+
+            if (
+                plane.alignment
+                != PlaneAlignment.HorizontalUp)
+            {
                 continue;
+            }
 
-            NativeArray<Vector2> boundary = plane.boundary;
 
-            if (!boundary.IsCreated || boundary.Length < 3)
+            NativeArray<Vector2> boundary =
+                plane.boundary;
+
+
+            if (
+                !boundary.IsCreated
+                || boundary.Length < 3)
+            {
                 continue;
+            }
 
-            // Plane polygon의 사각 범위 계산
+
             Vector2 min = boundary[0];
             Vector2 max = boundary[0];
 
-            for (int i = 1; i < boundary.Length; i++)
+
+            for (
+                int i = 1;
+                i < boundary.Length;
+                i++)
             {
-                min = Vector2.Min(min, boundary[i]);
-                max = Vector2.Max(max, boundary[i]);
+                min =
+                    Vector2.Min(
+                        min,
+                        boundary[i]
+                    );
+
+                max =
+                    Vector2.Max(
+                        max,
+                        boundary[i]
+                    );
             }
 
-            // Plane 내부를 여러 번 랜덤 샘플링
-            for (int attempt = 0; attempt < samplesPerPlane; attempt++)
+
+            for (
+                int attempt = 0;
+                attempt < samplesPerPlane;
+                attempt++)
             {
-                Vector2 localPoint = new Vector2(
-                    Random.Range(min.x, max.x),
-                    Random.Range(min.y, max.y)
-                );
+                Vector2 localPoint =
+                    new Vector2(
+                        Random.Range(
+                            min.x,
+                            max.x
+                        ),
+                        Random.Range(
+                            min.y,
+                            max.y
+                        )
+                    );
 
-                // 실제 Plane polygon 내부가 아니면 버림
-                if (!IsPointInsidePolygon(localPoint, boundary))
-                    continue;
 
-                Vector3 worldPoint = plane.transform.TransformPoint(
-                    new Vector3(localPoint.x, 0f, localPoint.y)
-                );
-
-                // 테이블 같은 높은 평면을 어느 정도 제외
-                float belowCamera =
-                    arCamera.transform.position.y - worldPoint.y;
-
-                if (belowCamera < minimumBelowCamera)
-                    continue;
-
-                // 너무 가까이 / 너무 멀리 제외
-                Vector3 horizontalDifference =
-                    worldPoint - arCamera.transform.position;
-
-                horizontalDifference.y = 0f;
-
-                float distance = horizontalDifference.magnitude;
-
-                if (distance < minSpawnDistance ||
-                    distance > maxSpawnDistance)
+                if (
+                    !IsPointInsidePolygon(
+                        localPoint,
+                        boundary))
                 {
                     continue;
                 }
 
-                // 캐릭터 발 + 몸통이 현재 화면 안에 있으면 제외
-                if (IsCurrentlyVisible(worldPoint))
+
+                Vector3 worldPoint =
+                    plane.transform.TransformPoint(
+                        new Vector3(
+                            localPoint.x,
+                            0f,
+                            localPoint.y
+                        )
+                    );
+
+
+                float belowCamera =
+                    arCamera.transform.position.y
+                    - worldPoint.y;
+
+
+                if (
+                    belowCamera
+                    < minimumBelowCamera)
+                {
                     continue;
+                }
+
+
+                Vector3 horizontalDifference =
+                    worldPoint
+                    - arCamera.transform.position;
+
+
+                horizontalDifference.y = 0f;
+
+
+                float distance =
+                    horizontalDifference.magnitude;
+
+
+                if (
+                    distance < minSpawnDistance
+                    || distance > maxSpawnDistance)
+                {
+                    continue;
+                }
+
+
+                if (
+                    IsCurrentlyVisible(
+                        worldPoint))
+                {
+                    continue;
+                }
+
 
                 result = worldPoint;
                 resultPlane = plane;
 
+
                 Debug.Log(
-                    $"화면 밖 Spawn 위치 발견! 거리: {distance:F2}m"
+                    $"[DALSU] 숨은 Spawn 위치 발견 / 거리 = {distance:F2}m"
                 );
+
 
                 return true;
             }
         }
 
+
         return false;
     }
 
-    private bool IsCurrentlyVisible(Vector3 floorPosition)
-    {
-        // 발 위치
-        Vector3 bottomViewport =
-            arCamera.WorldToViewportPoint(floorPosition);
 
-        // 캐릭터 몸 가운데 정도
+    // ==================================================
+    // 현재 화면에 보이는지
+    // ==================================================
+
+    private bool IsCurrentlyVisible(
+        Vector3 floorPosition)
+    {
+        Vector3 bottomViewport =
+            arCamera.WorldToViewportPoint(
+                floorPosition
+            );
+
+
         Vector3 centerPosition =
-            floorPosition + Vector3.up * visibilityCheckHeight;
+            floorPosition
+            + Vector3.up
+            * visibilityCheckHeight;
+
 
         Vector3 centerViewport =
-            arCamera.WorldToViewportPoint(centerPosition);
+            arCamera.WorldToViewportPoint(
+                centerPosition
+            );
 
-        bool bottomVisible = IsViewportPointVisible(bottomViewport);
-        bool centerVisible = IsViewportPointVisible(centerViewport);
 
-        // 조금이라도 화면에 보일 가능성이 있으면 Spawn하지 않음
-        return bottomVisible || centerVisible;
+        return
+            IsViewportPointVisible(
+                bottomViewport)
+            ||
+            IsViewportPointVisible(
+                centerViewport);
     }
 
-    private bool IsViewportPointVisible(Vector3 viewport)
+
+    private bool IsViewportPointVisible(
+        Vector3 viewport)
     {
-        // 카메라 뒤쪽이면 화면 밖
         if (viewport.z <= 0f)
             return false;
 
-        return viewport.x >= -screenPadding &&
-               viewport.x <= 1f + screenPadding &&
-               viewport.y >= -screenPadding &&
-               viewport.y <= 1f + screenPadding;
+
+        return
+            viewport.x >= -screenPadding
+            &&
+            viewport.x <= 1f + screenPadding
+            &&
+            viewport.y >= -screenPadding
+            &&
+            viewport.y <= 1f + screenPadding;
     }
 
-    private void SpawnDalsoo(Vector3 position, ARPlane spawnPlane)
+
+    // ==================================================
+    // 실제 달수 생성
+    // ==================================================
+
+    private void SpawnDalsoo(
+        Vector3 position,
+        ARPlane spawnPlane)
     {
         if (spawnedObject != null)
             return;
 
-        // Anchor와 달수를 분리한다.
-        anchorRoot = new GameObject("DalsooAnchor");
 
-        anchorRoot.transform.SetPositionAndRotation(
-            position,
-            Quaternion.identity
-        );
+        // -----------------------------------------
+        // Anchor 생성
+        // -----------------------------------------
 
-        // 이 Transform은 이후 직접 움직이거나 회전시키지 않는다.
+        anchorRoot =
+            new GameObject(
+                "DalsooAnchor"
+            );
+
+
+        anchorRoot.transform
+            .SetPositionAndRotation(
+                position,
+                Quaternion.identity
+            );
+
+
         anchorRoot.AddComponent<ARAnchor>();
 
-        // 달수는 Anchor의 자식
-        spawnedObject = Instantiate(
-            spawnPrefab,
-            anchorRoot.transform
-        );
+
+        // -----------------------------------------
+        // 공통 Runtime 생성
+        // -----------------------------------------
+
+        spawnedObject =
+            Instantiate(
+                dalsuRuntimePrefab,
+                anchorRoot.transform
+            );
+
 
         spawnedObject.transform.localPosition =
-            new Vector3(0f, visualYOffset, 0f);
+            new Vector3(
+                0f,
+                visualYOffset,
+                0f
+            );
+
 
         spawnedObject.transform.localRotation =
             Quaternion.identity;
 
-        DalsooBehaviorController behavior =
-            spawnedObject.GetComponentInChildren<DalsooBehaviorController>(true);
 
-        if (behavior != null)
+        // -----------------------------------------
+        // DalsuActor 초기화
+        // -----------------------------------------
+
+        DalsuActor actor =
+            spawnedObject
+            .GetComponent<DalsuActor>();
+
+
+        if (actor == null)
         {
-            Debug.Log("✅ 달수 Behavior 찾음! Initialize 시작");
-            behavior.Initialize(spawnPlane);
-        }
-        else
-        {
-            Debug.LogError("❌ DalsooBehaviorController를 못 찾았습니다!");
+            Debug.LogError(
+                "[DALSU] DalsuRuntime에 DalsuActor가 없습니다."
+            );
+
+
+            Destroy(spawnedObject);
+            Destroy(anchorRoot);
+
+            spawnedObject = null;
+            anchorRoot = null;
+
+            return;
         }
 
-        Debug.Log("달수 몰래 생성 완료!");
+
+        actor.Initialize(
+            currentDalsuData,
+            DalsuActor.SpawnMode.PlaneAR,
+            spawnPlane
+        );
+
+
+        Debug.Log(
+            $"[DALSU] AR 달수 생성 완료 / " +
+            $"ID = {currentDalsuData.id}, " +
+            $"Name = {currentDalsuData.dalsuName}"
+        );
     }
+
+
+    // ==================================================
+    // Polygon 내부 판정
+    // ==================================================
 
     private bool IsPointInsidePolygon(
         Vector2 point,
@@ -241,26 +446,48 @@ public class ARRandomSpawner : MonoBehaviour
     {
         bool inside = false;
 
-        int j = polygon.Length - 1;
+        int j =
+            polygon.Length - 1;
 
-        for (int i = 0; i < polygon.Length; i++)
+
+        for (
+            int i = 0;
+            i < polygon.Length;
+            i++)
         {
-            Vector2 pi = polygon[i];
-            Vector2 pj = polygon[j];
+            Vector2 pi =
+                polygon[i];
+
+            Vector2 pj =
+                polygon[j];
+
 
             bool crosses =
-                ((pi.y > point.y) != (pj.y > point.y)) &&
-                (point.x <
-                 (pj.x - pi.x) *
-                 (point.y - pi.y) /
-                 (pj.y - pi.y) +
-                 pi.x);
+                ((pi.y > point.y)
+                != (pj.y > point.y))
+                &&
+                (
+                    point.x
+                    <
+                    (pj.x - pi.x)
+                    *
+                    (point.y - pi.y)
+                    /
+                    (pj.y - pi.y)
+                    +
+                    pi.x
+                );
+
 
             if (crosses)
+            {
                 inside = !inside;
+            }
+
 
             j = i;
         }
+
 
         return inside;
     }

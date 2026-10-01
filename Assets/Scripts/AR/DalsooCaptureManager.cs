@@ -1,58 +1,44 @@
-﻿using System.Collections;
+using System.Collections;
 using System.IO;
 using UnityEngine;
 
 public class DalsooCaptureManager : MonoBehaviour
 {
-    [Header("Camera")]
+    [Header("References")]
     [SerializeField] private Camera arCamera;
 
-    [Header("UI")]
-    [Tooltip("촬영 순간 사진에서 숨길 UI")]
     [SerializeField] private GameObject captureUI;
 
-    [Tooltip("잡기 성공 후 띄울 UI. 아직 없으면 비워둬도 됨.")]
     [SerializeField] private CatchResultUI catchResultUI;
 
 
     [Header("Catch Condition")]
     [Range(0f, 0.4f)]
-    [SerializeField] private float screenMargin = 0.08f;
+    [SerializeField] private float screenMargin = 0.15f;
 
     [SerializeField] private float maxCatchDistance = 5f;
 
 
     private bool isCapturing = false;
 
-    // 방금 잡은 사진의 임시 경로
-    private string tempPhotoPath;
 
-    public string TempPhotoPath => tempPhotoPath;
-
-    public bool HasPendingPhoto =>
-        !string.IsNullOrEmpty(tempPhotoPath) &&
-        File.Exists(tempPhotoPath);
-
-
-    private void Start()
+    private void Awake()
     {
         if (arCamera == null)
+        {
             arCamera = Camera.main;
-
-        DeleteTempPhoto();
+        }
     }
 
 
-    // ==============================
-    // 촬영 버튼에서 호출
-    // ==============================
-
-    public void TakePhoto()
+    public void Capture()
     {
         if (isCapturing)
             return;
 
-        StartCoroutine(CaptureRoutine());
+        StartCoroutine(
+            CaptureRoutine()
+        );
     }
 
 
@@ -60,111 +46,136 @@ public class DalsooCaptureManager : MonoBehaviour
     {
         isCapturing = true;
 
-        if (arCamera == null)
-            arCamera = Camera.main;
 
-
-        DalsooCatchable dalsoo =
+        DalsooCatchable catchable =
             DalsooCatchable.Current;
 
 
-        if (dalsoo == null)
+        if (catchable == null)
         {
-            Debug.Log("현재 잡을 달수가 없습니다.");
+            Debug.Log(
+                "[DALSU] 현재 잡을 수 있는 달수가 없습니다."
+            );
 
             isCapturing = false;
             yield break;
         }
 
 
-        // 촬영 버튼 등 숨기기
+        // 달수가 화면 중앙 조건을 만족하는지
+        bool catchSuccess =
+            IsCatchSuccess(catchable);
+
+
+        // 잡힌 달수의 데이터는
+        // Destroy 전에 미리 보관
+        DalsuData caughtData =
+            catchable.Data;
+
+
+        // 촬영 버튼 등 UI 숨기기
         if (captureUI != null)
+        {
             captureUI.SetActive(false);
+        }
 
 
-        // UI가 사라진 상태로 실제 화면이 렌더링될 때까지 기다림
+        // UI가 실제 화면에서 사라진 뒤 캡처
         yield return new WaitForEndOfFrame();
 
 
-        // 촬영하는 바로 그 순간 잡기 조건 검사
-        bool canCatch =
-            IsDalsooCatchable(dalsoo);
-
-
-        // ==================================
-        // 실제 AR 화면 캡처
-        // ==================================
-
-        Texture2D capturedTexture =
+        Texture2D screenshot =
             ScreenCapture.CaptureScreenshotAsTexture();
 
 
-        // UI 다시 표시
-        if (captureUI != null)
-            captureUI.SetActive(true);
+        // ======================================
+        // 실패
+        // ======================================
 
-
-        // ==================================
-        // 달수를 제대로 못 찍음
-        // ==================================
-
-        if (!canCatch)
+        if (!catchSuccess)
         {
-            Debug.Log("📷 달수를 제대로 찍지 못했습니다.");
+            Debug.Log(
+                "[DALSU] 사진 촬영했지만 잡기 실패"
+            );
 
-            Destroy(capturedTexture);
+
+            if (screenshot != null)
+            {
+                Destroy(screenshot);
+            }
+
+
+            if (captureUI != null)
+            {
+                captureUI.SetActive(true);
+            }
+
 
             isCapturing = false;
+
             yield break;
         }
 
 
-        // ==================================
-        // 잡기 성공
-        // ==================================
+        // ======================================
+        // 성공
+        // ======================================
 
-        Debug.Log("📸 달수 포착 성공!");
-
-
-        // 이전 임시 사진 제거
-        DeleteTempPhoto();
-
-
-        // 임시 PNG 생성
-        byte[] pngBytes =
-            capturedTexture.EncodeToPNG();
-
-
-        tempPhotoPath =
-            Path.Combine(
-                Application.temporaryCachePath,
-                "last_dalsoo_capture.png"
+        string tempPhotoPath =
+            SaveTemporaryScreenshot(
+                screenshot
             );
 
 
-        File.WriteAllBytes(
-            tempPhotoPath,
-            pngBytes
-        );
+        if (screenshot != null)
+        {
+            Destroy(screenshot);
+        }
 
 
-        Destroy(capturedTexture);
+        if (string.IsNullOrEmpty(tempPhotoPath))
+        {
+            Debug.LogError(
+                "[DALSU] 임시 사진 저장 실패"
+            );
+
+
+            if (captureUI != null)
+            {
+                captureUI.SetActive(true);
+            }
+
+
+            isCapturing = false;
+
+            yield break;
+        }
 
 
         Debug.Log(
-            "임시 사진 저장 완료: " +
-            tempPhotoPath
+            caughtData != null
+                ? $"[DALSU] 사진 잡기 성공 / {caughtData.id}"
+                : "[DALSU] 사진 잡기 성공"
         );
 
 
-        // ★ 사진 저장을 끝낸 뒤 달수를 잡는다.
-        dalsoo.Catch();
+        // ======================================
+        // 사진 저장 후에 달수 제거
+        // ======================================
+
+        catchable.Catch();
 
 
-        // 잡기 성공 UI 표시
+        // ======================================
+        // 결과 UI
+        // ======================================
+
         if (catchResultUI != null)
         {
-            catchResultUI.Show(tempPhotoPath);
+            catchResultUI.Show(
+                tempPhotoPath,
+                caughtData
+            );
         }
 
 
@@ -172,81 +183,119 @@ public class DalsooCaptureManager : MonoBehaviour
     }
 
 
-    // ==============================
-    // 달수가 화면 안에 있는지 확인
-    // ==============================
+    // ==================================================
+    // 잡기 판정
+    // ==================================================
 
-    private bool IsDalsooCatchable(
-        DalsooCatchable dalsoo
-    )
+    private bool IsCatchSuccess(
+        DalsooCatchable catchable)
     {
-        if (dalsoo == null || arCamera == null)
+        if (
+            catchable == null
+            || arCamera == null)
+        {
             return false;
+        }
 
 
-        Vector3 dalsooPosition =
-            dalsoo.transform.position;
-
-
-        float distance =
-            Vector3.Distance(
-                arCamera.transform.position,
-                dalsooPosition
-            );
-
-
-        if (distance > maxCatchDistance)
-            return false;
+        Vector3 targetPosition =
+            catchable.transform.position;
 
 
         Vector3 viewport =
             arCamera.WorldToViewportPoint(
-                dalsooPosition
+                targetPosition
             );
 
 
         // 카메라 뒤쪽
         if (viewport.z <= 0f)
-            return false;
-
-
-        // 화면 가장자리보다 조금 안쪽에 있어야 함
-        bool insideScreen =
-            viewport.x >= screenMargin &&
-            viewport.x <= 1f - screenMargin &&
-            viewport.y >= screenMargin &&
-            viewport.y <= 1f - screenMargin;
-
-
-        return insideScreen;
-    }
-
-
-    // ==============================
-    // 임시 사진 삭제
-    // ==============================
-
-    public void DeleteTempPhoto()
-    {
-        if (!string.IsNullOrEmpty(tempPhotoPath))
         {
-            if (File.Exists(tempPhotoPath))
-                File.Delete(tempPhotoPath);
+            return false;
         }
 
 
-        // 혹시 앱 실행 전에 만들어진 파일도 제거
-        string defaultTempPath =
-            Path.Combine(
-                Application.temporaryCachePath,
-                "last_dalsoo_capture.png"
+        // 화면 안쪽 판정
+        bool insideScreen =
+            viewport.x >= screenMargin
+            &&
+            viewport.x <= 1f - screenMargin
+            &&
+            viewport.y >= screenMargin
+            &&
+            viewport.y <= 1f - screenMargin;
+
+
+        if (!insideScreen)
+        {
+            return false;
+        }
+
+
+        // 거리 판정
+        float distance =
+            Vector3.Distance(
+                arCamera.transform.position,
+                targetPosition
             );
 
 
-        if (File.Exists(defaultTempPath))
-            File.Delete(defaultTempPath);
+        if (distance > maxCatchDistance)
+        {
+            return false;
+        }
 
 
-        tempPhotoPath = null;
+        return true;
+    }
+
+
+    // ==================================================
+    // 임시 사진 저장
+    // ==================================================
+
+    private string SaveTemporaryScreenshot(
+        Texture2D screenshot)
+    {
+        if (screenshot == null)
+        {
+            return null;
+        }
+
+
+        try
+        {
+            byte[] pngBytes =
+                screenshot.EncodeToPNG();
+
+
+            string path =
+                Path.Combine(
+                    Application.temporaryCachePath,
+                    "last_dalsoo_capture.png"
+                );
+
+
+            File.WriteAllBytes(
+                path,
+                pngBytes
+            );
+
+
+            Debug.Log(
+                $"[DALSU] 임시 사진 저장 완료: {path}"
+            );
+
+
+            return path;
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError(
+                $"[DALSU] 임시 사진 저장 실패: {e.Message}"
+            );
+
+            return null;
+        }
     }
 }

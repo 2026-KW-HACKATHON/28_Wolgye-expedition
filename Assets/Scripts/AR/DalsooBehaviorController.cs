@@ -1197,4 +1197,16 @@ public class DalsooBehaviorController : MonoBehaviour
             );
         }
     }
+
+    public void BindModel(
+    Animator newAnimator,
+    DalsooLookController newLookController)
+    {
+        animator = newAnimator;
+        lookController = newLookController;
+
+        Debug.Log(
+            $"BehaviorController 모델 연결 완료: {newAnimator.name}"
+        );
+    }
 }

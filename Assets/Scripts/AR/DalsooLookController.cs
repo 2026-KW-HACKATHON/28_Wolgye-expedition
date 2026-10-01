@@ -41,8 +41,21 @@ public class DalsooLookController : MonoBehaviour
     {
         if (arCamera == null)
             arCamera = Camera.main;
+
+
     }
 
+    public void BindModel(
+    Animator newAnimator,
+    Transform newHip)
+    {
+        animator = newAnimator;
+        hip = newHip;
+
+        Debug.Log(
+            $"LookController 모델 연결 완료: {newAnimator.name}"
+        );
+    }
     private void Update()
     {
         if (!lookAtCameraEnabled)
