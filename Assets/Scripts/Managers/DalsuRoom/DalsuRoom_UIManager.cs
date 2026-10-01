@@ -36,7 +36,7 @@ public class DalsuRoom_UIManager : MonoBehaviour
     [SerializeField] private CameraModeSwitcher cameraModeSwitcher;
 
     [Header("Deco")]
-    [Tooltip("방 꾸미기 화면을 여는 동안 씬의 달수 캐릭터를 반투명하게 만든다.")]
+    [Tooltip("방 꾸미기 화면을 여는 동안 씬의 달수 캐릭터를 통째로 숨겼다가, 닫히면 빈 자리에 다시 불러온다.")]
     [SerializeField] private DalsuSpawnManager spawnManager;
 
     private void Awake()
@@ -56,9 +56,9 @@ public class DalsuRoom_UIManager : MonoBehaviour
     {
         Open(decorate);
 
-        // 배치 작업에 방해되지 않도록 달수 캐릭터를 반투명하게 만들고, 위에서 수직으로 내려다보는 카메라로 전환
+        // 배치 작업 중 겹침 문제가 생기지 않도록 달수 캐릭터를 통째로 숨기고, 위에서 수직으로 내려다보는 카메라로 전환
         if (spawnManager != null)
-            spawnManager.SetDalsusFaded(true);
+            spawnManager.SetDalsusActive(false);
         if (cameraModeSwitcher != null)
             cameraModeSwitcher.ShowDecorate();
     }
@@ -67,9 +67,9 @@ public class DalsuRoom_UIManager : MonoBehaviour
     {
         Close(decorate);
 
-        // 흐리게 만들었던 달수 캐릭터를 다시 원래대로 되돌리고, Overview 카메라로 복귀
+        // 숨겨뒀던 달수 캐릭터를 가구가 없는 빈 자리로 옮겨 다시 불러오고, Overview 카메라로 복귀
         if (spawnManager != null)
-            spawnManager.SetDalsusFaded(false);
+            spawnManager.SetDalsusActive(true);
         ShowOverview();
     }
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 using System.Collections.Generic;
 using AYellowpaper.SerializedCollections;
 using System.IO;
@@ -28,8 +29,8 @@ public class DalsuSpawnManager : MonoBehaviour
  
     [SerializeField] private GameObject aiParentPrefab;
 
-    [Tooltip("방 꾸미기 중 달수 캐릭터를 얼마나 흐리게 보일지 (0=완전 투명, 1=원래대로)")]
-    [SerializeField, Range(0f, 1f)] private float decorateFadeAlpha = 0.35f;
+    [Tooltip("방 꾸미기가 끝났을 때, 가구가 없는 빈 칸을 찾기 위해 참조하는 그리드")]
+    [SerializeField] private GridManager grid;
 
     // 스폰된 모든 달수 캐릭터. 방 꾸미기 화면 등에서 통째로 숨기거나 다시 보여줄 때 사용한다.
     private readonly List<GameObject> spawnedDalsus = new List<GameObject>();
@@ -107,36 +108,58 @@ public class DalsuSpawnManager : MonoBehaviour
         }
     }
 
-    // 방 꾸미기 화면 등에서 달수 캐릭터를 없애지 않고, 반투명하게 보이거나 다시 원래대로 보이게 한다.
-    // (배치 작업을 방해하지 않으면서도 자리는 그대로 눈에 보이므로, 그 위에 가구를 놓으려 할 때 왜 막히는지 알 수 있다.)
-    public void SetDalsusFaded(bool faded)
+    // 방 꾸미기 화면이 열리면 달수 캐릭터를 통째로 비활성화한다 (NavMeshAgent도 함께 꺼지므로,
+    // 가구를 배치하는 동안 달수와 가구가 겹쳐서 위치가 튀는 문제가 아예 생기지 않는다).
+    // 방 꾸미기가 끝나면(active=true) 가구가 없는 빈 칸을 찾아 그 자리로 옮긴 뒤 다시 켠다.
+    public void SetDalsusActive(bool active)
     {
-        float alpha = faded ? decorateFadeAlpha : 1f;
+        if (active)
+            RespawnDalsusAtFreeCells();
 
         foreach (GameObject dalsu in spawnedDalsus)
         {
             if (dalsu != null)
-                SetRenderersFaded(dalsu, alpha);
+                dalsu.SetActive(active);
         }
     }
 
-    private static void SetRenderersFaded(GameObject root, float alpha)
+    // 가구가 없는 칸들 중에서 무작위로 골라, 숨겨뒀던 달수들을 그 자리로 옮겨 놓는다.
+    // (아직 비활성 상태인 동안 위치를 먼저 옮기고 나서 켜기 때문에, 켜지는 순간부터 바로 안전한 자리에 있게 된다.)
+    private void RespawnDalsusAtFreeCells()
     {
-        foreach (Renderer renderer in root.GetComponentsInChildren<Renderer>(true))
-        {
-            // renderer.materials는 접근하는 순간 공유 에셋이 아닌, 이 렌더러만의 머티리얼 인스턴스를 만들어준다.
-            // (다른 달수나 원본 에셋의 머티리얼에는 영향을 주지 않는다.)
-            foreach (Material material in renderer.materials)
-                SetMaterialAlpha(material, alpha);
-        }
-    }
+        if (grid == null) return;
 
-    // 머티리얼은 이미 Transparent로 설정돼 있다는 전제 하에, 알파값만 바꾼다.
-    private static void SetMaterialAlpha(Material material, float alpha)
-    {
-        if (material.HasProperty("_Alpha"))
+        List<Vector2Int> freeCells = new List<Vector2Int>();
+        for (int x = 0; x < grid.Width; x++)
+            for (int y = 0; y < grid.Height; y++)
+            {
+                Vector2Int cell = new Vector2Int(x, y);
+                if (grid.GetFurnitureAt(cell) == null)
+                    freeCells.Add(cell);
+            }
+
+        foreach (GameObject dalsu in spawnedDalsus)
         {
-            material.SetFloat("_Alpha", alpha);
+            if (dalsu == null) continue;
+
+            Vector3 pos = dalsu.transform.position;
+
+            if (freeCells.Count > 0)
+            {
+                int index = Random.Range(0, freeCells.Count);
+                pos = grid.GetCellCenter(freeCells[index]);
+                freeCells.RemoveAt(index); // 되도록 달수끼리 같은 칸에 겹치지 않게 한다.
+            }
+            else
+            {
+                Debug.Log("빈 칸을 찾지 못해 원래 위치로 되돌립니다.");
+            }
+
+            // 그리드 칸 중심이 NavMesh 표면과 정확히 같은 높이가 아닐 수 있으므로, 가장 가까운 NavMesh 지점으로 보정한다.
+            if (NavMesh.SamplePosition(pos, out NavMeshHit hit, 5f, NavMesh.AllAreas))
+                pos = hit.position;
+
+            dalsu.transform.position = pos;
         }
     }
 }

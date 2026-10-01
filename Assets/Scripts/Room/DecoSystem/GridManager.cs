@@ -185,6 +185,39 @@ public class GridManager : MonoBehaviour
         Destroy(furniture.gameObject);
     }
 
+    /// <summary>
+    /// 이미 배치된 가구를 파괴하지 않고 그리드에서만 들어올린다 (칸을 비우고 목록에서 뺌).
+    /// 이동시키는 동안 임시로 빼두는 용도. 되돌리거나 다시 놓을 때는 Drop을 사용한다.
+    /// </summary>
+    public void PickUp(PlacedFurniture furniture)
+    {
+        if (furniture == null) return;
+
+        SetOccupant(furniture.Origin, furniture.Size, null);
+        placedFurniture.Remove(furniture);
+    }
+
+    /// <summary>
+    /// PickUp으로 들어올린 가구를 새 위치에 내려놓는다. 자리가 없으면 false를 반환하고 아무 것도 바뀌지 않는다.
+    /// </summary>
+    public bool Drop(PlacedFurniture furniture, Vector2Int origin, int rotation)
+    {
+        if (furniture == null || furniture.Data == null) return false;
+
+        rotation = GridRotation.Normalize(rotation);
+        Vector2Int size = GridRotation.RotateSize(furniture.Data.Size, rotation);
+        if (!CanPlace(origin, size)) return false;
+
+        Vector3 pos = GetFootprintCenter(origin, size);
+        Quaternion rot = transform.rotation * GridRotation.ToQuaternion(rotation);
+        furniture.transform.SetPositionAndRotation(pos, rot);
+
+        furniture.Initialize(furniture.Data, origin, rotation);
+        SetOccupant(origin, size, furniture);
+        placedFurniture.Add(furniture);
+        return true;
+    }
+
     private void SetOccupant(Vector2Int origin, Vector2Int size, PlacedFurniture occupant)
     {
         for (int x = 0; x < size.x; x++)
