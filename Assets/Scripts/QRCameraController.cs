@@ -10,6 +10,8 @@ public class QRCameraController : MonoBehaviour
 {
     public RawImage cameraPreview;
 
+    public StampManager stampManager;
+
     [Header("Scan Settings")]
     [Tooltip("스캔 간격(초)")]
     public float scanInterval = 0.3f;
@@ -236,17 +238,18 @@ public class QRCameraController : MonoBehaviour
         Debug.Log("QR 행동 실행: " + qrData);
 
         // TODO: 여기에 QR 내용(qrData)으로 할 행동 추가
+        stampManager.AddStamp();
 
         // 카메라 종료
         if (webCamTexture != null && webCamTexture.isPlaying)
         {
-            webCamTexture.Stop();
+            //webCamTexture.Stop();
         }
 
         // 카메라 화면 종료
         if (cameraPreview != null)
         {
-            cameraPreview.gameObject.SetActive(false);
+            //cameraPreview.gameObject.SetActive(false);
         }
 
         Debug.Log("카메라 화면 종료");
