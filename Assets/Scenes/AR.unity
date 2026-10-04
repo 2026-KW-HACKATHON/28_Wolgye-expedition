@@ -489,7 +489,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1278055734}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d12a574a42402744adaadd8cca8bb2b, type: 3}
   m_Name: 
@@ -917,7 +917,7 @@ MonoBehaviour:
   <trackablesChanged>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
-  m_PlanePrefab: {fileID: 5629375544150149047, guid: 2026a7183cb639348b4a95477c930d32, type: 3}
+  m_PlanePrefab: {fileID: 0}
   m_DetectionMode: 1
 --- !u!114 &1514759037
 MonoBehaviour:
@@ -964,6 +964,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1885253022}
   - {fileID: 1278055736}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -991,7 +992,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1885253020}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1cb78a82895d9ab4b911d1ff961fc202, type: 3}
   m_Name: 
@@ -1017,12 +1018,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1885253020}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: -0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.85929, y: 0, z: -1.48045}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1595835553}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2104272191
 GameObject:
@@ -1316,6 +1317,96 @@ MonoBehaviour:
   m_EnvironmentDepthMode: 1
   m_EnvironmentDepthTemporalSmoothing: 1
   m_OcclusionPreferenceMode: 2
+--- !u!1 &2137705696
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2137705698}
+  - component: {fileID: 2137705697}
+  - component: {fileID: 2137705699}
+  - component: {fileID: 2137705700}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2137705697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2137705696}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a120ac129817dbf4dac530a6f4c16eb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ConcurrentCameraProbe
+--- !u!4 &2137705698
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2137705696}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.29567, y: 1.0414, z: 0.01749}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2137705699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2137705696}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f310ae8b0daab047bb3ed32f394a38a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S25DualCameraAR
+  rearCameraManager: {fileID: 2104272195}
+  anchorManager: {fileID: 1514759037}
+  raycastManager: {fileID: 1514759035}
+  existingMonster: {fileID: 0}
+  monsterLayer: 30
+  frontCameraId: 1
+  frontOffsetMeters: {x: 0, y: 0, z: 0}
+  frontAngleCorrection: {x: 0, y: 0, z: 0}
+  focalScale: 1
+  principalShift: {x: 0, y: 0}
+  poseTimeAdjustmentMs: 0
+  mirrorSelfie: 0
+  usePoseHistory: 1
+  useManualFov: 0
+  manualVerticalFov: 65
+--- !u!114 &2137705700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2137705696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46eae30f5e9ae3d4c90e138587379471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::S25FrontMapProbe
+  rearCameraManager: {fileID: 2104272195}
+  frontCameraId: 1
+  frontOffsetMeters: {x: 0, y: 0, z: 0}
+  frontAngleCorrection: {x: 0, y: 0, z: 0}
+  poseTimeAdjustmentMs: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1323,7 +1414,7 @@ SceneRoots:
   - {fileID: 1357066477}
   - {fileID: 1514759034}
   - {fileID: 1446141053}
-  - {fileID: 1885253022}
+  - {fileID: 2137705698}
   - {fileID: 1595835553}
   - {fileID: 404840495}
   - {fileID: 786809442}
