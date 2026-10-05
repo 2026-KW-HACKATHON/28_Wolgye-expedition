@@ -126,6 +126,24 @@ public class DalsooBehaviorController : MonoBehaviour
     private float planeHeightOffset;
 
     private Coroutine behaviorRoutine;
+    private bool trackingPresentationPaused;
+    public void SetTrackingPresentationPaused(bool paused)
+    {
+        if (trackingPresentationPaused == paused) return;
+        trackingPresentationPaused = paused;
+        if (paused)
+        {
+            if (behaviorRoutine != null) StopCoroutine(behaviorRoutine);
+            behaviorRoutine = null;
+            SetWalking(false);
+            SetLookAtCamera(false);
+            if (animator != null) animator.SetBool("Sitting", false);
+            CurrentState = DalsooState.Idle;
+        }
+        else if (isActiveAndEnabled && behaviorRoutine == null)
+            behaviorRoutine = StartCoroutine(BehaviorLoop());
+    }
+
 
 
     // =========================================================

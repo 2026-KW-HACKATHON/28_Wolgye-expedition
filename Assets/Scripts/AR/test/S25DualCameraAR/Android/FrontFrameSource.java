@@ -41,8 +41,25 @@ public final class FrontFrameSource {
     private float fx, fy, cx, cy;
     private Rect sensorRect;
     private boolean disableDistortion;
+    private int autofocusMode = CaptureRequest.CONTROL_AF_MODE_OFF;
     private final Object mailboxLock = new Object();
     private byte[] latest;
+    private volatile UnifiedCapture capture;
+    private volatile RawFrameAssembler raw;
+    private volatile boolean rawColor;
+    public void setRawColorEnabled(boolean enabled){rawColor=enabled;}
+    public void setRawEnabled(boolean enabled){raw=enabled?new RawFrameAssembler():null;}
+    public byte[] takeRawFrame(){RawFrameAssembler r=raw;return r==null?null:r.take();}
+    public String rawStatus(){RawFrameAssembler r=raw;return r==null?"DISABLED":r.status()+" | capture "+(size==null?"pending":size.toString())+" | AF "+autofocusMode;}
+    public void setCapture(UnifiedCapture recorder){capture=recorder;}
+    private void recordRaw(Image image){
+        UnifiedCapture recorder=capture;RawFrameAssembler assembler=raw;if(recorder==null && assembler==null)return;
+        Image.Plane plane=image.getPlanes()[0];ByteBuffer y=plane.getBuffer().duplicate();
+        int w=image.getWidth(),h=image.getHeight(),base=y.position();byte[] pixels=new byte[w*h];
+        for(int row=0;row<h;row++)for(int col=0;col<w;col++)pixels[row*w+col]=y.get(base+row*plane.getRowStride()+col*plane.getPixelStride());
+        if(recorder!=null)recorder.recordCamera("front",image.getTimestamp(),realtimeTimestamp?"ANDROID_REALTIME":"CAMERA_UNKNOWN",w,h,pixels);
+        if(assembler!=null){if(rawColor)assembler.colorImage(image.getTimestamp(),w,h,rotation,pixels,rawRgba(image),realtimeTimestamp);else assembler.image(image.getTimestamp(),w,h,rotation,pixels,realtimeTimestamp);}
+    }
 
     public FrontFrameSource(Activity activity) {
         this.activity = activity;
@@ -69,11 +86,29 @@ public final class FrontFrameSource {
                 StreamConfigurationMap map = info.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
                 if (map == null) throw new IllegalStateException("No stream map");
                 size = chooseSize(map.getOutputSizes(ImageFormat.YUV_420_888));
+                autofocusMode = CaptureRequest.CONTROL_AF_MODE_OFF;
+                int[] afModes = info.get(CameraCharacteristics.CONTROL_AF_AVAILABLE_MODES);
+                if (afModes != null) for (int mode : afModes)
+                    if (mode == CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_VIDEO) autofocusMode = mode;
+                if (autofocusMode == CaptureRequest.CONTROL_AF_MODE_OFF && afModes != null)
+                    for (int mode : afModes) if (mode == CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE) autofocusMode = mode;
                 Integer sensorOrientation = info.get(CameraCharacteristics.SENSOR_ORIENTATION);
                 rotation = sensorOrientation == null ? 270 : sensorOrientation;
                 Integer timeSource = info.get(CameraCharacteristics.SENSOR_INFO_TIMESTAMP_SOURCE);
                 realtimeTimestamp = timeSource != null && timeSource == CameraMetadata.SENSOR_INFO_TIMESTAMP_SOURCE_REALTIME;
                 estimateOptics(info);
+                if(capture!=null){
+                    JSONObject meta=new JSONObject();
+                    meta.put("cameraId",id).put("sensorOrientation",rotation).put("timestampRealtime",realtimeTimestamp);
+                    meta.put("width",size.getWidth()).put("height",size.getHeight());
+                    meta.put("intrinsicsStatus","DEVICE_METADATA_REQUIRES_CROP_AND_DISTORTION_VALIDATION");
+                    meta.put("characteristics",CaptureMetadataDump.characteristics(info));
+                    meta.put("requestedCrop",sensorRect==null?JSONObject.NULL:new org.json.JSONArray(new int[]{sensorRect.left,sensorRect.top,sensorRect.right,sensorRect.bottom}));
+                    meta.put("requestedDistortionOff",disableDistortion);
+                    meta.put("poseWarning","Pose reference may be a same-facing camera or undefined; not automatically an IMU extrinsic.");
+                    meta.put("note","No image rotation or mirroring; calibrate against these raw frames.");
+                    capture.metadata("front_metadata",meta.toString());
+                }
                 reader = ImageReader.newInstance(size.getWidth(), size.getHeight(), ImageFormat.YUV_420_888, 3);
                 reader.setOnImageAvailableListener(source -> {
                     if (token != generation || disposed) return;
@@ -84,6 +119,8 @@ public final class FrontFrameSource {
                         long now = SystemClock.elapsedRealtime();
                         if (now - lastConvertedMs < 66) return;
                         lastConvertedMs = now;
+                        recordRaw(image);
+                        if(raw!=null && capture==null){converted++;lastFrameMs=now;state="RAW_STREAMING";return;}
                         long sampleMs = realtimeTimestamp ? image.getTimestamp() / 1000000L : now;
                         byte[] packet = convert(image, sampleMs);
                         synchronized (mailboxLock) { latest = packet; }
@@ -139,11 +176,20 @@ public final class FrontFrameSource {
                         CaptureRequest.Builder request = camera.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
                         request.addTarget(reader.getSurface());
                         request.set(CaptureRequest.CONTROL_MODE, CaptureRequest.CONTROL_MODE_AUTO);
+                        request.set(CaptureRequest.CONTROL_AF_MODE, autofocusMode);
                         request.set(CaptureRequest.CONTROL_VIDEO_STABILIZATION_MODE, CaptureRequest.CONTROL_VIDEO_STABILIZATION_MODE_OFF);
                         request.set(CaptureRequest.LENS_OPTICAL_STABILIZATION_MODE, CaptureRequest.LENS_OPTICAL_STABILIZATION_MODE_OFF);
                         if (sensorRect != null) request.set(CaptureRequest.SCALER_CROP_REGION, sensorRect);
                         if (disableDistortion) request.set(CaptureRequest.DISTORTION_CORRECTION_MODE, CaptureRequest.DISTORTION_CORRECTION_MODE_OFF);
-                        s.setRepeatingRequest(request.build(), null, worker);
+                        CameraCaptureSession.CaptureCallback metadataCallback=capture==null && raw==null?null:new CameraCaptureSession.CaptureCallback(){
+                            @Override public void onCaptureCompleted(CameraCaptureSession session,CaptureRequest req,TotalCaptureResult result){
+                                if(token!=generation || disposed)return;
+                                UnifiedCapture recorder=capture;RawFrameAssembler assembler=raw;
+                                try{String json=CaptureMetadataDump.frame(result,SystemClock.elapsedRealtimeNanos());if(recorder!=null)recorder.frameMetadata(json);if(assembler!=null)assembler.result(json);}
+                                catch(Exception e){if(recorder!=null)recorder.metadataError(e.toString());else fail("METADATA",e);}
+                            }
+                        };
+                        s.setRepeatingRequest(request.build(), metadataCallback, worker);
                         state = "WAITING_FOR_YUV";
                     } catch (Exception e) { fail("REPEATING", e); }
                 }
@@ -192,6 +238,17 @@ public final class FrontFrameSource {
         }
     }
 
+    // Top-down, unrotated color image. Gray and color share the exact source Image.
+    private byte[] rawRgba(Image image){
+        int w=image.getWidth(),h=image.getHeight();byte[] out=new byte[w*h*4];Image.Plane[] p=image.getPlanes();
+        ByteBuffer y=p[0].getBuffer(),u=p[1].getBuffer(),v=p[2].getBuffer();int y0=y.position(),u0=u.position(),v0=v.position();
+        for(int row=0;row<h;row++)for(int col=0;col<w;col++){
+            int yy=(y.get(y0+row*p[0].getRowStride()+col*p[0].getPixelStride())&255)-16;
+            int uu=(u.get(u0+row/2*p[1].getRowStride()+col/2*p[1].getPixelStride())&255)-128;
+            int vv=(v.get(v0+row/2*p[2].getRowStride()+col/2*p[2].getPixelStride())&255)-128;
+            int l=298*Math.max(0,yy),i=(row*w+col)*4;out[i]=(byte)clamp((l+409*vv+128)>>8);out[i+1]=(byte)clamp((l-100*uu-208*vv+128)>>8);out[i+2]=(byte)clamp((l+516*uu+128)>>8);out[i+3]=(byte)255;
+        }return out;
+    }
     private byte[] convert(Image image, long sampleMs) {
         int w = image.getWidth(), h = image.getHeight();
         Rect crop = image.getCropRect();
@@ -234,13 +291,20 @@ public final class FrontFrameSource {
     private static int clamp(int n) { return Math.max(0, Math.min(255, n)); }
     private Size chooseSize(Size[] sizes) {
         if (sizes == null || sizes.length == 0) throw new IllegalStateException("No YUV sizes");
+        // Preserve sensor detail for preview/recording. Tracking is resized separately.
+        // Prefer 4:3 so raw intrinsics retain the same sensor crop as existing maps.
         Size best = null;
-        // Low bandwidth first: largest supported size no larger than 320x240.
-        for (Size s : sizes) if (s.getWidth() <= 320 && s.getHeight() <= 240
-                && (best == null || area(s) > area(best))) best = s;
-        if (best != null) return best;
-        best = sizes[0];
-        for (Size s : sizes) if (area(s) < area(best)) best = s;
+        for (Size candidate : sizes) {
+            int w=candidate.getWidth(), h=candidate.getHeight();
+            if (w<=1280 && h<=960 && Math.abs(w/(double)h-4.0/3.0)<0.01
+                    && (best==null || area(candidate)>area(best))) best=candidate;
+        }
+        if (best!=null) return best;
+        for (Size candidate : sizes) if (candidate.getWidth()<=1280 && candidate.getHeight()<=960
+                && (best==null || area(candidate)>area(best))) best=candidate;
+        if (best!=null) return best;
+        best=sizes[0];
+        for(Size candidate:sizes) if(area(candidate)<area(best)) best=candidate;
         return best;
     }
     private static long area(Size s) { return (long) s.getWidth() * s.getHeight(); }
@@ -248,10 +312,12 @@ public final class FrontFrameSource {
         synchronized (mailboxLock) { byte[] result = latest; latest = null; return result; }
     }
     public long clockMs() { return SystemClock.elapsedRealtime(); }
+    public long clockNs() { return SystemClock.elapsedRealtimeNanos(); }
     public String snapshot() {
         try {
             JSONObject j = new JSONObject();
             j.put("state", state).put("optics", optics).put("cameraId", cameraId);
+            j.put("captureWidth",size==null?0:size.getWidth()).put("captureHeight",size==null?0:size.getHeight()).put("autofocusMode",autofocusMode);
             j.put("converted", converted).put("frameAgeMs", lastFrameMs == 0 ? -1 : SystemClock.elapsedRealtime() - lastFrameMs);
             j.put("timestampSource", realtimeTimestamp ? "REALTIME" : "callback receipt");
             return j.toString();

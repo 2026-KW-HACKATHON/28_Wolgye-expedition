@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.*;
 import org.opencv.video.Video;
+import org.opencv.imgproc.Imgproc;
 import org.opencv.calib3d.Calib3d;
 import org.opencv.features2d.ORB;
 import org.opencv.features2d.BFMatcher;
@@ -50,14 +51,21 @@ public final class FrontMapTracker {
                 int w=b.getInt(),h=b.getInt();b.getInt();seq=b.getLong();time=b.getLong();
                 double nfx=b.getFloat(),nfy=b.getFloat(),ncx=b.getFloat(),ncy=b.getFloat();
                 if(w<=0 || h<=0 || packet.length!=48L+4L*w*h || !(nfx>0) || !(nfy>0))throw new IllegalArgumentException("packet size/intrinsics");
+                int sourceW=w,sourceH=h;
+                double scale=Math.min(1.0,640.0/Math.max(w,h));
+                w=Math.max(1,(int)Math.round(w*scale));h=Math.max(1,(int)Math.round(h*scale));
+                double sx=w/(double)sourceW,sy=h/(double)sourceH;
+                nfx*=sx;nfy*=sy;ncx=(ncx+.5)*sx-.5;ncy=(ncy+.5)*sy-.5;
                 if(previous!=null && (w!=width || h!=height || Math.abs(nfx-fx)>.1 || Math.abs(nfy-fy)>.1 || Math.abs(ncx-cx)>.1 || Math.abs(ncy-cy)>.1))clear();
                 width=w;height=h;fx=nfx;fy=nfy;cx=ncx;cy=ncy;
-                byte[] gray=new byte[w*h];
-                for(int y=0;y<h;y++)for(int x=0;x<w;x++){
-                    int i=48+((h-1-y)*w+x)*4;
-                    gray[y*w+x]=(byte)(((packet[i]&255)*77+(packet[i+1]&255)*150+(packet[i+2]&255)*29)>>8);
+                byte[] gray=new byte[sourceW*sourceH];
+                for(int y=0;y<sourceH;y++)for(int x=0;x<sourceW;x++){
+                    int i=48+((sourceH-1-y)*sourceW+x)*4;
+                    gray[y*sourceW+x]=(byte)(((packet[i]&255)*77+(packet[i+1]&255)*150+(packet[i+2]&255)*29)>>8);
                 }
-                Mat image=new Mat(h,w,CvType.CV_8UC1);image.put(0,0,gray);
+                Mat full=new Mat(sourceH,sourceW,CvType.CV_8UC1);full.put(0,0,gray);
+                Mat image=new Mat();
+                try{Imgproc.resize(full,image,new Size(w,h),0,0,Imgproc.INTER_AREA);}finally{full.release();}
                 try{process(image,pose,referenceGood,seq,time);}finally{image.release();}
             } catch(Throwable e){lost=true;publish("ERROR: "+e.getClass().getSimpleName()+": "+e.getMessage(),seq,time,0,0,null);}
             finally {synchronized(this){if(draftResult!=null)result=draftResult;}busy=false;}
@@ -169,7 +177,7 @@ public final class FrontMapTracker {
             JSONObject j=new JSONObject();j.put("state",state).put("seq",seq).put("timeMs",time).put("points",pixels.size()).put("inliers",inliers).put("value",Double.isFinite(value)?value:0);
             j.put("added",growth==null?0:growth.added).put("keyframes",growth==null?0:growth.memory.size()).put("relocalized",growth==null?0:growth.relocalized).put("rearLinked",referenceLink.ready(frameEpoch));
             double[] link=referenceLink.transformFor(frameEpoch);
-            j.put("referenceEpoch",frameEpoch);
+            j.put("referenceEpoch",frameEpoch).put("linkStatus",referenceLink.status(frameEpoch));
             if(link!=null)j.put("mapFromRearWorld",new JSONArray(link));
             j.put("valid",pose!=null);if(pose!=null){JSONArray arr=new JSONArray();for(double x:pose)arr.put(x);j.put("pose",arr);}
             if(target!=null)j.put("target",new JSONArray(new double[]{target.x,target.y,target.z}));
@@ -190,7 +198,9 @@ public final class FrontMapTracker {
             publish("FRONT_RELOCALIZED",seq,time,world.size(),lastRms,lastPose);return;
         }
         double[] fallback=good?referenceLink.predict(rear,frameEpoch):null;
-        if(fallback!=null && lastPose!=null && positionDistance(lastPose,fallback)<.2 && rotationAngle(lastPose,fallback)<20){
+        // Current rear pose in a confirmed, unchanged tracking epoch is authoritative.
+        // Comparing it with an old front pose latches recovery off after normal movement.
+        if(fallback!=null){
             lastPose=fallback;world.clear();pixels.clear();
             growth.afterPose(image,fallback,time);
             if(world.size()>=30 && coverage(pixels)>=5){lost=false;publish("REAR_REBUILT",seq,time,world.size(),0,fallback);}

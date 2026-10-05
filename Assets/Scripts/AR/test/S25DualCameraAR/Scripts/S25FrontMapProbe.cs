@@ -15,9 +15,14 @@ public sealed class S25FrontMapProbe : MonoBehaviour
     [SerializeField] ARCameraManager rearCameraManager;
     [SerializeField] ARRaycastManager rearRaycastManager;
     [SerializeField] ARPlaneManager rearPlaneManager;
+    [SerializeField] ARAnchorManager rearAnchorManager;
+    ARAnchor planeAnchor;
+    bool planeMapValid,placingPlane;
+    int planeRequestVersion;
     readonly List<ARRaycastHit> planeHits=new List<ARRaycastHit>();
     bool hasPlaneTarget;
     Vector3 planeTargetMap;
+    Quaternion planeMapRotation=Quaternion.identity;
     string targetOrigin="Front triangulated point";
     [SerializeField] string frontCameraId="1";
     [SerializeField] Vector3 frontOffsetMeters;
@@ -28,7 +33,7 @@ public sealed class S25FrontMapProbe : MonoBehaviour
     public Pose CurrentPose { get; private set; }
     public string PoseSource { get; private set; } = "NONE";
     int referenceEpoch;
-    bool previousRearGood;
+    bool previousRearTracking;
     Camera rearCamera;
     AndroidJavaObject source,tracker;
     Texture2D texture;
@@ -48,16 +53,17 @@ public sealed class S25FrontMapProbe : MonoBehaviour
     StreamWriter log;
     string logPath;
     struct TimedPose {public double time;public Pose pose;}
-    sealed class Frame {public byte[] packet;public bool referenceGood;public Pose reference;public double capturedAt;}
+    sealed class Frame {public byte[] packet;public bool referenceGood;public Pose reference;public double capturedAt;public bool anchorValid;public Pose anchorPose;public int anchorVersion,epoch;}
     [Serializable] sealed class Result
     {
-        public string state="IDLE"; public long seq,timeMs;public int points,inliers,added,keyframes,relocalized;public bool rearLinked;public float value;
+        public string linkStatus="UNINITIALIZED"; public string state="IDLE"; public long seq,timeMs;public int points,inliers,added,keyframes,relocalized;public bool rearLinked;public float value;
         public int referenceEpoch;public bool valid;public float[] pose,target,mapFromRearWorld;
     }
     void OnEnable()
     {
         if(rearRaycastManager==null)rearRaycastManager=FindFirstObjectByType<ARRaycastManager>();
         if(rearPlaneManager==null)rearPlaneManager=FindFirstObjectByType<ARPlaneManager>();
+        if(rearAnchorManager==null)rearAnchorManager=FindFirstObjectByType<ARAnchorManager>();
         oldOrientation=Screen.orientation;Screen.orientation=ScreenOrientation.Portrait;
         if(rearCameraManager==null)rearCameraManager=FindFirstObjectByType<ARCameraManager>();
         if(rearCameraManager!=null){rearCamera=rearCameraManager.GetComponent<Camera>();rearCameraManager.frameReceived+=RearFrame;}
@@ -65,8 +71,9 @@ public sealed class S25FrontMapProbe : MonoBehaviour
     }
     void RearFrame(ARCameraFrameEventArgs e){if(e.timestampNs.HasValue && e.timestampNs!=rearTimestamp){rearTimestamp=e.timestampNs;rearFrameAt=Time.realtimeSinceStartupAsDouble;}}
     void TrackingChanged(ARSessionStateChangedEventArgs e){history.Clear();referenceEpoch++;}
-    bool RearGood => rearCamera!=null && ARSession.state==ARSessionState.SessionTracking && ARSession.notTrackingReason==NotTrackingReason.None &&
-        rearCameraManager.currentFacingDirection==CameraFacingDirection.World && Time.realtimeSinceStartupAsDouble-rearFrameAt<.3;
+    bool RearTracking => rearCamera!=null && ARSession.state==ARSessionState.SessionTracking && ARSession.notTrackingReason==NotTrackingReason.None &&
+        rearCameraManager.currentFacingDirection==CameraFacingDirection.World;
+    bool RearGood => RearTracking && Time.realtimeSinceStartupAsDouble-rearFrameAt<.3;
     void StartProbe()
     {
 #if UNITY_ANDROID && !UNITY_EDITOR
@@ -90,7 +97,7 @@ public sealed class S25FrontMapProbe : MonoBehaviour
     }
     void ResetMap()
     {
-        hasPlaneTarget=false;targetOrigin="Front triangulated point";
+        ClearPlaneTarget();
         try{tracker?.Call("dispose");tracker?.Dispose();tracker=new AndroidJavaObject("com.example.s25dualcamera.FrontMapTracker");
             pending.Clear();result=new Result();HasPose=false;PoseSource="NONE";verified=0;ignoreRear=false;referenceEpoch++;message="New map: rear uncovered, front sees static room; slide sideways 8-15 cm.";
         }catch(Exception e){message=e.Message;}
@@ -98,8 +105,9 @@ public sealed class S25FrontMapProbe : MonoBehaviour
     void LateUpdate()
     {
         double now=Time.realtimeSinceStartupAsDouble;
-        bool rearGoodNow=RearGood;
-        if(rearGoodNow!=previousRearGood){referenceEpoch++;previousRearGood=rearGoodNow;}
+        bool rearTrackingNow=RearTracking;
+        // Frame freshness gates pose use; it does not change the world coordinate epoch.
+        if(rearTrackingNow!=previousRearTracking){referenceEpoch++;history.Clear();previousRearTracking=rearTrackingNow;}
         if(displayed==null || now-displayed.capturedAt>=.6){HasPose=false;PoseSource="NONE";}
         if(rearCamera!=null && RearGood){history.Add(new TimedPose{time=now,pose=new Pose(rearCamera.transform.position,rearCamera.transform.rotation)});}
         while(history.Count>240 || (history.Count>0 && now-history[0].time>2))history.RemoveAt(0);
@@ -110,6 +118,7 @@ public sealed class S25FrontMapProbe : MonoBehaviour
                 Result next=JsonUtility.FromJson<Result>(json);
                 if(next!=null && pending.TryGetValue(next.seq,out Frame frame)){
                     result=next;displayed=frame;resultAt=now;ShowFrame(frame.packet);
+                    SyncPlaneMap();
                     HasPose=next.valid && next.pose?.Length==16 && now-frame.capturedAt<.6;
                     PoseSource=HasPose?(next.state.StartsWith("REAR")?"REAR":next.state=="MAP_READY"?"BOOTSTRAP":"FRONT"):"NONE";
                     if(HasPose)CurrentPose=UnityPose(next.pose);
@@ -127,13 +136,21 @@ public sealed class S25FrontMapProbe : MonoBehaviour
             byte[] packet=source.Call<byte[]>("takeFrame");
             if(packet==null || packet.Length<48)return;
             long seq=BitConverter.ToInt64(packet,16),stamp=BitConverter.ToInt64(packet,24);
-            double age=(source.Call<long>("clockMs")-stamp)/1000.0;
-            double at=now-age+poseTimeAdjustmentMs/1000.0;
+            // Pair the Android clock with the local clock at the call, not before result processing.
+            double clockBefore=Time.realtimeSinceStartupAsDouble;
+            long androidNow=source.Call<long>("clockMs");
+            double clockAfter=Time.realtimeSinceStartupAsDouble;
+            double age=(androidNow-stamp)/1000.0;
+            double captureTime=(clockBefore+clockAfter)*.5-age;
+            double at=captureTime+poseTimeAdjustmentMs/1000.0;
             bool referenceGood=!ignoreRear && RearGood && age>=0 && age<.4 && history.Count>=2 && at>=history[0].time && at<=history[history.Count-1].time;
             Pose rear=referenceGood?At(at):new Pose(Vector3.zero,Quaternion.identity);
             Pose front=new Pose(rear.position+rear.rotation*frontOffsetMeters,rear.rotation*Quaternion.Euler(0,180,0)*Quaternion.Euler(frontAngleCorrection));
             if(tracker.Call<bool>("submit",packet,CvPose(front),referenceGood,referenceEpoch))
-                pending[seq]=new Frame{packet=packet,reference=front,referenceGood=referenceGood,capturedAt=now-age};
+                pending[seq]=new Frame{packet=packet,reference=front,referenceGood=referenceGood,capturedAt=captureTime,
+                    epoch=referenceEpoch,anchorVersion=planeRequestVersion,
+                    anchorValid=hasPlaneTarget && planeAnchor!=null && planeAnchor.trackingState==TrackingState.Tracking,
+                    anchorPose=planeAnchor!=null?new Pose(planeAnchor.transform.position,planeAnchor.transform.rotation):default};
             if(pending.Count>8){var keys=new List<long>(pending.Keys);keys.Sort();pending.Remove(keys[0]);}
         }catch(Exception e){message=e.Message;Debug.LogException(e);StopProbe();}
     }
@@ -142,16 +159,18 @@ public sealed class S25FrontMapProbe : MonoBehaviour
     static Pose UnityPose(float[] a){Matrix4x4 m=Matrix4x4.identity;for(int i=0;i<4;i++)for(int j=0;j<4;j++)m[i,j]=a[i*4+j]*(i==1?-1:1)*(j==1?-1:1);return new Pose(m.GetColumn(3),Quaternion.LookRotation(m.GetColumn(2),m.GetColumn(1)));}
     void ShowFrame(byte[] packet){int w=BitConverter.ToInt32(packet,4),h=BitConverter.ToInt32(packet,8);if(texture==null || texture.width!=w || texture.height!=h){if(texture!=null)Destroy(texture);texture=new Texture2D(w,h,TextureFormat.RGBA32,false);}
         var rgba=new byte[w*h*4];Buffer.BlockCopy(packet,48,rgba,0,rgba.Length);texture.LoadRawTextureData(rgba);texture.Apply();}
-    void StopProbe(){hasPlaneTarget=false;targetOrigin="Front triangulated point";running=false;HasPose=false;PoseSource="NONE";try{source?.Call("dispose");tracker?.Call("dispose");}catch(Exception e){Debug.LogWarning(e.Message);}source?.Dispose();tracker?.Dispose();source=tracker=null;pending.Clear();result=new Result();displayed=null;log?.Dispose();log=null;}
+    void StopProbe(){ClearPlaneTarget();running=false;HasPose=false;PoseSource="NONE";try{source?.Call("dispose");tracker?.Call("dispose");}catch(Exception e){Debug.LogWarning(e.Message);}source?.Dispose();tracker?.Dispose();source=tracker=null;pending.Clear();result=new Result();displayed=null;log?.Dispose();log=null;}
     void OnApplicationPause(bool paused){if(paused)StopProbe();}
     void OnDisable(){StopProbe();if(rearCameraManager!=null)rearCameraManager.frameReceived-=RearFrame;ARSession.stateChanged-=TrackingChanged;if(texture!=null)Destroy(texture);history.Clear();Screen.orientation=oldOrientation;}
     bool RearLinkUsable => running && !ignoreRear && RearGood && result.valid && result.rearLinked &&
         result.referenceEpoch==referenceEpoch && result.mapFromRearWorld?.Length==16 && displayed!=null &&
         Time.realtimeSinceStartupAsDouble-displayed.capturedAt<.6;
 
-    void PlaceRearPlaneTarget()
+    async void PlaceRearPlaneTarget()
     {
-        if(!showRear || !RearLinkUsable){message="Use REAR view / AUTO and wait for Rear link True.";return;}
+        if(!running || !showRear || !RearGood || placingPlane){message="Wait for rear tracking in REAR view.";return;}
+        if(rearAnchorManager==null)rearAnchorManager=FindFirstObjectByType<ARAnchorManager>();
+        if(rearAnchorManager==null || !rearAnchorManager.isActiveAndEnabled){message="Add/enable AR Anchor Manager on XR Origin.";return;}
         if(rearRaycastManager==null)rearRaycastManager=FindFirstObjectByType<ARRaycastManager>();
         if(rearPlaneManager==null)rearPlaneManager=FindFirstObjectByType<ARPlaneManager>();
         if(rearRaycastManager==null || !rearRaycastManager.isActiveAndEnabled || rearPlaneManager==null || !rearPlaneManager.isActiveAndEnabled){
@@ -163,12 +182,40 @@ public sealed class S25FrontMapProbe : MonoBehaviour
         }
         ARRaycastHit hit=planeHits[0];
         if(Vector3.Dot(hit.pose.rotation*Vector3.up,Vector3.up)<.85f){message="Aim at a horizontal tabletop or floor, not the monitor.";return;}
-        Pose link=UnityPose(result.mapFromRearWorld);
-        planeTargetMap=Matrix4x4.TRS(link.position,link.rotation,Vector3.one).MultiplyPoint3x4(hit.pose.position);
-        hasPlaneTarget=true;targetOrigin="Rear plane point (fixed at placement)";
-        message=$"Placed on detected plane at {hit.distance:F2} m. Move REAR sideways first, then Show FRONT and aim at SAME spot.";
-        Debug.Log($"S25 v8 plane target: AR world={hit.pose.position:F5}, map={planeTargetMap:F5}, epoch={referenceEpoch}");
+        int request=++planeRequestVersion;placingPlane=true;
+        try{
+            var added=await rearAnchorManager.TryAddAnchorAsync(hit.pose);
+            if(this==null || request!=planeRequestVersion || !isActiveAndEnabled || !running){
+                if(added.value!=null)Destroy(added.value.gameObject);return;
+            }
+            if(!added.status.IsSuccess()){message="Anchor creation failed: "+added.status;return;}
+            if(planeAnchor!=null)Destroy(planeAnchor.gameObject);
+            planeAnchor=added.value;hasPlaneTarget=true;planeMapValid=false;
+            targetOrigin="Rear ARAnchor (surface point)";SyncPlaneMap();
+            message="Rear anchor placed. REAR display is independent of Front / Rear link. Turn away and return first.";
+        }catch(Exception e){message=e.Message;Debug.LogException(e);}
+        finally{if(request==planeRequestVersion)placingPlane=false;}
     }
+    void ClearPlaneTarget()
+    {
+        planeRequestVersion++;placingPlane=false;
+        if(planeAnchor!=null)Destroy(planeAnchor.gameObject);
+        planeAnchor=null;hasPlaneTarget=false;planeMapValid=false;targetOrigin="Front triangulated point";
+    }
+    void SyncPlaneMap()
+    {
+        if(!hasPlaneTarget || planeAnchor==null || planeAnchor.trackingState!=TrackingState.Tracking || !RearLinkUsable)return;
+        Pose link=UnityPose(result.mapFromRearWorld);
+        planeTargetMap=Matrix4x4.TRS(link.position,link.rotation,Vector3.one).MultiplyPoint3x4(planeAnchor.transform.position);
+        planeMapRotation=link.rotation*planeAnchor.transform.rotation;
+        planeMapValid=true;
+    }
+    // The packet, paired rear pose and anchor snapshot belong to the same submitted result.
+    // Only AUTO rear-sourced results use this route. FRONT ONLY still uses the front map.
+    bool DirectFrontAnchor => !showRear && !ignoreRear && hasPlaneTarget && RearGood &&
+        result.valid && result.state.StartsWith("REAR") && displayed!=null && displayed.referenceGood &&
+        displayed.epoch==referenceEpoch && displayed.anchorValid && displayed.anchorVersion==planeRequestVersion &&
+        planeAnchor!=null && planeAnchor.trackingState==TrackingState.Tracking;
     // Target and cube stay in one map coordinate frame. Switching changes only projection.
     bool ProjectMapPoint(Vector3 mapPoint,Rect imageRect,Matrix4x4 rearWorldFromMap,out Vector2 screen)
     {
@@ -178,7 +225,7 @@ public sealed class S25FrontMapProbe : MonoBehaviour
             if(p.z<=rearCamera.nearClipPlane || !rearCamera.pixelRect.Contains(new Vector2(p.x,p.y)))return false;
             screen=new Vector2(p.x,Screen.height-p.y);return true;
         }
-        Pose cameraPose=UnityPose(result.pose);
+        Pose cameraPose=DirectFrontAnchor?displayed.reference:UnityPose(result.pose);
         Vector3 q=Quaternion.Inverse(cameraPose.rotation)*(mapPoint-cameraPose.position);
         if(q.z<=.05f || displayed==null || texture==null)return false;
         byte[] b=displayed.packet;
@@ -187,11 +234,11 @@ public sealed class S25FrontMapProbe : MonoBehaviour
         if(u<0 || v<0 || u>=texture.width || v>=texture.height)return false;
         screen=new Vector2(imageRect.x+u/texture.width*imageRect.width,imageRect.y+v/texture.height*imageRect.height);return true;
     }
-    void DrawMapCube(Vector3 center,Rect r,Matrix4x4 rearWorldFromMap)
+    void DrawMapCube(Vector3 center,Rect r,Matrix4x4 rearWorldFromMap,Quaternion orientation)
     {
         // A 5 cm wireframe cube centred on the SAME landmark, not a Unity prefab.
         var points=new Vector2[8];var visible=new bool[8];
-        for(int i=0;i<8;i++)visible[i]=ProjectMapPoint(center+new Vector3((i&1)==0?-.025f:.025f,(i&2)==0?-.025f:.025f,(i&4)==0?-.025f:.025f),r,rearWorldFromMap,out points[i]);
+        for(int i=0;i<8;i++)visible[i]=ProjectMapPoint(center+orientation*new Vector3((i&1)==0?-.025f:.025f,(i&2)==0?-.025f:.025f,(i&4)==0?-.025f:.025f),r,rearWorldFromMap,out points[i]);
         GUI.color=Color.cyan;
         for(int i=0;i<8;i++)for(int axis=1;axis<=4;axis*=2){int j=i^axis;if(j>i && visible[i] && visible[j])DrawLine(points[i],points[j]);}
         GUI.color=Color.white;
@@ -221,25 +268,30 @@ public sealed class S25FrontMapProbe : MonoBehaviour
             GUI.DrawTexture(new Rect(x-20,y-20,2,40),Texture2D.whiteTexture);
             GUI.DrawTexture(new Rect(x+18,y-20,2,40),Texture2D.whiteTexture);
         }
-        bool canDraw=fresh && result.valid && result.pose?.Length==16 && (hasPlaneTarget || result.target?.Length==3);
+        bool canDraw=fresh && result.valid && result.pose?.Length==16 && (hasPlaneTarget?planeMapValid:result.target?.Length==3);
         Matrix4x4 rearWorldFromMap=Matrix4x4.identity;
-        if(showRear){
+        bool directRearAnchor=showRear && hasPlaneTarget;
+        bool directFrontAnchor=DirectFrontAnchor;
+        if(directFrontAnchor)canDraw=fresh;
+        if(directRearAnchor){
+            canDraw=running && RearGood && planeAnchor!=null && planeAnchor.trackingState==TrackingState.Tracking;
+        }else if(showRear){
             canDraw &= !ignoreRear && RearGood && result.rearLinked && result.referenceEpoch==referenceEpoch && result.mapFromRearWorld?.Length==16;
             if(canDraw){Pose link=UnityPose(result.mapFromRearWorld);rearWorldFromMap=Matrix4x4.TRS(link.position,link.rotation,Vector3.one).inverse;}
         }
-        viewStatus=canDraw?"Target outside view / behind camera":showRear?"Waiting for fresh AUTO rear coordinate link":"Waiting for valid front pose";
+        viewStatus=canDraw?"Target outside view / behind camera":directRearAnchor?"Waiting for rear camera / ARAnchor tracking":showRear?"Waiting for fresh AUTO rear coordinate link":hasPlaneTarget && !planeMapValid?"Waiting for target coordinate link":!fresh?"Waiting for fresh front frame":"Front pose lost: "+result.state;
         if(canDraw){
-            Vector3 target=hasPlaneTarget?planeTargetMap:new Vector3(result.target[0],-result.target[1],result.target[2]);
+            Vector3 target=directFrontAnchor?displayed.anchorPose.position:directRearAnchor?planeAnchor.transform.position:hasPlaneTarget?planeTargetMap:new Vector3(result.target[0],-result.target[1],result.target[2]);
             if(ProjectMapPoint(target,videoRect,rearWorldFromMap,out Vector2 screen)){
-                viewStatus="Same map target visible";GUI.color=Color.green;
+                viewStatus=directFrontAnchor?"Front visible via paired REAR pose":directRearAnchor?"Rear ARAnchor visible (independent)":"Same map target visible";GUI.color=Color.green;
                 GUI.DrawTexture(new Rect(screen.x-15,screen.y-2,30,4),Texture2D.whiteTexture);
                 GUI.DrawTexture(new Rect(screen.x-2,screen.y-15,4,30),Texture2D.whiteTexture);GUI.color=Color.white;
             }
-            if(showCube)DrawMapCube(target,videoRect,rearWorldFromMap);
+            if(showCube)DrawMapCube(target,videoRect,rearWorldFromMap,directFrontAnchor?displayed.anchorPose.rotation:directRearAnchor?planeAnchor.transform.rotation:hasPlaneTarget?planeMapRotation:Quaternion.identity);
         }
         GUI.matrix=Matrix4x4.Scale(Vector3.one*scale);
         GUILayout.BeginArea(new Rect(5,5,Screen.width/scale-10,400),GUI.skin.box);
-        GUILayout.Label("v8 PLANE TARGET — compare FRONT / REAR");
+        GUILayout.Label("v8.3 FRAME PAIRING");
         GUILayout.BeginHorizontal();
         if(GUILayout.Button("Start",GUILayout.Height(35)))StartProbe();
         GUI.enabled=running;if(GUILayout.Button("Reset map",GUILayout.Height(35)))ResetMap();
@@ -254,16 +306,16 @@ public sealed class S25FrontMapProbe : MonoBehaviour
         if(GUILayout.Button(showRear?"Show FRONT":"Show REAR",GUILayout.Height(36)))showRear=!showRear;
         if(GUILayout.Button(showCube?"Cube OFF":"Cube ON",GUILayout.Height(36)))showCube=!showCube;
         GUI.enabled=true;GUILayout.EndHorizontal();
-        GUI.enabled=showRear && RearLinkUsable;
+        GUI.enabled=running && showRear && RearGood && !placingPlane;
         if(GUILayout.Button("Place on table (white reticle)",GUILayout.Height(36)))PlaceRearPlaneTarget();
         GUI.enabled=true;
-        GUILayout.Label("Target: "+targetOrigin);
+        GUILayout.Label("Target: "+targetOrigin+(hasPlaneTarget?$" | Anchor {(planeAnchor==null?"missing":planeAnchor.trackingState.ToString())} | Front mapped {planeMapValid}":""));
         GUILayout.Label($"VIEW: {(showRear?"REAR":"FRONT")} | {viewStatus}");
         GUILayout.Label($"Rear: {ARSession.state} / {ARSession.notTrackingReason} | input {(ignoreRear?"IGNORED":"AUTO")}\nFront: {result.state} | points {result.points}, inliers {result.inliers}");
         string quality=(result.state=="FRONT_PNP" || result.state=="FRONT_RELOCALIZED")?$"Reprojection RMS {result.value:F2} px":$"Bootstrap/aux value {result.value:F3}";
-        GUILayout.Label($"Added {result.added} | Keyframes {result.keyframes}/12 | Recovered {result.relocalized} | Rear link {result.rearLinked}\nPose source: {PoseSource}");
+        GUILayout.Label($"Added {result.added} | Keyframes {result.keyframes}/12 | Recovered {result.relocalized} | Rear link {result.rearLinked}\nPose source: {PoseSource} | Link: {result.linkStatus}");
         GUILayout.Label(quality+$" | verified {verified}/5\nRear agreement (last comparison): {agreementM:F3} m / {agreementDeg:F1} deg");
-        if(!fresh && running)GUILayout.Label("NO FRESH RESULT — target hidden");
+        if(!fresh && running && !directRearAnchor)GUILayout.Label("NO FRESH FRONT RESULT — map target hidden");
         GUILayout.Label(message,new GUIStyle(GUI.skin.label){wordWrap=true});
         if(!running && logPath!=null)GUILayout.Label("Log saved: "+Path.GetFileName(logPath));
         GUILayout.EndArea();GUI.matrix=old;GUI.depth=depth;

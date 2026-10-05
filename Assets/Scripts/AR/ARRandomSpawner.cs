@@ -428,6 +428,11 @@ public class ARRandomSpawner : MonoBehaviour
         );
 
 
+        // Share the existing actor and floor with the S25 front-view experiment.
+        var floorTarget = spawnedObject.GetComponent<S25FloorTarget>();
+        if (floorTarget == null) floorTarget = spawnedObject.AddComponent<S25FloorTarget>();
+        floorTarget.Initialize(spawnPlane);
+
         Debug.Log(
             $"[DALSU] AR 달수 생성 완료 / " +
             $"ID = {currentDalsuData.id}, " +
