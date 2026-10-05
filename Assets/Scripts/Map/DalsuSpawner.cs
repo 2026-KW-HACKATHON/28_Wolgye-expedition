@@ -38,25 +38,46 @@ public class DalsuSpawner : MonoBehaviour
     private float _rarity3Probability = 10f;
 
 
+    private readonly Dictionary<string, DalsuData> _dalsuDataById = new();
     private readonly Dictionary<string, GameObject> _spawnedDalsu = new();
     private readonly HashSet<string> _caughtDalsu = new();
+    private readonly HashSet<string> _spawnAreaEntered = new();
 
     private LatitudeLongitude _currentLocation;
     private bool _hasLocation;
 
+    private void Awake()
+    {
+        foreach (DalsuData data in _dalsuDatas)
+        {
+            if (data == null)
+                continue;
+
+            if (_dalsuDataById.ContainsKey(data.id))
+            {
+                Debug.LogWarning(
+                    $"[DalsuSpawner] 중복된 Dalsu ID가 있습니다. id = {data.id}"
+                );
+
+                continue;
+            }
+
+            _dalsuDataById.Add(data.id, data);
+        }
+    }
+
     public void UpdateLocation(LatitudeLongitude location)
     {
-        Debug.Log(
-        $"[DalsuSpawner] 위치 업데이트 / " +
-        $"Lat = {location.Latitude}, " +
-        $"Lon = {location.Longitude}"
-    );
+        //Debug.Log(
+        //$"[DalsuSpawner] 위치 업데이트 / " +
+        //$"Lat = {location.Latitude}, " +
+        //$"Lon = {location.Longitude}"
+        //);
 
         _currentLocation = location;
         _hasLocation = true;
 
         CheckDalsuSpawn();
-        RefreshSpawnedPositions();
     }
 
     public void OnDalsuCaught(string id)
@@ -72,15 +93,25 @@ public class DalsuSpawner : MonoBehaviour
             return;
         }
 
-        _spawnedDalsu.Remove(id);
+        if (!_dalsuDataById.TryGetValue(
+                id,
+                out DalsuData caughtDalsu))
+        {
+            Debug.LogError(
+                $"[DalsuSpawner] DalsuData를 찾을 수 없습니다. id = {id}"
+            );
 
+            return;
+        }
+
+        _spawnedDalsu.Remove(id);
         _caughtDalsu.Add(id);
+
+        DalsuCaptureContext.Set(caughtDalsu);
 
         Destroy(instance);
 
-        Debug.Log(
-            $"[DalsuSpawner] Dalsu 잡기 완료 / id = {id}"
-        );
+        // TODO: AR 화면으로 이동
     }
 
     private void CheckDalsuSpawn()
@@ -111,10 +142,6 @@ public class DalsuSpawner : MonoBehaviour
             return;
         }
 
-        Debug.Log(
-            $"[DalsuSpawner] DalsuData 개수 = {_dalsuDatas.Length}"
-        );
-
         foreach (DalsuData data in _dalsuDatas)
         {
             if (data == null)
@@ -139,15 +166,31 @@ public class DalsuSpawner : MonoBehaviour
                 dalsuLocation
             );
 
-            Debug.Log(
-                $"[DalsuSpawner] {data.dalsuName} / " +
-                $"거리 = {distance:F1}m / " +
-                $"SpawnRadius = {data.spawnRadius}m"
-            );
+            //Debug.Log(
+            //    $"[DalsuSpawner] {data.dalsuName} / " +
+            //    $"거리 = {distance:F1}m / " +
+            //    $"SpawnRadius = {data.spawnRadius}m"
+            //);
 
-            if (!_spawnedDalsu.ContainsKey(data.id))
+            // 현재 Spawn 가능 구역 안에 있는 경우
+            if (distance <= data.spawnRadius)
             {
-                if (distance <= data.spawnRadius)
+                // 이미 이 구역에서 확률 판정을 했다면
+                // 다시 판정하지 않는다.
+                if (_spawnAreaEntered.Contains(data.id))
+                {
+                    if (_spawnedDalsu.ContainsKey(data.id))
+                    {
+                        UpdateCatchState(data.id, distance);
+                    }
+
+                    continue;
+                }
+
+                // Spawn 가능 구역 최초 진입
+                _spawnAreaEntered.Add(data.id);
+
+                if (!_spawnedDalsu.ContainsKey(data.id))
                 {
                     if (RollSpawnProbability(data.rarity))
                     {
@@ -166,14 +209,28 @@ public class DalsuSpawner : MonoBehaviour
                         );
                     }
                 }
+
+                continue;
+            }
+
+            // Spawn 가능 구역을 완전히 벗어난 경우
+            if (distance > data.spawnRadius + _despawnExtraDistance)
+            {
+                // 다시 들어왔을 때 확률을 새로 굴릴 수 있도록 초기화
+                _spawnAreaEntered.Remove(data.id);
+
+                // 현재 Spawn되어 있다면 Despawn
+                if (_spawnedDalsu.ContainsKey(data.id))
+                {
+                    Despawn(data);
+                }
             }
             else
             {
-                UpdateCatchState(data.id, distance);
-
-                if (distance > data.spawnRadius + _despawnExtraDistance)
+                // Spawn되어 있는 Dalsu라면 잡기 가능 여부만 갱신
+                if (_spawnedDalsu.ContainsKey(data.id))
                 {
-                    Despawn(data);
+                    UpdateCatchState(data.id, distance);
                 }
             }
         }
@@ -252,7 +309,7 @@ public class DalsuSpawner : MonoBehaviour
         Debug.Log($"Dalsu Despawn : {data.dalsuName}");
     }
 
-    private void RefreshSpawnedPositions()
+    public void RefreshSpawnedPositions()
     {
         foreach (DalsuData data in _dalsuDatas)
         {

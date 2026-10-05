@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
@@ -10,6 +10,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject couponPanel;
     [SerializeField] private GameObject couponDetailPanel;
     [SerializeField] private GameObject qrScanPanel;
+
+    [Header("Scenes")]
+    [SerializeField] private string roomScene = "Room";
 
     private void Awake()
     {
@@ -92,5 +95,14 @@ public class UIManager : MonoBehaviour
     public void CloseQRScan()
     {
         qrScanPanel.SetActive(false);
+    }
+
+    // =========================
+    // 씬 전환
+    // =========================
+
+    public void ShowRoom()
+    {
+        SceneManager.LoadScene(roomScene);
     }
 }

@@ -86,7 +86,7 @@ MonoBehaviour:
       Type: 0
     Width: 1.8
     PushUp: 0.0002
-    Material: {fileID: 2100000, guid: d449f6eb93a644716baa6f1f4c730813, type: 2}
+    Material: {fileID: 2100000, guid: 8917c0d338e58481388fbe080cf36caf, type: 2}
   - Name: path
     Filters:
       Filters:

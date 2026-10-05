@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DalsuRoom_UIManager : MonoBehaviour
 {
@@ -35,6 +36,12 @@ public class DalsuRoom_UIManager : MonoBehaviour
     [Header("Camera")]
     [SerializeField] private CameraModeSwitcher cameraModeSwitcher;
 
+    [Header("Deco")]
+    [Tooltip("방 꾸미기 화면을 여는 동안 씬의 달수 캐릭터를 통째로 숨겼다가, 닫히면 빈 자리에 다시 불러온다.")]
+    [SerializeField] private DalsuSpawnManager spawnManager;
+
+    [Header("MainScene")]
+    [SerializeField] private string mainScene;
     private void Awake()
     {
         Prepare(decorate);
@@ -48,8 +55,29 @@ public class DalsuRoom_UIManager : MonoBehaviour
     }
 
     // ── 방 꾸미기 ──
-    public void OpenDecorate() => Open(decorate);
-    public void CloseDecorate() => Close(decorate);
+    public void OpenDecorate()
+    {
+        Open(decorate);
+
+        // 배치 작업 중 겹침 문제가 생기지 않도록 달수 캐릭터를 통째로 숨기고, 위에서 수직으로 내려다보는 카메라로 전환
+        if (spawnManager != null)
+            spawnManager.SetDalsusActive(false);
+        if (cameraModeSwitcher != null)
+            cameraModeSwitcher.ShowDecorate();
+    }
+
+    public void CloseDecorate()
+    {
+        Close(decorate);
+
+        // 숨겨뒀던 달수 캐릭터를 가구가 없는 빈 자리로 옮겨 다시 불러오고, Overview 카메라로 복귀
+        if (spawnManager != null)
+            spawnManager.SetDalsusActive(true);
+        ShowOverview();
+    }
+
+    // 방 꾸미기 화면이 켜져 있는 동안에만 배치 입력을 받도록, PlacementController 등에서 참조한다.
+    public bool IsDecoratePanelActive => decorate.panel != null && decorate.panel.activeSelf;
 
     // ── 달수 리스트 ──
     public void OpenDalsuList() => Open(dalsuList);
@@ -166,5 +194,10 @@ public class DalsuRoom_UIManager : MonoBehaviour
     private void SetActive(GameObject gameObject, bool boolean)
     {
         gameObject.SetActive(boolean);
+    }
+
+    public void PrevBtn()
+    {
+        SceneManager.LoadScene(mainScene);
     }
 }

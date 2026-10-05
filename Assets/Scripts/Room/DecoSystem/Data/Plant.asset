@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f451d7ea7ee4a3c4a9a1ac675d9af8cd, type: 3}
+  m_Name: Plant
+  m_EditorClassIdentifier: Assembly-CSharp::FurnitureData
+  id: Plant
+  displayName: "\uD654\uBD84"
+  icon: {fileID: 21300000, guid: 9e851a30bcbccfc4caf575aa75aa06c0, type: 3}
+  prefab: {fileID: 7714989299801392036, guid: 25d0b78d95139d34590d2aee15100045, type: 3}
+  size: {x: 1, y: 1}
