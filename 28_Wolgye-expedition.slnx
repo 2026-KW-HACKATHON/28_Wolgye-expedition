@@ -10,10 +10,10 @@
   <Project Path="MapboxExamples.csproj" />
   <Project Path="MapboxCustomImageryModule.csproj" />
   <Project Path="MapboxLocationModule.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
   <Project Path="MapboxExamples.Editor.csproj" />
   <Project Path="MapboxImageryModule.csproj" />
-  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="MapboxBaseModule.Editor.csproj" />
   <Project Path="MapboxGeocodingApi.csproj" />
   <Project Path="MapboxCustomImageryModule.Editor.csproj" />
