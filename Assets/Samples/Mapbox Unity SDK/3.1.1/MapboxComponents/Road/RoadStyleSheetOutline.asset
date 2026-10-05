@@ -76,7 +76,7 @@ MonoBehaviour:
       Filters:
       - rid: 5722777937161748530
       Type: 0
-    Width: 6.6
+    Width: 5.5
     PushUp: 0.0001
     Material: {fileID: 2100000, guid: 3a006dbd53abf4e029c02c32b8753395, type: 2}
   references:
