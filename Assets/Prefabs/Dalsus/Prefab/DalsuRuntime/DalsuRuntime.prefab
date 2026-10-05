@@ -1,0 +1,162 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2430921579833938177
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1073991955080456234}
+  - component: {fileID: 7872254348063069281}
+  - component: {fileID: 8045929500218782823}
+  - component: {fileID: 5125237493743629569}
+  - component: {fileID: 1962255779507488444}
+  m_Layer: 0
+  m_Name: DalsuRuntime
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1073991955080456234
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2430921579833938177}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3494120280565088978}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7872254348063069281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2430921579833938177}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 141ebd03f5cc62f44963901db6e64a65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DalsooLookController
+  arCamera: {fileID: 0}
+  hip: {fileID: 0}
+  animator: {fileID: 0}
+  turnSpeed: 60
+  stopWalkingAngle: 8
+  modelRotationOffsetY: 90
+  hipLookSpeed: 6
+  maxLookUp: 60
+  maxLookDown: 15
+  lookUpThreshold: 50
+  lookDownThreshold: 15
+  lookTransitionRange: 8
+--- !u!114 &8045929500218782823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2430921579833938177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a998cf396797b6f4180c1b0dd83c5c3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DalsooCatchable
+--- !u!114 &5125237493743629569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2430921579833938177}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b796a0f2cbf793048a3bf2615c5bfcd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DalsooBehaviorController
+  animator: {fileID: 0}
+  lookController: {fileID: 0}
+  arCamera: {fileID: 0}
+  minIdleTime: 5
+  maxIdleTime: 10
+  lookAtCameraChance: 0.35
+  minLookTime: 4
+  maxLookTime: 5
+  wanderWeight: 45
+  turnWeight: 30
+  sitWeight: 25
+  approachCameraWeight: 15
+  minTurnAngle: 40
+  maxTurnAngle: 140
+  turnSpeed: 100
+  walkSpeed: 0.2
+  minWanderDistance: 0.35
+  maxWanderDistance: 1.5
+  destinationAttempts: 30
+  planeEdgeMargin: 0.15
+  stopAtPlaneEdge: 1
+  minApproachDistance: 0.4
+  maxApproachDistance: 1
+  cameraStopDistance: 1.2
+  minApproachLookTime: 3
+  maxApproachLookTime: 4
+  minSitTime: 17
+  maxSitTime: 21
+  standUpWaitTime: 1
+--- !u!114 &1962255779507488444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2430921579833938177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afc3eacd2eab69849a464cd9d9c73324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DalsuActor
+  modelRoot: {fileID: 3494120280565088978}
+  lookController: {fileID: 7872254348063069281}
+  behaviorController: {fileID: 5125237493743629569}
+  catchable: {fileID: 8045929500218782823}
+--- !u!1 &2596461663999555466
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3494120280565088978}
+  m_Layer: 0
+  m_Name: ModelRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3494120280565088978
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2596461663999555466}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1073991955080456234}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

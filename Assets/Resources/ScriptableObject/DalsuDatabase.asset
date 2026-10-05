@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3734de14dd4648344bb06ec1b13315b7, type: 3}
+  m_Name: DalsuDatabase
+  m_EditorClassIdentifier: Assembly-CSharp::DalsuDatabase
+  dalsuList:
+  - {fileID: 11400000, guid: 0549b35ccda840b4b89921cd9857651e, type: 2}
+  - {fileID: 11400000, guid: 97b87d722be56e341820c886673d20cd, type: 2}

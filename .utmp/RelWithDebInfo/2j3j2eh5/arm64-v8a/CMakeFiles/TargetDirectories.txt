@@ -1,0 +1,5 @@
+C:/Hackathon/28_Wolgye-expedition/.utmp/RelWithDebInfo/2j3j2eh5/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Hackathon/28_Wolgye-expedition/.utmp/RelWithDebInfo/2j3j2eh5/arm64-v8a/CMakeFiles/rebuild_cache.dir
+C:/Hackathon/28_Wolgye-expedition/.utmp/RelWithDebInfo/2j3j2eh5/arm64-v8a/GameActivity/CMakeFiles/game.dir
+C:/Hackathon/28_Wolgye-expedition/.utmp/RelWithDebInfo/2j3j2eh5/arm64-v8a/GameActivity/CMakeFiles/edit_cache.dir
+C:/Hackathon/28_Wolgye-expedition/.utmp/RelWithDebInfo/2j3j2eh5/arm64-v8a/GameActivity/CMakeFiles/rebuild_cache.dir
