@@ -16,9 +16,6 @@ public class ARRandomSpawner : MonoBehaviour
     [Header("Dalsu Data")]
     [SerializeField] private DalsuDatabase dalsuDatabase;
 
-    [Tooltip("테스트할 달수 ID")]
-    [SerializeField] private string spawnDalsuId = "Dalsu_001";
-
     [Header("Visual")]
     [SerializeField] private float visualYOffset = 0f;
 
@@ -36,6 +33,7 @@ public class ARRandomSpawner : MonoBehaviour
     private GameObject spawnedObject;
     private GameObject anchorRoot;
 
+    private string spawnDalsuId;
     private DalsuData currentDalsuData;
 
 
@@ -45,6 +43,7 @@ public class ARRandomSpawner : MonoBehaviour
         // 먼저 달수 데이터 찾기
         // -----------------------------------------
 
+        spawnDalsuId = DalsuSceneContext.SelectedDalsuId;
         currentDalsuData = dalsuDatabase.GetById(spawnDalsuId);
 
         if (currentDalsuData == null)

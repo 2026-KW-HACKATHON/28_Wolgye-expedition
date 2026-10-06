@@ -946,6 +946,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1682808002393283775, guid: 2d1242bdf3f8dc648907db4c86167d97, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1871050859}
+    - target: {fileID: 1682808002393283775, guid: 2d1242bdf3f8dc648907db4c86167d97, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShowQRScan
+      objectReference: {fileID: 0}
     - target: {fileID: 1759901220221121252, guid: 2d1242bdf3f8dc648907db4c86167d97, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -1029,6 +1037,14 @@ PrefabInstance:
     - target: {fileID: 2762025260094171924, guid: 2d1242bdf3f8dc648907db4c86167d97, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 2800916580955424975, guid: 2d1242bdf3f8dc648907db4c86167d97, type: 3}
+      propertyPath: m_Horizontal
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2800916580955424975, guid: 2d1242bdf3f8dc648907db4c86167d97, type: 3}
+      propertyPath: m_HorizontalScrollbar
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3033055787362487783, guid: 2d1242bdf3f8dc648907db4c86167d97, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1575,6 +1591,7 @@ PrefabInstance:
     - {fileID: 5805361445281214225, guid: 2d1242bdf3f8dc648907db4c86167d97, type: 3}
     - {fileID: 5008398137483084136, guid: 2d1242bdf3f8dc648907db4c86167d97, type: 3}
     - {fileID: 3834586898357103713, guid: 2d1242bdf3f8dc648907db4c86167d97, type: 3}
+    - {fileID: 1521439120404988924, guid: 2d1242bdf3f8dc648907db4c86167d97, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4038097864452788603, guid: 2d1242bdf3f8dc648907db4c86167d97, type: 3}
       insertIndex: -1

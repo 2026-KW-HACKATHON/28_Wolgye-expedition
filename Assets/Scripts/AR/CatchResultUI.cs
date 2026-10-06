@@ -2,41 +2,77 @@ using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CatchResultUI : MonoBehaviour
 {
+    [Header("Dalsu Data")]
+    [SerializeField]
+    private DalsuData[] dalsuDatas;
+
     [Header("Photo")]
-    [SerializeField] private RawImage photoPreview;
+    [SerializeField]
+    private RawImage photoPreview;
 
     [Header("Dalsu Info")]
-    [SerializeField] private TMP_Text caughtText;
-    [SerializeField] private Image dalsuIcon;
+    [SerializeField]
+    private TMP_Text caughtText;
+
+    [SerializeField]
+    private Image dalsuIcon;
 
     private string currentTempPhotoPath;
     private Texture2D previewTexture;
 
     private DalsuData caughtDalsuData;
 
-
-    public void Show(
-        string photoPath,
-        DalsuData data)
+    private void Start()
     {
+        LoadResult();
+    }
+
+    private void LoadResult()
+    {
+        string dalsuId =
+            DalsuSceneContext.SelectedDalsuId;
+
+        string photoPath =
+            DalsuSceneContext.CapturedPhotoPath;
+
+        caughtDalsuData =
+            FindDalsuData(dalsuId);
+
+        DalsuSaveManager.AcquireDalsu(caughtDalsuData);
+
         currentTempPhotoPath =
             photoPath;
 
-        caughtDalsuData =
-            data;
-
-
         LoadPreview(photoPath);
-
         UpdateDalsuInfo();
-
-
-        gameObject.SetActive(true);
     }
 
+    private DalsuData FindDalsuData(string id)
+    {
+        if (dalsuDatas == null)
+            return null;
+
+        foreach (DalsuData data in dalsuDatas)
+        {
+            if (data == null)
+                continue;
+
+            if (data.id == id)
+            {
+                return data;
+            }
+        }
+
+        Debug.LogError(
+            $"[DALSU] DalsuData를 찾을 수 없습니다. id = {id}"
+        );
+
+        return null;
+    }
 
     private void UpdateDalsuInfo()
     {
@@ -51,13 +87,11 @@ public class CatchResultUI : MonoBehaviour
             return;
         }
 
-
         if (caughtText != null)
         {
             caughtText.text =
                 $"{caughtDalsuData.dalsuName}을(를) 잡았다!";
         }
-
 
         if (dalsuIcon != null)
         {
@@ -68,7 +102,6 @@ public class CatchResultUI : MonoBehaviour
                 caughtDalsuData.icon != null;
         }
     }
-
 
     private void LoadPreview(
         string path)
@@ -84,24 +117,19 @@ public class CatchResultUI : MonoBehaviour
             return;
         }
 
-
         if (previewTexture != null)
         {
             Destroy(previewTexture);
         }
 
-
         byte[] bytes =
             File.ReadAllBytes(path);
-
 
         previewTexture =
             new Texture2D(2, 2);
 
-
         bool success =
             previewTexture.LoadImage(bytes);
-
 
         if (!success)
         {
@@ -112,14 +140,12 @@ public class CatchResultUI : MonoBehaviour
             return;
         }
 
-
         if (photoPreview != null)
         {
             photoPreview.texture =
                 previewTexture;
         }
     }
-
 
     public void OnSaveButton()
     {
@@ -130,12 +156,10 @@ public class CatchResultUI : MonoBehaviour
             return;
         }
 
-
         bool success =
             AndroidGallerySaver.SaveImage(
                 currentTempPhotoPath
             );
-
 
         if (!success)
         {
@@ -146,12 +170,10 @@ public class CatchResultUI : MonoBehaviour
             return;
         }
 
-
         DeleteTempPhoto();
 
         Close();
     }
-
 
     public void OnDiscardButton()
     {
@@ -159,7 +181,6 @@ public class CatchResultUI : MonoBehaviour
 
         Close();
     }
-
 
     private void DeleteTempPhoto()
     {
@@ -175,10 +196,8 @@ public class CatchResultUI : MonoBehaviour
             );
         }
 
-
         currentTempPhotoPath = null;
     }
-
 
     private void Close()
     {
@@ -188,15 +207,21 @@ public class CatchResultUI : MonoBehaviour
             previewTexture = null;
         }
 
-
         if (photoPreview != null)
         {
             photoPreview.texture = null;
         }
 
-
         caughtDalsuData = null;
 
+        // Context도 비워준다.
+        DalsuSceneContext.Clear();
+
         gameObject.SetActive(false);
+    }
+
+    public void ClickOkBtn()
+    {
+        SceneManager.LoadScene("Map");
     }
 }
