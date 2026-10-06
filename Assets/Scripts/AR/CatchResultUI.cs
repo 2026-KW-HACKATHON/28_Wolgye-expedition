@@ -8,7 +8,7 @@ public class CatchResultUI : MonoBehaviour
 {
     [Header("Dalsu Data")]
     [SerializeField]
-    private DalsuData[] dalsuDatas;
+    private DalsuDatabase dalsuDatabase;
 
     [Header("Photo")]
     [SerializeField]
@@ -56,25 +56,21 @@ public class CatchResultUI : MonoBehaviour
 
     private DalsuData FindDalsuData(string id)
     {
-        if (dalsuDatas == null)
+        if (dalsuDatabase == null)
             return null;
 
-        foreach (DalsuData data in dalsuDatas)
-        {
-            if (data == null)
-                continue;
+        var dalsuData =
+            dalsuDatabase.GetById(id);
 
-            if (data.id == id)
-            {
-                return data;
-            }
+        if (dalsuData == null)
+        {
+            Debug.LogError(
+                $"[DALSU] DalsuData를 찾을 수 없습니다. id = {id}"
+                );
         }
 
-        Debug.LogError(
-            $"[DALSU] DalsuData를 찾을 수 없습니다. id = {id}"
-        );
 
-        return null;
+        return dalsuData;
     }
 
     private void UpdateDalsuInfo()
@@ -93,7 +89,7 @@ public class CatchResultUI : MonoBehaviour
         if (caughtText != null)
         {
             caughtText.text =
-                $"{caughtDalsuData.dalsuName}을(를) 잡았다!";
+                caughtDalsuData.dalsuName;
         }
 
         if (dalsuIcon != null)
@@ -234,8 +230,5 @@ public class CatchResultUI : MonoBehaviour
     {
         if (caughtDalsuData == null) return;
         GameObject dalsu = Instantiate(caughtDalsuData.prefab, dalsuParent);
-        dalsu.transform.localScale *= 0.4f;
-        dalsu.transform.localPosition = Vector3.zero;
-        dalsu.transform.localEulerAngles = new Vector3(0, -90, 0);
     }
 }

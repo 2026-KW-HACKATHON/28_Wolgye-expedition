@@ -573,15 +573,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b364150bbe7cf941b3284b3c5a21834, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CatchResultUI
-  dalsuDatas:
-  - {fileID: 11400000, guid: 84d49857080c9ff4f943e7072c0beb8f, type: 2}
-  - {fileID: 11400000, guid: 823a99a085c0dae49961dde3b1e72b7a, type: 2}
-  - {fileID: 11400000, guid: f36042d9b2e292f46b225591b0f3259f, type: 2}
-  - {fileID: 11400000, guid: 16ec7bed5ed88c7498f605b0b8a9520b, type: 2}
+  dalsuDatabase: {fileID: 11400000, guid: cafb53b2f0c5dd74c84cba824fa7d196, type: 2}
   photoPreview: {fileID: 1426059961}
   caughtText: {fileID: 1373482155}
   dalsuIcon: {fileID: 0}
-  dalsuParent: {fileID: 0}
+  dalsuParent: {fileID: 2079803571}
 --- !u!4 &229133459
 Transform:
   m_ObjectHideFlags: 0
@@ -3588,13 +3584,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2079803570}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0.33}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: -0.56, z: 0.33}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
