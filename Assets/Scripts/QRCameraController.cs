@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Android;
 using ZXing;
 using ZXing.Common;
+using UnityEngine.SceneManagement;
 
 public class QRCameraController : MonoBehaviour
 {
@@ -235,26 +236,34 @@ public class QRCameraController : MonoBehaviour
     {
         isScanning = false;
 
-        Debug.Log("QR 행동 실행: " + qrData);
+        string dalsuId = qrData.Trim();
+        Debug.Log("QR 인식 ID: " + dalsuId);
 
-        // TODO: 여기에 QR 내용(qrData)으로 할 행동 추가
-        stampManager.AddStamp();
+        // 씬 이동 후에도 유지되는 static 값에 저장
+        DalsuSceneContext.SelectedDalsuId = dalsuId;
 
-        // 카메라 종료
-        if (webCamTexture != null && webCamTexture.isPlaying)
-        {
-            //webCamTexture.Stop();
-        }
+        if (stampManager != null)
+            stampManager.AddStamp();
 
-        // 카메라 화면 종료
-        if (cameraPreview != null)
-        {
-            //cameraPreview.gameObject.SetActive(false);
-        }
-
-        Debug.Log("카메라 화면 종료");
+        StartCoroutine(LoadARScene());
     }
 
+    IEnumerator LoadARScene()
+    {
+        // AR 씬에서 카메라를 쓰므로 WebCamTexture를 먼저 완전히 해제
+        if (webCamTexture != null)
+        {
+            if (webCamTexture.isPlaying)
+                webCamTexture.Stop();
+
+            if (cameraPreview != null)
+                cameraPreview.texture = null;
+        }
+
+        yield return null; // 카메라 해제 대기
+
+        SceneManager.LoadScene("QR-AR");
+    }
 
     // =========================
     // 종료
