@@ -930,6 +930,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: CloseCouponDetail
       objectReference: {fileID: 0}
+    - target: {fileID: 1277857418961609679, guid: 2d1242bdf3f8dc648907db4c86167d97, type: 3}
+      propertyPath: dalsuData
+      value: 
+      objectReference: {fileID: 11400000, guid: f36042d9b2e292f46b225591b0f3259f, type: 2}
     - target: {fileID: 1602666831789982655, guid: 2d1242bdf3f8dc648907db4c86167d97, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1282,6 +1286,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6333054088933836856, guid: 2d1242bdf3f8dc648907db4c86167d97, type: 3}
+      propertyPath: dalsuData
+      value: 
+      objectReference: {fileID: 11400000, guid: f36042d9b2e292f46b225591b0f3259f, type: 2}
     - target: {fileID: 6420511911220031304, guid: 2d1242bdf3f8dc648907db4c86167d97, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1502,6 +1510,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7597741844969161399, guid: 2d1242bdf3f8dc648907db4c86167d97, type: 3}
+      propertyPath: dalsuData
+      value: 
+      objectReference: {fileID: 11400000, guid: 84d49857080c9ff4f943e7072c0beb8f, type: 2}
     - target: {fileID: 7972519632649339880, guid: 2d1242bdf3f8dc648907db4c86167d97, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 221.84033

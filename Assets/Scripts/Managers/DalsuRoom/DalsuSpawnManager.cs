@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using AYellowpaper.SerializedCollections;
 using System.IO;
 using Newtonsoft.Json;
-using Unity.VisualScripting;
 
 public class OwnDalsus
 {
@@ -19,8 +18,9 @@ public class OwnDalsu
 
 public class DalsuSpawnManager : MonoBehaviour
 {
-    [SerializedDictionary("id", "DalsuData")]
-    public SerializedDictionary<string, DalsuData> dalsuDatas;
+    // [SerializedDictionary("id", "DalsuData")]
+    // public SerializedDictionary<string, DalsuData> dalsuDatas;
+    [SerializeField] private DalsuDatabase dalsuDatabase;
     private OwnDalsus ownDalsus;
 
     [SerializeField] private CameraTargetSwitcher cts;
@@ -88,12 +88,12 @@ public class DalsuSpawnManager : MonoBehaviour
             rot = new Vector3(0, Random.Range(0, 180f), 0);
 
             GameObject parentPrefab = Instantiate(aiParentPrefab, pos, Quaternion.Euler(rot));
-            GameObject prefab = Instantiate(dalsuDatas[dalsu.id].prefab, parentPrefab.transform);
+            GameObject prefab = Instantiate(dalsuDatabase.GetById(dalsu.id).prefab, parentPrefab.transform);
             prefab.transform.localPosition = new Vector3(0, -0.05f, 0);
             prefab.transform.localEulerAngles = new Vector3(0, 90, 0); 
 
             OwnDalsuData odd = parentPrefab.GetComponent<OwnDalsuData>();
-            odd.dalsuData = dalsuDatas[dalsu.id];
+            odd.dalsuData = dalsuDatabase.GetById(dalsu.id);
             odd.ownData = dalsu;
             cts.targets.Add(parentPrefab.transform);
             odd.listIndex = cts.targets.Count - 1;

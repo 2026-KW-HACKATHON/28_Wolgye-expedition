@@ -7104,12 +7104,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DalsuSpawnManager
   dalsuDatas:
     _serializedList:
-    - Key: char_001
-      Value: {fileID: 11400000, guid: db13055d73568d84e8949fe3db5b4fce, type: 2}
-    - Key: char_002
-      Value: {fileID: 11400000, guid: a8b0e1070f02dd648be09ae022435990, type: 2}
-    - Key: char_003
-      Value: {fileID: 11400000, guid: d5ed07e2f54e6ff46881c1da7bf37117, type: 2}
+    - Key: "\uAD11\uC7A5"
+      Value: {fileID: 11400000, guid: 84d49857080c9ff4f943e7072c0beb8f, type: 2}
+    - Key: "\uC0C8\uBE5B"
+      Value: {fileID: 11400000, guid: 823a99a085c0dae49961dde3b1e72b7a, type: 2}
+    - Key: "\uC2DC\uACC4\uD0D1"
+      Value: {fileID: 11400000, guid: f36042d9b2e292f46b225591b0f3259f, type: 2}
+    - Key: "\uAE30\uC219\uC0AC"
+      Value: {fileID: 11400000, guid: 16ec7bed5ed88c7498f605b0b8a9520b, type: 2}
   cts: {fileID: 2062843808}
   dlm: {fileID: 617239877}
   rlm: {fileID: 617239879}

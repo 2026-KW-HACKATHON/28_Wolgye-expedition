@@ -21,6 +21,8 @@ public class CatchResultUI : MonoBehaviour
     [SerializeField]
     private Image dalsuIcon;
 
+    [SerializeField] private Transform dalsuParent;
+
     private string currentTempPhotoPath;
     private Texture2D previewTexture;
 
@@ -29,6 +31,7 @@ public class CatchResultUI : MonoBehaviour
     private void Start()
     {
         LoadResult();
+        SpawnDalsuPrefab();
     }
 
     private void LoadResult()
@@ -220,8 +223,19 @@ public class CatchResultUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    //============================================
+
     public void ClickOkBtn()
     {
         SceneManager.LoadScene("Map");
+    }
+
+    private void SpawnDalsuPrefab()
+    {
+        if (caughtDalsuData == null) return;
+        GameObject dalsu = Instantiate(caughtDalsuData.prefab, dalsuParent);
+        dalsu.transform.localScale *= 0.4f;
+        dalsu.transform.localPosition = Vector3.zero;
+        dalsu.transform.localEulerAngles = new Vector3(0, -90, 0);
     }
 }
