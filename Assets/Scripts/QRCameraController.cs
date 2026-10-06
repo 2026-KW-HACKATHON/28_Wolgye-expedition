@@ -145,7 +145,7 @@ public class QRCameraController : MonoBehaviour
         // =========================
         // 8. 화면 비율 맞추기
         // =========================
-
+        /*
         AspectRatioFitter aspectFitter = cameraPreview.GetComponent<AspectRatioFitter>();
 
         if (aspectFitter == null)
@@ -156,7 +156,7 @@ public class QRCameraController : MonoBehaviour
         aspectFitter.aspectMode = AspectRatioFitter.AspectMode.FitInParent;
         aspectFitter.aspectRatio = (float)webCamTexture.width / webCamTexture.height;
 
-        Debug.Log("카메라 화면 비율: " + aspectFitter.aspectRatio);
+        Debug.Log("카메라 화면 비율: " + aspectFitter.aspectRatio);   */
 
 
         // =========================
