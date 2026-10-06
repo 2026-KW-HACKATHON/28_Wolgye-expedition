@@ -12,9 +12,9 @@ public class DalsuSpawner : MonoBehaviour
     [SerializeField]
     private MapboxMapBehaviour _mapBehaviour;
 
-    [Header("Dalsu Data")]
+    [Header("Dalsu Database")]
     [SerializeField]
-    private DalsuData[] _dalsuDatas;
+    private DalsuDatabase _dalsuDatabase;
 
     [Header("Spawn")]
     [SerializeField]
@@ -38,34 +38,12 @@ public class DalsuSpawner : MonoBehaviour
     [SerializeField]
     private float _rarity3Probability = 10f;
 
-
-    private readonly Dictionary<string, DalsuData> _dalsuDataById = new();
     private readonly Dictionary<string, GameObject> _spawnedDalsu = new();
     private readonly HashSet<string> _caughtDalsu = new();
     private readonly HashSet<string> _spawnAreaEntered = new();
 
     private LatitudeLongitude _currentLocation;
     private bool _hasLocation;
-
-    private void Awake()
-    {
-        foreach (DalsuData data in _dalsuDatas)
-        {
-            if (data == null)
-                continue;
-
-            if (_dalsuDataById.ContainsKey(data.id))
-            {
-                Debug.LogWarning(
-                    $"[DalsuSpawner] 중복된 Dalsu ID가 있습니다. id = {data.id}"
-                );
-
-                continue;
-            }
-
-            _dalsuDataById.Add(data.id, data);
-        }
-    }
 
     public void UpdateLocation(LatitudeLongitude location)
     {
@@ -94,9 +72,9 @@ public class DalsuSpawner : MonoBehaviour
             return;
         }
 
-        if (!_dalsuDataById.TryGetValue(
-                id,
-                out DalsuData caughtDalsu))
+        DalsuData caughtDalsu = _dalsuDatabase.GetById(id);
+
+        if (caughtDalsu == null)
         {
             Debug.LogError(
                 $"[DalsuSpawner] DalsuData를 찾을 수 없습니다. id = {id}"
@@ -137,13 +115,15 @@ public class DalsuSpawner : MonoBehaviour
             return;
         }
 
-        if (_dalsuDatas == null)
+        var dalsuDatas = _dalsuDatabase.GetDalsuDatas();
+
+        if (dalsuDatas == null)
         {
             Debug.LogError("[DalsuSpawner] DalsuData 배열이 null입니다.");
             return;
         }
 
-        foreach (DalsuData data in _dalsuDatas)
+        foreach (DalsuData data in dalsuDatas)
         {
             if (data == null)
             {
@@ -319,7 +299,9 @@ public class DalsuSpawner : MonoBehaviour
 
     public void RefreshSpawnedPositions()
     {
-        foreach (DalsuData data in _dalsuDatas)
+        var dalsuData = _dalsuDatabase.GetDalsuDatas();
+
+        foreach (DalsuData data in dalsuData)
         {
             if (!_spawnedDalsu.TryGetValue(
                     data.id,

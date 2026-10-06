@@ -36,4 +36,9 @@ public class DalsuDatabase : ScriptableObject
 
         return null;
     }
+
+    public List<DalsuData> GetDalsuDatas()
+    {
+        return dalsuList;
+    }
 }

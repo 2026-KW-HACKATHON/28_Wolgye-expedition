@@ -2215,11 +2215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DalsuSpawner
   _mapBehaviour: {fileID: 1316629399}
-  _dalsuDatas:
-  - {fileID: 11400000, guid: 84d49857080c9ff4f943e7072c0beb8f, type: 2}
-  - {fileID: 11400000, guid: 823a99a085c0dae49961dde3b1e72b7a, type: 2}
-  - {fileID: 11400000, guid: f36042d9b2e292f46b225591b0f3259f, type: 2}
-  - {fileID: 11400000, guid: 16ec7bed5ed88c7498f605b0b8a9520b, type: 2}
+  _dalsuDatabase: {fileID: 11400000, guid: cafb53b2f0c5dd74c84cba824fa7d196, type: 2}
   _spawnRoot: {fileID: 0}
   _dalsuMarker: {fileID: 5687499155010298105, guid: a4393658222d7ba4b9f05d797ac1ca98, type: 3}
   _despawnExtraDistance: 10
