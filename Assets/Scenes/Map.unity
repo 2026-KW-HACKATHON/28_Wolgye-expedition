@@ -866,6 +866,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 838421574342500098, guid: 2d1242bdf3f8dc648907db4c86167d97, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -575.4741
+      objectReference: {fileID: 0}
+    - target: {fileID: 838421574342500098, guid: 2d1242bdf3f8dc648907db4c86167d97, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 221.81982
+      objectReference: {fileID: 0}
     - target: {fileID: 1060866114945336719, guid: 2d1242bdf3f8dc648907db4c86167d97, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1477,6 +1485,10 @@ PrefabInstance:
     - target: {fileID: 7513073891168934697, guid: 2d1242bdf3f8dc648907db4c86167d97, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972519632649339880, guid: 2d1242bdf3f8dc648907db4c86167d97, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 221.84033
       objectReference: {fileID: 0}
     - target: {fileID: 8150374392577253612, guid: 2d1242bdf3f8dc648907db4c86167d97, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2233,7 +2245,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MapInformation:
-    _pitch: 45
+    _pitch: 20
     _bearing: 0
     _scale: 1000
     _latitudeLongitudeString: 0, 0

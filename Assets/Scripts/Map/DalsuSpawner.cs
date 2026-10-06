@@ -245,38 +245,45 @@ public class DalsuSpawner : MonoBehaviour
             return;
 
         Vector3 localPosition =
-             _mapBehaviour.MapboxMap.MapInformation
-                 .ConvertLatLngToPosition(location);
+            _mapBehaviour.MapboxMap.MapInformation
+                .ConvertLatLngToPosition(location);
 
-        //Debug.Log(
-        //    $"[DalsuSpawner] Spawn 좌표 확인\n" +
-        //    $"GPS Current : {_currentLocation.Latitude}, {_currentLocation.Longitude}\n" +
-        //    $"GPS Dalsu   : {location.Latitude}, {location.Longitude}\n" +
-        //    $"Distance    : {CalculateDistance(_currentLocation, location):F3}m\n" +
-        //    $"Local Pos   : {localPosition:F5}\n" +
-        //    $"Map Scale   : {_mapBehaviour.MapboxMap.MapInformation.Scale}\n" +
-        //    $"Map Center  : {_mapBehaviour.MapboxMap.MapInformation.CenterMercator}"
-        //);
-
-        GameObject instance = Instantiate(
+        // DalsuMarker 생성
+        GameObject marker = Instantiate(
             _dalsuMarker,
             _mapBehaviour.MapboxMap.UnityContext.MapRoot,
             false
         );
 
-        instance.transform.localPosition = localPosition;
+        marker.transform.localPosition = localPosition;
+
+        // DalsuMarker의 자식으로 실제 Dalsu 생성
+        GameObject dalsu = Instantiate(
+            data.prefab,
+            marker.transform,
+            false
+        );
+
+        dalsu.transform.localPosition = Vector3.zero;
+        dalsu.transform.localRotation =
+        Quaternion.Euler(
+            0f,
+            Random.Range(0f, 360f),
+            0f
+        );
+        dalsu.transform.localScale = Vector3.one;
 
         DalsuController controller =
-            instance.GetComponent<DalsuController>();
+            marker.GetComponent<DalsuController>();
 
         if (controller == null)
         {
             Debug.LogError(
-                $"[DalsuSpawner] DalsuController가 없습니다. " +
-                $"{instance.name}"
+                $"[DalsuSpawner] DalsuMarker에 " +
+                $"DalsuController가 없습니다. {marker.name}"
             );
 
-            Destroy(instance);
+            Destroy(marker);
             return;
         }
 
@@ -292,7 +299,7 @@ public class DalsuSpawner : MonoBehaviour
             ) <= _catchRadius
         );
 
-        _spawnedDalsu.Add(data.id, instance);
+        _spawnedDalsu.Add(data.id, marker);
     }
 
     private void Despawn(DalsuData data)

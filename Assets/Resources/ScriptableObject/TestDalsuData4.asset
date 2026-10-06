@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f5c34f0a8ded4447b1377c811bb08d0, type: 3}
-  m_Name: TestDalsuData3
+  m_Name: TestDalsuData4
   m_EditorClassIdentifier: Assembly-CSharp::DalsuData
-  id: "\uC2DC\uACC4\uD0D1"
+  id: "\uAE30\uC219\uC0AC"
   dalsuName: 
   type: 
   description: 
   rarity: 2
   icon: {fileID: 0}
-  prefab: {fileID: 0}
-  latitude: 37.6199074
-  longitude: 127.0585403
+  prefab: {fileID: 7920453874104579306, guid: 1918f323cafb1a84aa078727f9419a68, type: 3}
+  latitude: 37.6213036
+  longitude: 127.0570755
   spawnRadius: 50
