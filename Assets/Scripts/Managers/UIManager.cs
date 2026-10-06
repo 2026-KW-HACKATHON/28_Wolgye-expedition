@@ -33,6 +33,13 @@ public class UIManager : MonoBehaviour
         couponPanel.SetActive(false);
         couponDetailPanel.SetActive(false);
         qrScanPanel.SetActive(false);
+
+        if (DalsuSceneContext.ShowStampOnMap)
+        {
+            couponPanel.SetActive(true);
+            couponDetailPanel.SetActive(true);
+            DalsuSceneContext.ShowStampOnMap = false;   // 한 번만 켜지도록 소비
+        }
     }
 
     // =========================

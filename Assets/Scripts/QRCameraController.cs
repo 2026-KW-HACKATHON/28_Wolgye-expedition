@@ -145,19 +145,6 @@ public class QRCameraController : MonoBehaviour
         // =========================
         // 8. 화면 비율 맞추기
         // =========================
-        /*
-        AspectRatioFitter aspectFitter = cameraPreview.GetComponent<AspectRatioFitter>();
-
-        if (aspectFitter == null)
-        {
-            aspectFitter = cameraPreview.gameObject.AddComponent<AspectRatioFitter>();
-        }
-
-        aspectFitter.aspectMode = AspectRatioFitter.AspectMode.FitInParent;
-        aspectFitter.aspectRatio = (float)webCamTexture.width / webCamTexture.height;
-
-        Debug.Log("카메라 화면 비율: " + aspectFitter.aspectRatio);   */
-
         AspectRatioFitter aspectFitter = cameraPreview.GetComponent<AspectRatioFitter>();
 
         if (aspectFitter == null)
@@ -273,6 +260,7 @@ public class QRCameraController : MonoBehaviour
 
         // 씬 이동 후에도 유지되는 static 값에 저장
         DalsuSceneContext.SelectedDalsuId = dalsuId;
+        DalsuSceneContext.ShowStampOnMap = true; 
 
         if (stampManager != null)
             stampManager.AddStamp();
