@@ -1,9 +1,10 @@
-using System.Collections.Generic;
 using Mapbox.BaseModule.Data.Vector2d;
 using Mapbox.BaseModule.Map;
 using Mapbox.BaseModule.Utilities;
 using Mapbox.Example.Scripts.Map;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DalsuSpawner : MonoBehaviour
 {
@@ -107,11 +108,11 @@ public class DalsuSpawner : MonoBehaviour
         _spawnedDalsu.Remove(id);
         _caughtDalsu.Add(id);
 
-        DalsuCaptureContext.Set(caughtDalsu);
-
         Destroy(instance);
 
         // TODO: AR 화면으로 이동
+        DalsuSceneContext.SelectedDalsuId = caughtDalsu.id;
+        SceneManager.LoadScene("AR");
     }
 
     private void CheckDalsuSpawn()

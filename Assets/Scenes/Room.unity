@@ -5605,7 +5605,7 @@ MonoBehaviour:
   returnCompletePanel: {fileID: 1210685419}
   cameraModeSwitcher: {fileID: 2062843810}
   spawnManager: {fileID: 1390144150}
-  mainScene: Main
+  mainScene: Map
 --- !u!1 &1040447153
 GameObject:
   m_ObjectHideFlags: 0
