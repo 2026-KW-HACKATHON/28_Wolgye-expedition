@@ -1,16 +1,13 @@
 using System.Collections;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DalsooCaptureManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Camera arCamera;
-
     [SerializeField] private GameObject captureUI;
-
-    [SerializeField] private CatchResultUI catchResultUI;
-
 
     [Header("Catch Condition")]
     [Range(0f, 0.4f)]
@@ -18,9 +15,7 @@ public class DalsooCaptureManager : MonoBehaviour
 
     [SerializeField] private float maxCatchDistance = 5f;
 
-
     private bool isCapturing = false;
-
 
     private void Awake()
     {
@@ -29,7 +24,6 @@ public class DalsooCaptureManager : MonoBehaviour
             arCamera = Camera.main;
         }
     }
-
 
     public void Capture()
     {
@@ -41,15 +35,12 @@ public class DalsooCaptureManager : MonoBehaviour
         );
     }
 
-
     private IEnumerator CaptureRoutine()
     {
         isCapturing = true;
 
-
         DalsooCatchable catchable =
             DalsooCatchable.Current;
-
 
         if (catchable == null)
         {
@@ -61,32 +52,22 @@ public class DalsooCaptureManager : MonoBehaviour
             yield break;
         }
 
-
-        // 달수가 화면 중앙 조건을 만족하는지
         bool catchSuccess =
             IsCatchSuccess(catchable);
 
-
-        // 잡힌 달수의 데이터는
-        // Destroy 전에 미리 보관
+        // Destroy 전에 데이터 보관
         DalsuData caughtData =
             catchable.Data;
 
-
-        // 촬영 버튼 등 UI 숨기기
         if (captureUI != null)
         {
             captureUI.SetActive(false);
         }
 
-
-        // UI가 실제 화면에서 사라진 뒤 캡처
         yield return new WaitForEndOfFrame();
-
 
         Texture2D screenshot =
             ScreenCapture.CaptureScreenshotAsTexture();
-
 
         // ======================================
         // 실패
@@ -98,27 +79,23 @@ public class DalsooCaptureManager : MonoBehaviour
                 "[DALSU] 사진 촬영했지만 잡기 실패"
             );
 
-
             if (screenshot != null)
             {
                 Destroy(screenshot);
             }
-
 
             if (captureUI != null)
             {
                 captureUI.SetActive(true);
             }
 
-
             isCapturing = false;
 
             yield break;
         }
 
-
         // ======================================
-        // 성공
+        // 사진 저장
         // ======================================
 
         string tempPhotoPath =
@@ -126,12 +103,10 @@ public class DalsooCaptureManager : MonoBehaviour
                 screenshot
             );
 
-
         if (screenshot != null)
         {
             Destroy(screenshot);
         }
-
 
         if (string.IsNullOrEmpty(tempPhotoPath))
         {
@@ -139,18 +114,15 @@ public class DalsooCaptureManager : MonoBehaviour
                 "[DALSU] 임시 사진 저장 실패"
             );
 
-
             if (captureUI != null)
             {
                 captureUI.SetActive(true);
             }
 
-
             isCapturing = false;
 
             yield break;
         }
-
 
         Debug.Log(
             caughtData != null
@@ -158,34 +130,30 @@ public class DalsooCaptureManager : MonoBehaviour
                 : "[DALSU] 사진 잡기 성공"
         );
 
+        // ======================================
+        // Context에 결과 정보 저장
+        // ======================================
+
+        DalsuSceneContext.SelectedDalsuId =
+            caughtData.id;
+
+        DalsuSceneContext.CapturedPhotoPath =
+            tempPhotoPath;
 
         // ======================================
-        // 사진 저장 후에 달수 제거
+        // 달수 제거
         // ======================================
 
         catchable.Catch();
 
-
         // ======================================
-        // 결과 UI
+        // Result 씬 이동
         // ======================================
 
-        if (catchResultUI != null)
-        {
-            catchResultUI.Show(
-                tempPhotoPath,
-                caughtData
-            );
-        }
-
+        SceneManager.LoadScene("Reward");
 
         isCapturing = false;
     }
-
-
-    // ==================================================
-    // 잡기 판정
-    // ==================================================
 
     private bool IsCatchSuccess(
         DalsooCatchable catchable)
@@ -197,25 +165,19 @@ public class DalsooCaptureManager : MonoBehaviour
             return false;
         }
 
-
         Vector3 targetPosition =
             catchable.transform.position;
-
 
         Vector3 viewport =
             arCamera.WorldToViewportPoint(
                 targetPosition
             );
 
-
-        // 카메라 뒤쪽
         if (viewport.z <= 0f)
         {
             return false;
         }
 
-
-        // 화면 안쪽 판정
         bool insideScreen =
             viewport.x >= screenMargin
             &&
@@ -225,34 +187,24 @@ public class DalsooCaptureManager : MonoBehaviour
             &&
             viewport.y <= 1f - screenMargin;
 
-
         if (!insideScreen)
         {
             return false;
         }
 
-
-        // 거리 판정
         float distance =
             Vector3.Distance(
                 arCamera.transform.position,
                 targetPosition
             );
 
-
         if (distance > maxCatchDistance)
         {
             return false;
         }
 
-
         return true;
     }
-
-
-    // ==================================================
-    // 임시 사진 저장
-    // ==================================================
 
     private string SaveTemporaryScreenshot(
         Texture2D screenshot)
@@ -262,12 +214,10 @@ public class DalsooCaptureManager : MonoBehaviour
             return null;
         }
 
-
         try
         {
             byte[] pngBytes =
                 screenshot.EncodeToPNG();
-
 
             string path =
                 Path.Combine(
@@ -275,17 +225,14 @@ public class DalsooCaptureManager : MonoBehaviour
                     "last_dalsoo_capture.png"
                 );
 
-
             File.WriteAllBytes(
                 path,
                 pngBytes
             );
 
-
             Debug.Log(
                 $"[DALSU] 임시 사진 저장 완료: {path}"
             );
-
 
             return path;
         }
@@ -297,5 +244,14 @@ public class DalsooCaptureManager : MonoBehaviour
 
             return null;
         }
+    }
+
+
+    //======================================
+    // 이전 버튼
+    //======================================
+    public void ClickBackBtn()
+    {
+        SceneManager.LoadScene("Map");
     }
 }

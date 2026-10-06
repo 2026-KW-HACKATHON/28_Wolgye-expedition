@@ -1,4 +1,11 @@
 public static class DalsuSceneContext
 {
     public static string SelectedDalsuId;
+    public static string CapturedPhotoPath;
+
+    public static void Clear()
+    {
+        SelectedDalsuId = null;
+        CapturedPhotoPath = null;
+    }
 }

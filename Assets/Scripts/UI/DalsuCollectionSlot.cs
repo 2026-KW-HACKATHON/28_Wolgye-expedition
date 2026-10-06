@@ -19,6 +19,11 @@ public class DalsuCollectionSlot : MonoBehaviour
 
     public void Refresh()
     {
+        image = GetComponent<Image>();
+
+        if (image == null)
+            return;
+
         if (dalsuData == null)
             return;
 

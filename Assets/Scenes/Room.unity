@@ -5605,7 +5605,7 @@ MonoBehaviour:
   returnCompletePanel: {fileID: 1210685419}
   cameraModeSwitcher: {fileID: 2062843810}
   spawnManager: {fileID: 1390144150}
-  mainScene: Main
+  mainScene: Map
 --- !u!1 &1040447153
 GameObject:
   m_ObjectHideFlags: 0
@@ -7102,14 +7102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 609f2fd4ea2c7ba4a8a26abbaefb4a97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DalsuSpawnManager
-  dalsuDatas:
-    _serializedList:
-    - Key: char_001
-      Value: {fileID: 11400000, guid: db13055d73568d84e8949fe3db5b4fce, type: 2}
-    - Key: char_002
-      Value: {fileID: 11400000, guid: a8b0e1070f02dd648be09ae022435990, type: 2}
-    - Key: char_003
-      Value: {fileID: 11400000, guid: d5ed07e2f54e6ff46881c1da7bf37117, type: 2}
+  dalsuDatabase: {fileID: 11400000, guid: cafb53b2f0c5dd74c84cba824fa7d196, type: 2}
   cts: {fileID: 2062843808}
   dlm: {fileID: 617239877}
   rlm: {fileID: 617239879}

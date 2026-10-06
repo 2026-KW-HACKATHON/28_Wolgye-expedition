@@ -1,9 +1,10 @@
-using System.Collections.Generic;
 using Mapbox.BaseModule.Data.Vector2d;
 using Mapbox.BaseModule.Map;
 using Mapbox.BaseModule.Utilities;
 using Mapbox.Example.Scripts.Map;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DalsuSpawner : MonoBehaviour
 {
@@ -11,9 +12,9 @@ public class DalsuSpawner : MonoBehaviour
     [SerializeField]
     private MapboxMapBehaviour _mapBehaviour;
 
-    [Header("Dalsu Data")]
+    [Header("Dalsu Database")]
     [SerializeField]
-    private DalsuData[] _dalsuDatas;
+    private DalsuDatabase _dalsuDatabase;
 
     [Header("Spawn")]
     [SerializeField]
@@ -37,34 +38,12 @@ public class DalsuSpawner : MonoBehaviour
     [SerializeField]
     private float _rarity3Probability = 10f;
 
-
-    private readonly Dictionary<string, DalsuData> _dalsuDataById = new();
     private readonly Dictionary<string, GameObject> _spawnedDalsu = new();
     private readonly HashSet<string> _caughtDalsu = new();
     private readonly HashSet<string> _spawnAreaEntered = new();
 
     private LatitudeLongitude _currentLocation;
     private bool _hasLocation;
-
-    private void Awake()
-    {
-        foreach (DalsuData data in _dalsuDatas)
-        {
-            if (data == null)
-                continue;
-
-            if (_dalsuDataById.ContainsKey(data.id))
-            {
-                Debug.LogWarning(
-                    $"[DalsuSpawner] 중복된 Dalsu ID가 있습니다. id = {data.id}"
-                );
-
-                continue;
-            }
-
-            _dalsuDataById.Add(data.id, data);
-        }
-    }
 
     public void UpdateLocation(LatitudeLongitude location)
     {
@@ -93,9 +72,9 @@ public class DalsuSpawner : MonoBehaviour
             return;
         }
 
-        if (!_dalsuDataById.TryGetValue(
-                id,
-                out DalsuData caughtDalsu))
+        DalsuData caughtDalsu = _dalsuDatabase.GetById(id);
+
+        if (caughtDalsu == null)
         {
             Debug.LogError(
                 $"[DalsuSpawner] DalsuData를 찾을 수 없습니다. id = {id}"
@@ -107,11 +86,11 @@ public class DalsuSpawner : MonoBehaviour
         _spawnedDalsu.Remove(id);
         _caughtDalsu.Add(id);
 
-        DalsuCaptureContext.Set(caughtDalsu);
-
         Destroy(instance);
 
         // TODO: AR 화면으로 이동
+        DalsuSceneContext.SelectedDalsuId = caughtDalsu.id;
+        SceneManager.LoadScene("AR");
     }
 
     private void CheckDalsuSpawn()
@@ -136,13 +115,15 @@ public class DalsuSpawner : MonoBehaviour
             return;
         }
 
-        if (_dalsuDatas == null)
+        var dalsuDatas = _dalsuDatabase.GetDalsuDatas();
+
+        if (dalsuDatas == null)
         {
             Debug.LogError("[DalsuSpawner] DalsuData 배열이 null입니다.");
             return;
         }
 
-        foreach (DalsuData data in _dalsuDatas)
+        foreach (DalsuData data in dalsuDatas)
         {
             if (data == null)
             {
@@ -244,38 +225,45 @@ public class DalsuSpawner : MonoBehaviour
             return;
 
         Vector3 localPosition =
-             _mapBehaviour.MapboxMap.MapInformation
-                 .ConvertLatLngToPosition(location);
+            _mapBehaviour.MapboxMap.MapInformation
+                .ConvertLatLngToPosition(location);
 
-        //Debug.Log(
-        //    $"[DalsuSpawner] Spawn 좌표 확인\n" +
-        //    $"GPS Current : {_currentLocation.Latitude}, {_currentLocation.Longitude}\n" +
-        //    $"GPS Dalsu   : {location.Latitude}, {location.Longitude}\n" +
-        //    $"Distance    : {CalculateDistance(_currentLocation, location):F3}m\n" +
-        //    $"Local Pos   : {localPosition:F5}\n" +
-        //    $"Map Scale   : {_mapBehaviour.MapboxMap.MapInformation.Scale}\n" +
-        //    $"Map Center  : {_mapBehaviour.MapboxMap.MapInformation.CenterMercator}"
-        //);
-
-        GameObject instance = Instantiate(
+        // DalsuMarker 생성
+        GameObject marker = Instantiate(
             _dalsuMarker,
             _mapBehaviour.MapboxMap.UnityContext.MapRoot,
             false
         );
 
-        instance.transform.localPosition = localPosition;
+        marker.transform.localPosition = localPosition;
+
+        // DalsuMarker의 자식으로 실제 Dalsu 생성
+        GameObject dalsu = Instantiate(
+            data.prefab,
+            marker.transform,
+            false
+        );
+
+        dalsu.transform.localPosition = Vector3.zero;
+        dalsu.transform.localRotation =
+        Quaternion.Euler(
+            0f,
+            Random.Range(0f, 360f),
+            0f
+        );
+        dalsu.transform.localScale = Vector3.one;
 
         DalsuController controller =
-            instance.GetComponent<DalsuController>();
+            marker.GetComponent<DalsuController>();
 
         if (controller == null)
         {
             Debug.LogError(
-                $"[DalsuSpawner] DalsuController가 없습니다. " +
-                $"{instance.name}"
+                $"[DalsuSpawner] DalsuMarker에 " +
+                $"DalsuController가 없습니다. {marker.name}"
             );
 
-            Destroy(instance);
+            Destroy(marker);
             return;
         }
 
@@ -291,7 +279,7 @@ public class DalsuSpawner : MonoBehaviour
             ) <= _catchRadius
         );
 
-        _spawnedDalsu.Add(data.id, instance);
+        _spawnedDalsu.Add(data.id, marker);
     }
 
     private void Despawn(DalsuData data)
@@ -311,7 +299,9 @@ public class DalsuSpawner : MonoBehaviour
 
     public void RefreshSpawnedPositions()
     {
-        foreach (DalsuData data in _dalsuDatas)
+        var dalsuData = _dalsuDatabase.GetDalsuDatas();
+
+        foreach (DalsuData data in dalsuData)
         {
             if (!_spawnedDalsu.TryGetValue(
                     data.id,
