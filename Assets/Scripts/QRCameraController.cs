@@ -158,6 +158,38 @@ public class QRCameraController : MonoBehaviour
 
         Debug.Log("카메라 화면 비율: " + aspectFitter.aspectRatio);   */
 
+        AspectRatioFitter aspectFitter = cameraPreview.GetComponent<AspectRatioFitter>();
+
+        if (aspectFitter == null)
+        {
+            aspectFitter = cameraPreview.gameObject.AddComponent<AspectRatioFitter>();
+        }
+
+        // 화면에 보이는 모양은 항상 정사각형
+        aspectFitter.aspectMode = AspectRatioFitter.AspectMode.FitInParent;
+        aspectFitter.aspectRatio = 1f;
+
+        // 영상 중 가운데 정사각형 부분만 UV로 잘라서 표시
+        float texW = webCamTexture.width;
+        float texH = webCamTexture.height;
+
+        Rect uv = new Rect(0f, 0f, 1f, 1f);
+
+        if (texW > texH)
+        {
+            // 가로가 더 긴 영상: 좌우를 잘라냄
+            float w = texH / texW;
+            uv = new Rect((1f - w) * 0.5f, 0f, w, 1f);
+        }
+        else if (texH > texW)
+        {
+            // 세로가 더 긴 영상: 위아래를 잘라냄
+            float h = texW / texH;
+            uv = new Rect(0f, (1f - h) * 0.5f, 1f, h);
+        }
+
+        cameraPreview.uvRect = uv;
+
 
         // =========================
         // 9. ZXing 초기화 (인식률 향상 옵션)
