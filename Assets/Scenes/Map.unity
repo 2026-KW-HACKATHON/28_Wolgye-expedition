@@ -1324,11 +1324,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DalsuSpawner
   _mapBehaviour: {fileID: 1316629399}
-  _dalsuDatabase: {fileID: 11400000, guid: cafb53b2f0c5dd74c84cba824fa7d196, type: 2}
-  _spawnRoot: {fileID: 0}
+  _spawnAreas:
+  - {fileID: 11400000, guid: 93310a8174ddaa74b8e0c730ca5dbd01, type: 2}
   _dalsuMarker: {fileID: 5687499155010298105, guid: a4393658222d7ba4b9f05d797ac1ca98, type: 3}
   _despawnExtraDistance: 10
-  _catchRadius: 30
+  _minSpawnDistance: 10
+  _maxPositionAttempts: 30
+  _visibleDistance: 30
   _rarity1Probability: 80
   _rarity2Probability: 40
   _rarity3Probability: 10
@@ -10351,7 +10353,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0.000061035156, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &4316024065947444253
@@ -17508,7 +17510,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: -180, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.00018310547, y: 0}
+  m_AnchoredPosition: {x: -0.00024414062, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 0}
 --- !u!1 &7944843590454578615
