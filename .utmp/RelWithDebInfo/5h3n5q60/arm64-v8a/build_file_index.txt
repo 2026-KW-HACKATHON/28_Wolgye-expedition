@@ -1,0 +1,2 @@
+C:\Git\dev\28_Wolgye-expedition\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\CMakeLists.txt
+C:\Git\dev\28_Wolgye-expedition\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\GameActivity\CMakeLists.txt

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2369638989410391991}
   - component: {fileID: 8138394126665277282}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Table
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,6 +60,10 @@ PrefabInstance:
     - target: {fileID: 6988426106075308570, guid: b22049dea4e6c0940a9329bac4f37af7, type: 3}
       propertyPath: m_Name
       value: Coffee_Table_03
+      objectReference: {fileID: 0}
+    - target: {fileID: 6988426106075308570, guid: b22049dea4e6c0940a9329bac4f37af7, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7759755110562871456, guid: b22049dea4e6c0940a9329bac4f37af7, type: 3}
       propertyPath: m_LocalPosition.x
