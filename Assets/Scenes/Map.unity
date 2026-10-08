@@ -1374,14 +1374,13 @@ MonoBehaviour:
   _mapBehaviour: {fileID: 1316629399}
   _spawnAreas:
   - {fileID: 11400000, guid: 93310a8174ddaa74b8e0c730ca5dbd01, type: 2}
-  _dalsuMarker: {fileID: 5687499155010298105, guid: a4393658222d7ba4b9f05d797ac1ca98, type: 3}
-  _despawnExtraDistance: 10
+  _defaultDalsu: {fileID: 11400000, guid: 0549b35ccda840b4b89921cd9857651e, type: 2}
+  _minSpawnTriggerDistance: 20
+  _maxSpawnTriggerDistance: 40
+  _spawnRadius: 30
   _minSpawnDistance: 10
   _maxPositionAttempts: 30
-  _visibleDistance: 30
-  _rarity1Probability: 80
-  _rarity2Probability: 40
-  _rarity3Probability: 10
+  _dalsuMarker: {fileID: 5687499155010298105, guid: a4393658222d7ba4b9f05d797ac1ca98, type: 3}
 --- !u!4 &1167436372
 Transform:
   m_ObjectHideFlags: 0
