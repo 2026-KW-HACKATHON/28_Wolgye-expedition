@@ -814,6 +814,7 @@ GameObject:
   - component: {fileID: 985205836}
   - component: {fileID: 985205834}
   - component: {fileID: 985205837}
+  - component: {fileID: 985205838}
   m_Layer: 0
   m_Name: MapCamera
   m_TagString: MainCamera
@@ -931,6 +932,14 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!81 &985205838
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985205833}
+  m_Enabled: 1
 --- !u!1 &1096438833
 GameObject:
   m_ObjectHideFlags: 0
@@ -10402,6 +10411,7 @@ GameObject:
   - component: {fileID: 6772987882737183714}
   - component: {fileID: 7942949787424302030}
   - component: {fileID: 388095961848694742}
+  - component: {fileID: 880000001}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -19365,6 +19375,7 @@ GameObject:
   - component: {fileID: 5008409003950189326}
   - component: {fileID: 7316630957793344086}
   - component: {fileID: 2794474064282208973}
+  - component: {fileID: 880000002}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -20696,3 +20707,27 @@ SceneRoots:
   - {fileID: 1710475947}
   - {fileID: 7020973077074319345}
   - {fileID: 257693563}
+--- !u!114 &880000001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4159444325179369709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c6bda591ca94f45ab3f85b71e3cc900, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CurrencyDisplay
+--- !u!114 &880000002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8612549843192986671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c6bda591ca94f45ab3f85b71e3cc900, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CurrencyDisplay

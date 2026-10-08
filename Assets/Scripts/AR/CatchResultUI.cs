@@ -223,7 +223,7 @@ public class CatchResultUI : MonoBehaviour
 
     public void ClickOkBtn()
     {
-        SceneManager.LoadScene("Map");
+        SceneLoader.Instance.Load("Map");
     }
 
     private void SpawnDalsuPrefab()

@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 8bb3bb95441c8664fb0b7924ace3fcd8, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -675,6 +675,7 @@ GameObject:
   - component: {fileID: 136540466}
   - component: {fileID: 136540468}
   - component: {fileID: 136540467}
+  - component: {fileID: 880000001}
   m_Layer: 5
   m_Name: CurrentCoinText
   m_TagString: Untagged
@@ -2752,6 +2753,7 @@ MonoBehaviour:
   cameraModeSwitcher: {fileID: 2062843810}
   spawnManager: {fileID: 1390144150}
   dalsuListManager: {fileID: 617239877}
+  returnRewardText: {fileID: 938776842}
   selectedColor: {r: 0.6, g: 0.8, b: 1, a: 1}
 --- !u!1 &619544961
 GameObject:
@@ -6242,6 +6244,7 @@ GameObject:
   - component: {fileID: 1241865474}
   - component: {fileID: 1241865476}
   - component: {fileID: 1241865475}
+  - component: {fileID: 880000002}
   m_Layer: 5
   m_Name: CurrentCoinText
   m_TagString: Untagged
@@ -8351,7 +8354,7 @@ MonoBehaviour:
   rotateButton: {fileID: 1519148515}
   decoControlPanel: {fileID: 1754148158}
   decoControlCanvas: {fileID: 1754148162}
-  decoControlPanelOffset: {x: 0, y: 5, z: 0}
+  decoControlPanelOffset: {x: 0, y: 10, z: 0}
   retrieveButton: {fileID: 1612851399}
   moveButton: {fileID: 94353491}
   spawnManager: {fileID: 1390144150}
@@ -10958,3 +10961,27 @@ SceneRoots:
   - {fileID: 1617669133}
   - {fileID: 1732991199}
   - {fileID: 508897254}
+--- !u!114 &880000001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136540465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c6bda591ca94f45ab3f85b71e3cc900, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CurrencyDisplay
+--- !u!114 &880000002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1241865473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c6bda591ca94f45ab3f85b71e3cc900, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CurrencyDisplay

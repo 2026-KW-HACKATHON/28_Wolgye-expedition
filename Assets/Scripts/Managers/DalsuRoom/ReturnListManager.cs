@@ -28,6 +28,8 @@ public class ReturnListManager : MonoBehaviour
     [Tooltip("달수 리스트 화면. 삭제된 달수의 항목을 여기서도 같이 지운다.")]
     [SerializeField] private DalsuListManager dalsuListManager;
 
+    [SerializeField] private TMP_Text returnRewardText;
+
     [Tooltip("선택된 항목에 표시할 강조 색상")]
     [SerializeField] private Color selectedColor = new Color(0.6f, 0.8f, 1f, 1f);
 
@@ -83,15 +85,22 @@ public class ReturnListManager : MonoBehaviour
         }
         if (!isSelected) return;
 
-        uiManager.OpenReturnComplete();
+        int totalReward = 0;
 
         for (int i = entries.Count - 1; i >= 0; i--)
         {
             Entry entry = entries[i];
             if (!entry.selected) continue;
 
-            if (spawnManager != null && entry.data != null)
-                spawnManager.RemoveOwnDalsu(entry.data.ownData);
+            if (spawnManager == null || entry.data == null || entry.data.dalsuData == null)
+                continue;
+            if (!spawnManager.RemoveOwnDalsu(entry.data.ownData))
+                continue;
+
+            int reward = entry.data.dalsuData.rarity >= 2 ? 100 : 50;
+            DalsuSaveManager.UseDalsu(entry.data.dalsuData);
+            CurrencyManager.Add(reward);
+            totalReward += reward;
 
             if (dalsuListManager != null)
                 dalsuListManager.RemoveEntry(entry.data); // 달수 리스트 화면의 항목도 같이 제거
@@ -110,6 +119,11 @@ public class ReturnListManager : MonoBehaviour
             Destroy(entry.element); // 리스트 UI 항목 제거
             entries.RemoveAt(i);
         }
+
+        if (totalReward == 0) return;
+        if (returnRewardText != null)
+            returnRewardText.text = $"+ {totalReward:N0}";
+        uiManager.OpenReturnComplete();
 
         if (cameraModeSwitcher != null)
             cameraModeSwitcher.ShowOverview();
