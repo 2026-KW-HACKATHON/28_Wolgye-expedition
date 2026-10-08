@@ -28,10 +28,6 @@ public class PlayerLocation : MonoBehaviour
     [SerializeField]
     private float _moveAnimationDuration = 1f;
 
-    [Header("Debug")]
-    [SerializeField]
-    private TMPro.TextMeshProUGUI _debugText;
-
     [Header("Dalsu")]
     [SerializeField]
     private DalsuSpawner _dalsuSpawner;
@@ -106,6 +102,7 @@ public class PlayerLocation : MonoBehaviour
 
         // Player를 MapRoot에 배치
         SetupPlayer();
+        SceneLoader.NotifySceneReady(); // 여기서 로딩 완료
 
         // 위치 이벤트 연결
         _locationProvider.OnLocationUpdated -= OnLocationUpdated;
@@ -137,8 +134,6 @@ public class PlayerLocation : MonoBehaviour
 
         LatitudeLongitude currentLocation =
             location.LatitudeLongitude;
-
-        UpdateDebugText(currentLocation);
 
         // Mapbox가 아직 준비되지 않았으면 종료
         if (_mapBehaviour.MapboxMap == null)
@@ -249,18 +244,6 @@ public class PlayerLocation : MonoBehaviour
         LatitudeLongitude location)
     {
         _dalsuSpawner?.UpdateLocation(location);
-    }
-
-    private void UpdateDebugText(
-        LatitudeLongitude location)
-    {
-        if (_debugText == null)
-            return;
-
-        _debugText.text =
-            $"GPS Count : {_gpsUpdateCount}\n" +
-            $"Lat : {location.Latitude:F7}\n" +
-            $"Lon : {location.Longitude:F7}";
     }
 
     private float CalculateDistance(

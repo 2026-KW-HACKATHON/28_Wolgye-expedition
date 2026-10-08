@@ -639,7 +639,8 @@ MonoBehaviour:
   progressBar: {fileID: 0}
   fadeDuration: 0.3
   minimumShowTime: 1
-  delayAfterLoad: 2
+  delayAfterLoad: 1
+  sceneReadyTimeout: 10
 --- !u!114 &556883524
 MonoBehaviour:
   m_ObjectHideFlags: 0

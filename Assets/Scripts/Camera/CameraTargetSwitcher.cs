@@ -15,6 +15,12 @@ public class CameraTargetSwitcher : MonoBehaviour
 
     private int currentIndex;
 
+    /// 지금 카메라가 따라가고 있는 대상. (CameraOcclusionFader 등 다른 스크립트가 참조)
+    public Transform CurrentTarget { get; private set; }
+
+    /// 대상을 바꾸는 시네머신 카메라.
+    public CinemachineCamera TargetCamera => cinemachineCamera;
+
     private void Start()
     {
         if (targets != null && targets.Count > 0)
@@ -48,8 +54,9 @@ public class CameraTargetSwitcher : MonoBehaviour
     {
         if (cinemachineCamera == null || target == null) return;
 
+        CurrentTarget = target;
         cinemachineCamera.Follow = target;
         if (alsoLookAt)
             cinemachineCamera.LookAt = target;
     }
-}
+}
