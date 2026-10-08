@@ -814,6 +814,7 @@ GameObject:
   - component: {fileID: 985205836}
   - component: {fileID: 985205834}
   - component: {fileID: 985205837}
+  - component: {fileID: 985205838}
   m_Layer: 0
   m_Name: MapCamera
   m_TagString: MainCamera
@@ -931,6 +932,14 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!81 &985205838
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985205833}
+  m_Enabled: 1
 --- !u!1 &1096438833
 GameObject:
   m_ObjectHideFlags: 0

@@ -198,6 +198,6 @@ public class DalsuRoom_UIManager : MonoBehaviour
 
     public void PrevBtn()
     {
-        SceneManager.LoadScene(mainScene);
+        SceneLoader.Instance.Load(mainScene);
     }
 }
