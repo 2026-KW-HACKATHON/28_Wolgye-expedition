@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8a2c3306e6c50b48a56a7b9b44a5add, type: 3}
-  m_Name: Area_002
+  m_Name: Area_003
   m_EditorClassIdentifier: Assembly-CSharp::DalsuSpawnArea
-  areaId: Area_002
-  areaName: "\uC6B0\uC774\uCC9C\uB2EC\uBE5B\uAC70\uB9AC"
-  latitude: 37.61703618266112
-  longitude: 127.05871960908038
-  radius: 150
+  areaId: Area_003
+  areaName: "\uAD11\uC6B4\uB300\uC2DD\uB2F9\uAC00"
+  latitude: 37.62107191333119
+  longitude: 127.05891470520226
+  radius: 100
   maxSpawnCount: 5
   spawnEntries:
-  - dalsuData: {fileID: 11400000, guid: 0549b35ccda840b4b89921cd9857651e, type: 2}
-    weight: 3
-  - dalsuData: {fileID: 11400000, guid: 97b87d722be56e341820c886673d20cd, type: 2}
-    weight: 4
-  - dalsuData: {fileID: 11400000, guid: 823a99a085c0dae49961dde3b1e72b7a, type: 2}
+  - dalsuData: {fileID: 11400000, guid: 91d807e06ca38e04ba1b47f7a90648fb, type: 2}
     weight: 2
   - dalsuData: {fileID: 11400000, guid: 042e7d62288e9694095845422b87b072, type: 2}
-    weight: 1
+    weight: 3
+  - dalsuData: {fileID: 11400000, guid: cfaf221f604bb5745b3546c3f883b5d8, type: 2}
+    weight: 2
+  - dalsuData: {fileID: 11400000, guid: 930e67ef58107624896ef16cf186bb86, type: 2}
+    weight: 3
