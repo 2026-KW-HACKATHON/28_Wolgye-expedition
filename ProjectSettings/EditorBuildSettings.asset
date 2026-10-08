@@ -27,6 +27,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Reward.unity
     guid: 23bf001a20762a9469a384ca4d770c2c
   m_configObjects:
+    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 5e4ce36c52104af479dca755f5136b73, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 00f646f04ca6b2546b418c01045401e0, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 552e9c94d0d267d49af63048866c7ca3, type: 2}
   m_UseUCBPForAssetBundles: 0
