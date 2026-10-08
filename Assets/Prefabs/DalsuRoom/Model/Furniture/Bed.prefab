@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5216001732900785321}
   - component: {fileID: 6547273698716160476}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,9 +57,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5216001732900785321}
     m_Modifications:
+    - target: {fileID: 137371706182430763, guid: bfea4d366532a7743a5e9bd373db8435, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 859587981478386067, guid: bfea4d366532a7743a5e9bd373db8435, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 3869633881674399100, guid: bfea4d366532a7743a5e9bd373db8435, type: 3}
       propertyPath: m_Name
       value: Bed_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869633881674399100, guid: bfea4d366532a7743a5e9bd373db8435, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4537485682296547270, guid: bfea4d366532a7743a5e9bd373db8435, type: 3}
       propertyPath: m_LocalPosition.x
@@ -100,6 +112,10 @@ PrefabInstance:
     - target: {fileID: 4537485682296547270, guid: bfea4d366532a7743a5e9bd373db8435, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5750746764541764734, guid: bfea4d366532a7743a5e9bd373db8435, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

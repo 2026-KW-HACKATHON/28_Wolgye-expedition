@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9179768623576028714}
   - component: {fileID: 3474685894704927223}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Chair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,7 +62,7 @@ GameObject:
   - component: {fileID: 6931157554973030261}
   - component: {fileID: 1878430039266326696}
   - component: {fileID: 8858554618943450442}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,6 +173,10 @@ PrefabInstance:
     - target: {fileID: 5166716410169907534, guid: 83b854de2af80bd4995e0a8955880207, type: 3}
       propertyPath: m_Name
       value: Chair_17
+      objectReference: {fileID: 0}
+    - target: {fileID: 5166716410169907534, guid: 83b854de2af80bd4995e0a8955880207, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5546197920911164404, guid: 83b854de2af80bd4995e0a8955880207, type: 3}
       propertyPath: m_LocalScale.x
