@@ -106,7 +106,8 @@ public class DalsuSpawner : MonoBehaviour
             // 테스트용 최초 Dalsu Spawn
             // =====================================================
 
-            SpawnTestDalsuNearPlayer();
+            if (_spawnTestDalsuOnFirstLocation)
+                SpawnTestDalsuNearPlayer();
 
             return;
         }
