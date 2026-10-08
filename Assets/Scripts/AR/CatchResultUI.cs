@@ -231,4 +231,18 @@ public class CatchResultUI : MonoBehaviour
         if (caughtDalsuData == null) return;
         GameObject dalsu = Instantiate(caughtDalsuData.prefab, dalsuParent);
     }
+
+
+    public void OnShareButton()
+    {
+        if (string.IsNullOrEmpty(currentTempPhotoPath)
+            || !File.Exists(currentTempPhotoPath))
+        {
+            Debug.LogError("[DALSU] 공유할 사진이 없습니다.");
+            return;
+        }
+
+        AndroidPhotoShare.ShareImage(currentTempPhotoPath);
+    }
+
 }
