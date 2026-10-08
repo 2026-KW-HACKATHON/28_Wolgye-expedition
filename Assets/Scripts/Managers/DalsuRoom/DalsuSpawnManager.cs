@@ -71,12 +71,23 @@ public class DalsuSpawnManager : MonoBehaviour
     }
 
     // 돌려보내기 등에서 특정 소유 달수 레코드를 data.json에서 제거합니다.
-    public void RemoveOwnDalsu(OwnDalsu dalsu)
+    public bool RemoveOwnDalsu(OwnDalsu dalsu)
     {
-        if (dalsu == null || ownDalsus == null || ownDalsus.characters == null) return;
-
-        if (ownDalsus.characters.Remove(dalsu))
+        if (dalsu == null || ownDalsus?.characters == null) return false;
+        int index = ownDalsus.characters.IndexOf(dalsu);
+        if (index < 0) return false;
+        ownDalsus.characters.RemoveAt(index);
+        try
+        {
             SaveOwnDalsuJson();
+            return true;
+        }
+        catch (System.Exception exception)
+        {
+            ownDalsus.characters.Insert(index, dalsu);
+            Debug.LogError($"달수 돌려보내기 저장 실패: {exception.Message}");
+            return false;
+        }
     }
 
     private void SpawnDalsus()
