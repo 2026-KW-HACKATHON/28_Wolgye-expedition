@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: DalsuDatabase
   m_EditorClassIdentifier: Assembly-CSharp::DalsuDatabase
   dalsuList:
-  - {fileID: 11400000, guid: 0549b35ccda840b4b89921cd9857651e, type: 2}
-  - {fileID: 11400000, guid: 97b87d722be56e341820c886673d20cd, type: 2}
   - {fileID: 11400000, guid: 84d49857080c9ff4f943e7072c0beb8f, type: 2}
   - {fileID: 11400000, guid: 823a99a085c0dae49961dde3b1e72b7a, type: 2}
   - {fileID: 11400000, guid: f36042d9b2e292f46b225591b0f3259f, type: 2}
