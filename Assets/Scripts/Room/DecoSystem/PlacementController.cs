@@ -6,11 +6,11 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 
-/// °¡±¸ ¹èÄ¡ ÀÔ·Â Ã³¸®.
-/// °¡±¸ ¼±ÅÃ: UI ¹öÆ° (¼ÒÁöÇÑ °¡±¸ ÇÏ³ª´ç ¹öÆ° ÇÏ³ª) / R: ½Ã°è ¹æÇâ È¸Àü / Q: ¹İ½Ã°è ¹æÇâ È¸Àü
-/// ÁÂÅ¬¸¯: ¹èÄ¡ / ¿ìÅ¬¸¯: Á¦°Å
+/// ê°€êµ¬ ë°°ì¹˜ ì…ë ¥ ì²˜ë¦¬.
+/// ê°€êµ¬ ì„ íƒ: UI ë²„íŠ¼ (ì†Œì§€í•œ ê°€êµ¬ í•˜ë‚˜ë‹¹ ë²„íŠ¼ í•˜ë‚˜) / R: ì‹œê³„ ë°©í–¥ íšŒì „ / Q: ë°˜ì‹œê³„ ë°©í–¥ íšŒì „
+/// ì¢Œí´ë¦­: ë°°ì¹˜ / ìš°í´ë¦­: ì œê±°
 
-// ¼ÒÁöÇÑ °¡±¸ µ¥ÀÌÅÍ (furniture_data.json). DalsuSpawnManagerÀÇ OwnDalsus/OwnDalsu ÆĞÅÏ°ú µ¿ÀÏÇÏ´Ù.
+// ì†Œì§€í•œ ê°€êµ¬ ë°ì´í„° (furniture_data.json). DalsuSpawnManagerì˜ OwnDalsus/OwnDalsu íŒ¨í„´ê³¼ ë™ì¼í•˜ë‹¤.
 public class OwnFurnitures
 {
     public List<OwnFurniture> furnitures;
@@ -19,11 +19,11 @@ public class OwnFurniture
 {
     public string id;
 
-    // ¼ÒÁöÇÑ ¼ö·®. ÀÌ ¼ö·®¸¸Å­¸¸ µ¿½Ã¿¡ ¹èÄ¡ÇÒ ¼ö ÀÖ´Ù.
+    // ì†Œì§€í•œ ìˆ˜ëŸ‰. ì´ ìˆ˜ëŸ‰ë§Œí¼ë§Œ ë™ì‹œì— ë°°ì¹˜í•  ìˆ˜ ìˆë‹¤.
     public int count;
 }
 
-// ¹èÄ¡µÈ °¡±¸ »óÅÂ (placed_furniture.json). ¼¼¼ÇÀÌ ³¡³ªµµ ¹èÄ¡ »óÅÂ°¡ À¯ÁöµÇµµ·Ï ÀúÀå/º¹¿øÇÑ´Ù.
+// ë°°ì¹˜ëœ ê°€êµ¬ ìƒíƒœ (placed_furniture.json). ì„¸ì…˜ì´ ëë‚˜ë„ ë°°ì¹˜ ìƒíƒœê°€ ìœ ì§€ë˜ë„ë¡ ì €ì¥/ë³µì›í•œë‹¤.
 public class PlacedFurnitureSave
 {
     public List<PlacedFurnitureEntry> items = new List<PlacedFurnitureEntry>();
@@ -43,7 +43,7 @@ public class PlacementController : MonoBehaviour
     [SerializeField] private FurnitureData[] furnitureList;
 
     [Header("Footprint Highlight")]
-    [Tooltip("QuadÀÇ Renderer. È¸Àü/Å©±â´Â ÄÚµå¿¡¼­ ¸ÂÃçÁİ´Ï´Ù.")]
+    [Tooltip("Quadì˜ Renderer. íšŒì „/í¬ê¸°ëŠ” ì½”ë“œì—ì„œ ë§ì¶°ì¤ë‹ˆë‹¤.")]
     [SerializeField] private Renderer highlight;
     [SerializeField] private Material validMaterial;
     [SerializeField] private Material invalidMaterial;
@@ -52,45 +52,49 @@ public class PlacementController : MonoBehaviour
     [SerializeField] private PlacementGhost ghost;
 
     [Header("UI")]
-    [Tooltip("¹æ ²Ù¹Ì±â È­¸éÀÌ ¿­·Á ÀÖÀ» ¶§¸¸ ¹èÄ¡ ÀÔ·ÂÀ» ¹Ş´Â´Ù.")]
+    [Tooltip("ë°© ê¾¸ë¯¸ê¸° í™”ë©´ì´ ì—´ë ¤ ìˆì„ ë•Œë§Œ ë°°ì¹˜ ì…ë ¥ì„ ë°›ëŠ”ë‹¤.")]
     [SerializeField] private DalsuRoom_UIManager uiManager;
 
-    [Tooltip("°¡±¸ ¼±ÅÃ ¹öÆ° ÇÁ¸®ÆÕ (Button + ÀÚ½Ä¿¡ TextMeshProUGUI, ¾ÆÀÌÄÜ¿ë Image´Â ÀÚ½Ä ÀÌ¸§ \"Icon\")")]
+    [Tooltip("ê°€êµ¬ ì„ íƒ ë²„íŠ¼ í”„ë¦¬íŒ¹ (Button + ìì‹ì— TextMeshProUGUI, ì•„ì´ì½˜ìš© ImageëŠ” ìì‹ ì´ë¦„ \"Icon\")")]
     [SerializeField] private Button furnitureButtonPrefab;
-    [Tooltip("°¡±¸ ¼±ÅÃ ¹öÆ°µéÀÌ »ı¼ºµÉ ºÎ¸ğ")]
+    [Tooltip("ê°€êµ¬ ì„ íƒ ë²„íŠ¼ë“¤ì´ ìƒì„±ë  ë¶€ëª¨")]
     [SerializeField] private Transform furnitureButtonParent;
 
-    [Tooltip("°¡±¸¸¦ ¼±ÅÃÇßÀ» ¶§¸¸ ³ªÅ¸³ª´Â È¸Àü ¹öÆ° (RÅ°¿Í µ¿ÀÏÇÏ°Ô µ¿ÀÛ)")]
+    [Tooltip("ê°€êµ¬ë¥¼ ì„ íƒí–ˆì„ ë•Œë§Œ ë‚˜íƒ€ë‚˜ëŠ” íšŒì „ ë²„íŠ¼ (Rí‚¤ì™€ ë™ì¼í•˜ê²Œ ë™ì‘)")]
     [SerializeField] private Button rotateButton;
-    [Tooltip("°¡±¸¸¦ ¼±ÅÃÇßÀ» ¶§¸¸ ³ªÅ¸³ª´Â ui ÆĞ³Î")]
+    [Tooltip("ê°€êµ¬ë¥¼ ì„ íƒí–ˆì„ ë•Œë§Œ ë‚˜íƒ€ë‚˜ëŠ” ui íŒ¨ë„")]
     [SerializeField] private GameObject decoControlPanel;
 
-    [Tooltip("decoControlPanelÀÌ ¼ÓÇÑ Canvas. ºñ¿öµÎ¸é decoControlPanel¿¡¼­ ÀÚµ¿À¸·Î Ã£´Â´Ù.")]
+    [Tooltip("decoControlPanelì´ ì†í•œ Canvas. ë¹„ì›Œë‘ë©´ decoControlPanelì—ì„œ ìë™ìœ¼ë¡œ ì°¾ëŠ”ë‹¤.")]
     [SerializeField] private Canvas decoControlCanvas;
-    [Tooltip("°í½ºÆ® ÇÁ¸®ºä À§Ä¡¿¡¼­ ¾ó¸¶³ª ¶³¾îÁø °÷¿¡ ÆĞ³ÎÀ» ¶ç¿ïÁö (¿ùµå ÁÂÇ¥ ¿ÀÇÁ¼Â)")]
+    [Tooltip("ê³ ìŠ¤íŠ¸ í”„ë¦¬ë·° ìœ„ì¹˜ì—ì„œ ì–¼ë§ˆë‚˜ ë–¨ì–´ì§„ ê³³ì— íŒ¨ë„ì„ ë„ìš¸ì§€ (ì›”ë“œ ì¢Œí‘œ ì˜¤í”„ì…‹)")]
     [SerializeField] private Vector3 decoControlPanelOffset = new Vector3(0f, 1.5f, 0f);
-    [Tooltip("Áı¾îµç °¡±¸¸¦ º¸°üÇÔÀ¸·Î µ¹·Áº¸³»´Â È¸¼ö ¹öÆ° (¾ÆÁ÷ ¹èÄ¡ ÀüÀÎ ¼±ÅÃÀ» Ãë¼ÒÇÒ ¶§µµ ¾²ÀÎ´Ù)")]
+    [Tooltip("ì§‘ì–´ë“  ê°€êµ¬ë¥¼ ë³´ê´€í•¨ìœ¼ë¡œ ëŒë ¤ë³´ë‚´ëŠ” íšŒìˆ˜ ë²„íŠ¼ (ì•„ì§ ë°°ì¹˜ ì „ì¸ ì„ íƒì„ ì·¨ì†Œí•  ë•Œë„ ì“°ì¸ë‹¤)")]
     [SerializeField] private Button retrieveButton;
-    [Tooltip("´©¸£°í ÀÖ´Â µ¿¾È¿¡¸¸ ¼±ÅÃÇÑ °¡±¸°¡ ¸¶¿ì½º¸¦ µû¶ó ¿òÁ÷ÀÌ´Â 'ÀÌµ¿' ¹öÆ°")]
+    [Tooltip("ëˆ„ë¥´ê³  ìˆëŠ” ë™ì•ˆì—ë§Œ ì„ íƒí•œ ê°€êµ¬ê°€ ë§ˆìš°ìŠ¤ë¥¼ ë”°ë¼ ì›€ì§ì´ëŠ” 'ì´ë™' ë²„íŠ¼")]
     [SerializeField] private PressHoldButton moveButton;
 
     [Header("Dalsu")]
-    [Tooltip("´Ş¼ö Ä³¸¯ÅÍ¿Í °ãÄ¡´Â Ä­¿¡´Â °¡±¸¸¦ ¹èÄ¡ÇÒ ¼ö ¾ø°Ô ¸·´Â´Ù. (NavMesh ObstacleÀÌ NavMesh Agent¿Í °ãÃÄ À§Ä¡°¡ Æ¢´Â ¹®Á¦ ¹æÁö)")]
+    [Tooltip("ë‹¬ìˆ˜ ìºë¦­í„°ì™€ ê²¹ì¹˜ëŠ” ì¹¸ì—ëŠ” ê°€êµ¬ë¥¼ ë°°ì¹˜í•  ìˆ˜ ì—†ê²Œ ë§‰ëŠ”ë‹¤. (NavMesh Obstacleì´ NavMesh Agentì™€ ê²¹ì³ ìœ„ì¹˜ê°€ íŠ€ëŠ” ë¬¸ì œ ë°©ì§€)")]
     [SerializeField] private DalsuSpawnManager spawnManager;
 
     private OwnFurnitures ownFurnitures;
+
+    // furnitureList ì¸ë±ìŠ¤ â†’ ê·¸ ê°€êµ¬ì˜ ì„ íƒ ë²„íŠ¼. ë‚¨ì€ ìˆ˜ëŸ‰ì´ ì—†ìœ¼ë©´ ë²„íŠ¼ì„ ìˆ¨ê¸´ë‹¤.
+    private readonly Dictionary<int, Button> furnitureButtons = new Dictionary<int, Button>();
+    private bool furnitureButtonsDirty;
     private RectTransform decoControlPanelRect;
 
     private int selectedIndex = -1;
     private int rotation;
 
-    // ÀÌ¹Ì ¹èÄ¡µÇ¾î ÀÖ´Ù°¡ Å¬¸¯À¸·Î ¼±ÅÃÇÑ °¡±¸. nullÀÌ ¾Æ´Ï¸é ¼±ÅÃµÈ »óÅÂ (¾ÆÁ÷ Áı¾îµç °ÍÀº ¾Æ´Ò ¼ö ÀÖ´Ù).
+    // ì´ë¯¸ ë°°ì¹˜ë˜ì–´ ìˆë‹¤ê°€ í´ë¦­ìœ¼ë¡œ ì„ íƒí•œ ê°€êµ¬. nullì´ ì•„ë‹ˆë©´ ì„ íƒëœ ìƒíƒœ (ì•„ì§ ì§‘ì–´ë“  ê²ƒì€ ì•„ë‹ ìˆ˜ ìˆë‹¤).
     private PlacedFurniture editingFurniture;
 
-    // 'ÀÌµ¿' ¹öÆ°À» ´©¸£°í ÀÖ¾î¼­, ½ÇÁ¦·Î °í½ºÆ®/ÇÏÀÌ¶óÀÌÆ®°¡ ¸¶¿ì½º¸¦ µû¶ó´Ù´Ï´Â ÁßÀÎÁö.
+    // 'ì´ë™' ë²„íŠ¼ì„ ëˆ„ë¥´ê³  ìˆì–´ì„œ, ì‹¤ì œë¡œ ê³ ìŠ¤íŠ¸/í•˜ì´ë¼ì´íŠ¸ê°€ ë§ˆìš°ìŠ¤ë¥¼ ë”°ë¼ë‹¤ë‹ˆëŠ” ì¤‘ì¸ì§€.
     private bool isMoving;
 
-    // ÆÈ·¹Æ®¿¡¼­ »õ °¡±¸¸¦ ¼±ÅÃÇÑ ½ÃÁ¡ÀÇ ¸¶¿ì½º À§Ä¡. 'ÀÌµ¿' ¹öÆ°À» ´©¸£±â Àü±îÁö´Â ÀÌ ÀÚ¸®¿¡ °íÁ¤ÇØ¼­ º¸¿©ÁØ´Ù.
+    // íŒ”ë ˆíŠ¸ì—ì„œ ìƒˆ ê°€êµ¬ë¥¼ ì„ íƒí•œ ì‹œì ì˜ ë§ˆìš°ìŠ¤ ìœ„ì¹˜. 'ì´ë™' ë²„íŠ¼ì„ ëˆ„ë¥´ê¸° ì „ê¹Œì§€ëŠ” ì´ ìë¦¬ì— ê³ ì •í•´ì„œ ë³´ì—¬ì¤€ë‹¤.
     private Vector2Int newItemPreviewOrigin;
 
     private FurnitureData Selected =>
@@ -100,7 +104,7 @@ public class PlacementController : MonoBehaviour
                 ? furnitureList[selectedIndex]
                 : null);
 
-    /// ÇöÀç ¼±ÅÃµÈ °¡±¸ÀÇ È¸Àü ¹İ¿µ Å©±â
+    /// í˜„ì¬ ì„ íƒëœ ê°€êµ¬ì˜ íšŒì „ ë°˜ì˜ í¬ê¸°
     private Vector2Int CurrentSize =>
         Selected != null ? GridRotation.RotateSize(Selected.Size, rotation) : Vector2Int.one;
 
@@ -135,7 +139,7 @@ public class PlacementController : MonoBehaviour
         }
     }
 
-    // ¼ÒÁöÇÑ °¡±¸ ¸ñ·Ï(furniture_data.json)À» ÀĞ¾î¿Â´Ù.
+    // ì†Œì§€í•œ ê°€êµ¬ ëª©ë¡(furniture_data.json)ì„ ì½ì–´ì˜¨ë‹¤.
     private void ReadOwnFurnitureJson()
     {
         string path = Path.Combine(Application.persistentDataPath, "furniture_data.json");
@@ -147,14 +151,45 @@ public class PlacementController : MonoBehaviour
         }
         else
         {
-            Debug.Log("°¡±¸ JSON ÆÄÀÏÀÌ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+            CreateDefaultFurnitureJson(path);
         }
 
         if (ownFurnitures == null) ownFurnitures = new OwnFurnitures();
         if (ownFurnitures.furnitures == null) ownFurnitures.furnitures = new List<OwnFurniture>();
     }
 
-    // id·Î FurnitureData¸¦ Ã£´Â´Ù.
+    // furniture_data.jsonì´ ì—†ì„ ë•Œ: furnitureList ì•ìª½ ê°€êµ¬ 5ê°œë¥¼ 1ê°œì”© ì†Œì§€í•œ ìƒíƒœë¡œ íŒŒì¼ì„ ë§Œë“ ë‹¤.
+    // ì•„ë¬´ê²ƒë„ ë°°ì¹˜ë˜ì§€ ì•Šì€ ìƒíƒœë¡œ ì‹œì‘í•´ì•¼ í•˜ë¯€ë¡œ, ì´ì „ì— ë‚¨ì•„ ìˆë˜ placed_furniture.jsonì€ ì§€ìš´ë‹¤.
+    private void CreateDefaultFurnitureJson(string path)
+    {
+        const int defaultFurnitureCount = 5;
+
+        ownFurnitures = new OwnFurnitures { furnitures = new List<OwnFurniture>() };
+
+        if (furnitureList != null)
+        {
+            foreach (FurnitureData data in furnitureList)
+            {
+                if (ownFurnitures.furnitures.Count >= defaultFurnitureCount) break;
+                if (data == null) continue;
+
+                ownFurnitures.furnitures.Add(new OwnFurniture { id = data.Id, count = 1 });
+            }
+        }
+
+        if (ownFurnitures.furnitures.Count < defaultFurnitureCount)
+            Debug.LogWarning($"furnitureListì— ê°€êµ¬ê°€ {ownFurnitures.furnitures.Count}ê°œë¿ì´ë¼ {defaultFurnitureCount}ê°œë¥¼ ì±„ìš°ì§€ ëª»í–ˆìŠµë‹ˆë‹¤.");
+
+        string jsonString = JsonConvert.SerializeObject(ownFurnitures, Formatting.Indented);
+        File.WriteAllText(path, jsonString);
+
+        string placedPath = Path.Combine(Application.persistentDataPath, "placed_furniture.json");
+        if (File.Exists(placedPath)) File.Delete(placedPath);
+
+        Debug.Log($"ê°€êµ¬ JSON íŒŒì¼ì´ ì—†ì–´ ìƒˆë¡œ ìƒì„±í–ˆìŠµë‹ˆë‹¤: {path}");
+    }
+
+    // idë¡œ FurnitureDataë¥¼ ì°¾ëŠ”ë‹¤.
     private FurnitureData FindFurnitureData(string id)
     {
         if (furnitureList == null) return null;
@@ -167,7 +202,7 @@ public class PlacementController : MonoBehaviour
         return null;
     }
 
-    // Áö±İ grid¿¡ ¹èÄ¡µÇ¾î ÀÖ´Â »óÅÂ¸¦ placed_furniture.json¿¡ ÀúÀåÇÑ´Ù.
+    // ì§€ê¸ˆ gridì— ë°°ì¹˜ë˜ì–´ ìˆëŠ” ìƒíƒœë¥¼ placed_furniture.jsonì— ì €ì¥í•œë‹¤.
     private void SavePlacedFurnitureJson()
     {
         if (grid == null) return;
@@ -189,9 +224,13 @@ public class PlacementController : MonoBehaviour
         string path = Path.Combine(Application.persistentDataPath, "placed_furniture.json");
         string jsonString = JsonConvert.SerializeObject(save, Formatting.Indented);
         File.WriteAllText(path, jsonString);
+
+        // ë°°ì¹˜ ìƒíƒœê°€ ë°”ë€Œì—ˆìœ¼ë‹ˆ ë‹¤ìŒ Updateì—ì„œ ë²„íŠ¼ ëª©ë¡ì„ ê°±ì‹ í•œë‹¤.
+        // (íšŒìˆ˜ ì‹œ DestroyëŠ” í”„ë ˆì„ ëì— ì²˜ë¦¬ë˜ë¯€ë¡œ, ë°”ë¡œ ì„¸ì§€ ì•Šê³  ë‹¤ìŒ í”„ë ˆì„ì— ì„¼ë‹¤)
+        furnitureButtonsDirty = true;
     }
 
-    // placed_furniture.json¿¡ ÀúÀåµÈ ¹èÄ¡ »óÅÂ¸¦ grid¿¡ º¹¿øÇÑ´Ù.
+    // placed_furniture.jsonì— ì €ì¥ëœ ë°°ì¹˜ ìƒíƒœë¥¼ gridì— ë³µì›í•œë‹¤.
     private void LoadPlacedFurnitureJson()
     {
         if (grid == null || furnitureList == null) return;
@@ -212,9 +251,11 @@ public class PlacementController : MonoBehaviour
 
             grid.PlaceFurniture(data, new Vector2Int(entry.x, entry.y), entry.rotation);
         }
+
+        RefreshFurnitureButtons();
     }
 
-    // ¼ÒÁöÇÏ°í ÀÖ´Â ¼ö·®À» ¹İÈ¯ÇÑ´Ù. ¼ÒÁöÇÏÁö ¾Ê¾ÒÀ¸¸é 0.
+    // ì†Œì§€í•˜ê³  ìˆëŠ” ìˆ˜ëŸ‰ì„ ë°˜í™˜í•œë‹¤. ì†Œì§€í•˜ì§€ ì•Šì•˜ìœ¼ë©´ 0.
     private int GetOwnedCount(FurnitureData data)
     {
         if (data == null || ownFurnitures?.furnitures == null) return 0;
@@ -227,7 +268,7 @@ public class PlacementController : MonoBehaviour
         return 0;
     }
 
-    // Áö±İ ¾À¿¡ ¹èÄ¡µÇ¾î ÀÖ´Â ¼ö·®À» ¼¾´Ù (grid¿¡ ½ÇÁ¦·Î ³õ¿© ÀÖ´Â °³¼ö ±âÁØ).
+    // ì§€ê¸ˆ ì”¬ì— ë°°ì¹˜ë˜ì–´ ìˆëŠ” ìˆ˜ëŸ‰ì„ ì„¼ë‹¤ (gridì— ì‹¤ì œë¡œ ë†“ì—¬ ìˆëŠ” ê°œìˆ˜ ê¸°ì¤€).
     private int CountPlaced(FurnitureData data)
     {
         if (data == null || grid == null) return 0;
@@ -241,7 +282,7 @@ public class PlacementController : MonoBehaviour
         return count;
     }
 
-    // ¼ÒÁöÇÑ °¡±¸ ÇÏ³ª´ç ¹öÆ°À» ÇÏ³ª¾¿ ¸¸µé¾î Å¬¸¯À¸·Î ¼±ÅÃÇÏ°Ô ÇÑ´Ù.
+    // ì†Œì§€í•œ ê°€êµ¬ í•˜ë‚˜ë‹¹ ë²„íŠ¼ì„ í•˜ë‚˜ì”© ë§Œë“¤ì–´ í´ë¦­ìœ¼ë¡œ ì„ íƒí•˜ê²Œ í•œë‹¤.
     private void CreateFurnitureButtons()
     {
         if (furnitureButtonPrefab == null || furnitureButtonParent == null || furnitureList == null) return;
@@ -249,9 +290,9 @@ public class PlacementController : MonoBehaviour
         for (int i = 0; i < furnitureList.Length; i++)
         {
             FurnitureData data = furnitureList[i];
-            if (GetOwnedCount(data) <= 0) continue; // ¼ÒÁö ¼ö·®ÀÌ ¾øÀ¸¸é ¹öÆ°À» ¸¸µéÁö ¾Ê´Â´Ù.
+            if (GetOwnedCount(data) <= 0) continue; // ì†Œì§€ ìˆ˜ëŸ‰ì´ ì—†ìœ¼ë©´ ë²„íŠ¼ì„ ë§Œë“¤ì§€ ì•ŠëŠ”ë‹¤.
 
-            int index = i; // ¶÷´Ù Ä¸Ã³¿ë Áö¿ª º¯¼ö
+            int index = i; // ëŒë‹¤ ìº¡ì²˜ìš© ì§€ì—­ ë³€ìˆ˜
 
             Button button = Instantiate(furnitureButtonPrefab, furnitureButtonParent);
 
@@ -268,21 +309,39 @@ public class PlacementController : MonoBehaviour
             }
 
             button.onClick.AddListener(() => SelectFurniture(index));
+            furnitureButtons[index] = button;
+        }
+
+        RefreshFurnitureButtons();
+    }
+
+    // ë‚¨ì€ ìˆ˜ëŸ‰(ì†Œì§€ ìˆ˜ëŸ‰ - ë°°ì¹˜ëœ ìˆ˜ëŸ‰)ì´ ìˆëŠ” ê°€êµ¬ì˜ ë²„íŠ¼ë§Œ ë³´ì´ê²Œ í•œë‹¤.
+    private void RefreshFurnitureButtons()
+    {
+        furnitureButtonsDirty = false;
+
+        foreach (KeyValuePair<int, Button> pair in furnitureButtons)
+        {
+            if (pair.Value == null) continue;
+
+            FurnitureData data = furnitureList[pair.Key];
+            bool hasRemaining = CountPlaced(data) < GetOwnedCount(data);
+            pair.Value.gameObject.SetActive(hasRemaining);
         }
     }
 
-    // UI ¹öÆ° OnClick: °¡±¸ ¼±ÅÃ
+    // UI ë²„íŠ¼ OnClick: ê°€êµ¬ ì„ íƒ
     private void SelectFurniture(int index)
     {
         if (furnitureList == null || index < 0 || index >= furnitureList.Length) return;
 
-        ResetSelection(); // ´Ù¸¥ °É °í¸£±â Àü¿¡, ±âÁ¸¿¡ ¼±ÅÃ/ÀÌµ¿ ÁßÀÌ´ø °ÍºÎÅÍ Á¤¸®ÇÑ´Ù.
+        ResetSelection(); // ë‹¤ë¥¸ ê±¸ ê³ ë¥´ê¸° ì „ì—, ê¸°ì¡´ì— ì„ íƒ/ì´ë™ ì¤‘ì´ë˜ ê²ƒë¶€í„° ì •ë¦¬í•œë‹¤.
         selectedIndex = index;
         newItemPreviewOrigin = ComputeGridCenterOrigin();
         Debug.Log($"Selected: {Selected.DisplayName}");
     }
 
-    // ±×¸®µå ÇÑ°¡¿îµ¥(ºñ½ÁÇÑ À§Ä¡)¸¦, ÇöÀç ¼±ÅÃµÈ °¡±¸ Å©±â ±âÁØ footprint originÀ¸·Î º¯È¯ÇÑ´Ù.
+    // ê·¸ë¦¬ë“œ í•œê°€ìš´ë°(ë¹„ìŠ·í•œ ìœ„ì¹˜)ë¥¼, í˜„ì¬ ì„ íƒëœ ê°€êµ¬ í¬ê¸° ê¸°ì¤€ footprint originìœ¼ë¡œ ë³€í™˜í•œë‹¤.
     private Vector2Int ComputeGridCenterOrigin()
     {
         Vector2 centerPoint = new Vector2(grid.Width * 0.5f, grid.Height * 0.5f);
@@ -291,6 +350,8 @@ public class PlacementController : MonoBehaviour
 
     private void Update()
     {
+        if (furnitureButtonsDirty) RefreshFurnitureButtons();
+
         if (uiManager != null && !uiManager.IsDecoratePanelActive)
         {
             ResetSelection();
@@ -316,8 +377,8 @@ public class PlacementController : MonoBehaviour
 
         if (mouse.leftButton.wasPressedThisFrame)
         {
-            // ¾Æ¹«°Íµµ ¼±ÅÃµÇ¾î ÀÖÁö ¾ÊÀ» ¶§ ¹èÄ¡µÈ °¡±¸¸¦ Å¬¸¯ÇÏ¸é ¼±ÅÃ »óÅÂ·Î ÀüÈ¯ÇÑ´Ù.
-            // (¾ÆÁ÷ Áı¾îµéÁö´Â ¾Ê´Â´Ù - ½ÇÁ¦·Î µû¶ó´Ù´Ï°Ô ÇÏ·Á¸é 'ÀÌµ¿' ¹öÆ°À» ´­·¯¾ß ÇÑ´Ù.)
+            // ì•„ë¬´ê²ƒë„ ì„ íƒë˜ì–´ ìˆì§€ ì•Šì„ ë•Œ ë°°ì¹˜ëœ ê°€êµ¬ë¥¼ í´ë¦­í•˜ë©´ ì„ íƒ ìƒíƒœë¡œ ì „í™˜í•œë‹¤.
+            // (ì•„ì§ ì§‘ì–´ë“¤ì§€ëŠ” ì•ŠëŠ”ë‹¤ - ì‹¤ì œë¡œ ë”°ë¼ë‹¤ë‹ˆê²Œ í•˜ë ¤ë©´ 'ì´ë™' ë²„íŠ¼ì„ ëˆŒëŸ¬ì•¼ í•œë‹¤.)
             if (Selected == null && hoveredInBounds) SelectPlacedFurniture(hoveredCell);
         }
         else if (mouse.rightButton.wasPressedThisFrame)
@@ -327,12 +388,12 @@ public class PlacementController : MonoBehaviour
         }
     }
 
-    // °í½ºÆ®/ÇÏÀÌ¶óÀÌÆ®/ÆĞ³Î ¹Ì¸®º¸±â °»½Å. 'ÀÌµ¿' ¹öÆ°À» ´©¸£°í ÀÖÀ» ¶§¸¸ ½ÇÁ¦·Î ¸¶¿ì½º¸¦ µû¶ó°£´Ù.
+    // ê³ ìŠ¤íŠ¸/í•˜ì´ë¼ì´íŠ¸/íŒ¨ë„ ë¯¸ë¦¬ë³´ê¸° ê°±ì‹ . 'ì´ë™' ë²„íŠ¼ì„ ëˆ„ë¥´ê³  ìˆì„ ë•Œë§Œ ì‹¤ì œë¡œ ë§ˆìš°ìŠ¤ë¥¼ ë”°ë¼ê°„ë‹¤.
     private void UpdatePreview(Vector2 point, bool hoveredInBounds)
     {
         if (editingFurniture != null && !isMoving)
         {
-            // ¼±ÅÃ¸¸ µÈ »óÅÂ: °¡±¸´Â ¿ø·¡ ÀÚ¸®¿¡ ±×´ë·Î µÎ°í, ÆĞ³Î¸¸ ±× À§Ä¡ ±ÙÃ³¿¡ ¶ç¿î´Ù.
+            // ì„ íƒë§Œ ëœ ìƒíƒœ: ê°€êµ¬ëŠ” ì›ë˜ ìë¦¬ì— ê·¸ëŒ€ë¡œ ë‘ê³ , íŒ¨ë„ë§Œ ê·¸ ìœ„ì¹˜ ê·¼ì²˜ì— ë„ìš´ë‹¤.
             HidePreview();
             UpdateDecoControlPanel(grid.GetFootprintCenter(editingFurniture.Origin, editingFurniture.Size));
             return;
@@ -340,7 +401,7 @@ public class PlacementController : MonoBehaviour
 
         if (selectedIndex >= 0 && Selected != null && !isMoving)
         {
-            // »õ·Î ¼±ÅÃÇÑ °¡±¸: ¼±ÅÃÇÑ ½ÃÁ¡ÀÇ À§Ä¡¿¡ °íÁ¤ÇØ¼­ º¸¿©ÁØ´Ù ('ÀÌµ¿' ¹öÆ°À» ´­·¯¾ß ¿òÁ÷ÀÌ±â ½ÃÀÛÇÑ´Ù).
+            // ìƒˆë¡œ ì„ íƒí•œ ê°€êµ¬: ì„ íƒí•œ ì‹œì ì˜ ìœ„ì¹˜ì— ê³ ì •í•´ì„œ ë³´ì—¬ì¤€ë‹¤ ('ì´ë™' ë²„íŠ¼ì„ ëˆŒëŸ¬ì•¼ ì›€ì§ì´ê¸° ì‹œì‘í•œë‹¤).
             Vector2Int previewSize = CurrentSize;
             bool previewHasRemaining = CountPlaced(Selected) < GetOwnedCount(Selected);
             bool previewValid = previewHasRemaining
@@ -374,9 +435,9 @@ public class PlacementController : MonoBehaviour
         if (keyboard.qKey.wasPressedThisFrame) rotation = GridRotation.Normalize(rotation - 1);
     }
 
-    // È¸Àü ¹öÆ° OnClick / RÅ°: ½Ã°è ¹æÇâÀ¸·Î 90µµ È¸Àü.
-    // ÀÌ¹Ì ¹èÄ¡µÈ °¡±¸°¡(ÀÌµ¿ ÁßÀÌ ¾Æ´Ñ Ã¤·Î) ¼±ÅÃµÇ¾î ÀÖÀ» ¶§´Â, È­¸é¿¡ º¸ÀÌ´Â °í½ºÆ®°¡ ¾øÀ¸´Ï
-    // È¸ÀüÇØµµ ´«¿¡ º¸ÀÌ´Â º¯È­°¡ ¾øÀ¸¹Ç·Î, ½ÇÁ¦·Î ³õÀÎ °¡±¸ ÀÚÃ¼¸¦ ±× ÀÚ¸®¿¡¼­ ¹Ù·Î È¸Àü½ÃÅ²´Ù.
+    // íšŒì „ ë²„íŠ¼ OnClick / Rí‚¤: ì‹œê³„ ë°©í–¥ìœ¼ë¡œ 90ë„ íšŒì „.
+    // ì´ë¯¸ ë°°ì¹˜ëœ ê°€êµ¬ê°€(ì´ë™ ì¤‘ì´ ì•„ë‹Œ ì±„ë¡œ) ì„ íƒë˜ì–´ ìˆì„ ë•ŒëŠ”, í™”ë©´ì— ë³´ì´ëŠ” ê³ ìŠ¤íŠ¸ê°€ ì—†ìœ¼ë‹ˆ
+    // íšŒì „í•´ë„ ëˆˆì— ë³´ì´ëŠ” ë³€í™”ê°€ ì—†ìœ¼ë¯€ë¡œ, ì‹¤ì œë¡œ ë†“ì¸ ê°€êµ¬ ìì²´ë¥¼ ê·¸ ìë¦¬ì—ì„œ ë°”ë¡œ íšŒì „ì‹œí‚¨ë‹¤.
     private void RotateClockwise()
     {
         int newRotation = GridRotation.Normalize(rotation + 1);
@@ -390,8 +451,8 @@ public class PlacementController : MonoBehaviour
         rotation = newRotation;
     }
 
-    // Á¦ÀÚ¸®(¸¶¿ì½º¸¦ µû¶ó ÀÌµ¿ ÁßÀÌ ¾Æ´Ñ)¿¡¼­ È¸ÀüÀ» ½ÃµµÇÑ´Ù.
-    // È¸ÀüÇÑ Å©±â°¡ ¿· °¡±¸³ª ±×¸®µå °æ°è¿Í °ãÃÄ¼­ µé¾î°¥ ÀÚ¸®°¡ ¾øÀ¸¸é, ¿ø·¡ È¸Àü°ªÀ¸·Î µÇµ¹¸°´Ù.
+    // ì œìë¦¬(ë§ˆìš°ìŠ¤ë¥¼ ë”°ë¼ ì´ë™ ì¤‘ì´ ì•„ë‹Œ)ì—ì„œ íšŒì „ì„ ì‹œë„í•œë‹¤.
+    // íšŒì „í•œ í¬ê¸°ê°€ ì˜† ê°€êµ¬ë‚˜ ê·¸ë¦¬ë“œ ê²½ê³„ì™€ ê²¹ì³ì„œ ë“¤ì–´ê°ˆ ìë¦¬ê°€ ì—†ìœ¼ë©´, ì›ë˜ íšŒì „ê°’ìœ¼ë¡œ ë˜ëŒë¦°ë‹¤.
     private void TryRotateInPlace(int newRotation)
     {
         PlacedFurniture furniture = editingFurniture;
@@ -407,13 +468,13 @@ public class PlacementController : MonoBehaviour
         }
         else
         {
-            grid.Drop(furniture, origin, oldRotation); // È¸ÀüÀÌ ¾È µÇ¸é È¸ÀüÇÏ±â ÀüÀÇ ÀÚ¸®·Î µÇµ¹¸²
-            Debug.Log($"Cannot rotate {furniture.Data.DisplayName}: °ø°£ÀÌ ºÎÁ·ÇÕ´Ï´Ù.");
+            grid.Drop(furniture, origin, oldRotation); // íšŒì „ì´ ì•ˆ ë˜ë©´ íšŒì „í•˜ê¸° ì „ì˜ ìë¦¬ë¡œ ë˜ëŒë¦¼
+            Debug.Log($"Cannot rotate {furniture.Data.DisplayName}: ê³µê°„ì´ ë¶€ì¡±í•©ë‹ˆë‹¤.");
         }
     }
 
-    // ¾Æ¹«°Íµµ ¼±ÅÃµÇ¾î ÀÖÁö ¾ÊÀ» ¶§ ¹èÄ¡µÈ °¡±¸¸¦ Å¬¸¯ÇÏ¸é ¼±ÅÃ »óÅÂ·Î ÀüÈ¯ÇÑ´Ù.
-    // ¾ÆÁ÷ ±×¸®µå¿¡¼­ µé¾î¿Ã¸®Áö´Â ¾Ê´Â´Ù - Á¦ÀÚ¸®¿¡ ±×´ë·Î µĞ Ã¤ ÁÖº¯¿¡ Á¶ÀÛ UI¸¸ ¶ç¿î´Ù.
+    // ì•„ë¬´ê²ƒë„ ì„ íƒë˜ì–´ ìˆì§€ ì•Šì„ ë•Œ ë°°ì¹˜ëœ ê°€êµ¬ë¥¼ í´ë¦­í•˜ë©´ ì„ íƒ ìƒíƒœë¡œ ì „í™˜í•œë‹¤.
+    // ì•„ì§ ê·¸ë¦¬ë“œì—ì„œ ë“¤ì–´ì˜¬ë¦¬ì§€ëŠ” ì•ŠëŠ”ë‹¤ - ì œìë¦¬ì— ê·¸ëŒ€ë¡œ ë‘” ì±„ ì£¼ë³€ì— ì¡°ì‘ UIë§Œ ë„ìš´ë‹¤.
     private void SelectPlacedFurniture(Vector2Int cell)
     {
         PlacedFurniture target = grid.GetFurnitureAt(cell);
@@ -424,7 +485,7 @@ public class PlacementController : MonoBehaviour
         rotation = target.Rotation;
     }
 
-    // 'ÀÌµ¿' ¹öÆ°À» ´©¸£±â ½ÃÀÛÇßÀ» ¶§: ±âÁ¸¿¡ ¹èÄ¡µÅ ÀÖ´ø °¡±¸¶ó¸é ÀÌÁ¦¼­¾ß ±×¸®µå¿¡¼­ µé¾î¿Ã¸°´Ù.
+    // 'ì´ë™' ë²„íŠ¼ì„ ëˆ„ë¥´ê¸° ì‹œì‘í–ˆì„ ë•Œ: ê¸°ì¡´ì— ë°°ì¹˜ë¼ ìˆë˜ ê°€êµ¬ë¼ë©´ ì´ì œì„œì•¼ ê·¸ë¦¬ë“œì—ì„œ ë“¤ì–´ì˜¬ë¦°ë‹¤.
     private void OnMovePressed()
     {
         if (Selected == null) return;
@@ -434,11 +495,11 @@ public class PlacementController : MonoBehaviour
         if (editingFurniture != null)
         {
             grid.PickUp(editingFurniture);
-            editingFurniture.gameObject.SetActive(false); // ½ÇÁ¦ ¿ÀºêÁ§Æ®´Â ¼û±â°í, °í½ºÆ® ÇÁ¸®ºä°¡ ´ë½Å º¸¿©ÁØ´Ù.
+            editingFurniture.gameObject.SetActive(false); // ì‹¤ì œ ì˜¤ë¸Œì íŠ¸ëŠ” ìˆ¨ê¸°ê³ , ê³ ìŠ¤íŠ¸ í”„ë¦¬ë·°ê°€ ëŒ€ì‹  ë³´ì—¬ì¤€ë‹¤.
         }
     }
 
-    // 'ÀÌµ¿' ¹öÆ°¿¡¼­ ¼ÕÀ» ¶ÃÀ» ¶§: ±× ½ÃÁ¡ÀÇ ¸¶¿ì½º À§Ä¡¿¡ ¹èÄ¡/ÀÌµ¿À» È®Á¤ÇÑ´Ù.
+    // 'ì´ë™' ë²„íŠ¼ì—ì„œ ì†ì„ ë—ì„ ë•Œ: ê·¸ ì‹œì ì˜ ë§ˆìš°ìŠ¤ ìœ„ì¹˜ì— ë°°ì¹˜/ì´ë™ì„ í™•ì •í•œë‹¤.
     private void OnMoveReleased()
     {
         if (!isMoving) return;
@@ -467,7 +528,7 @@ public class PlacementController : MonoBehaviour
             if (!moved)
             {
                 Debug.Log($"Cannot move {furniture.Data.DisplayName} to {origin} (rotation {rotation})");
-                grid.Drop(furniture, furniture.Origin, furniture.Rotation); // ½ÇÆĞÇÏ¸é ¿ø·¡ ÀÚ¸®·Î º¹¿ø
+                grid.Drop(furniture, furniture.Origin, furniture.Rotation); // ì‹¤íŒ¨í•˜ë©´ ì›ë˜ ìë¦¬ë¡œ ë³µì›
             }
 
             furniture.gameObject.SetActive(true);
@@ -480,11 +541,11 @@ public class PlacementController : MonoBehaviour
 
             if (!canCommit)
             {
-                Debug.Log($"Cannot place {data.DisplayName}: ±×¸®µå ¹ÛÀÔ´Ï´Ù.");
+                Debug.Log($"Cannot place {data.DisplayName}: ê·¸ë¦¬ë“œ ë°–ì…ë‹ˆë‹¤.");
             }
             else if (CountPlaced(data) >= GetOwnedCount(data))
             {
-                Debug.Log($"{data.DisplayName}: ¼ÒÁö ¼ö·®À» ¸ğµÎ ¹èÄ¡Çß½À´Ï´Ù.");
+                Debug.Log($"{data.DisplayName}: ì†Œì§€ ìˆ˜ëŸ‰ì„ ëª¨ë‘ ë°°ì¹˜í–ˆìŠµë‹ˆë‹¤.");
             }
             else if (grid.PlaceFurniture(data, origin, rotation) == null)
             {
@@ -501,7 +562,7 @@ public class PlacementController : MonoBehaviour
         HidePreview();
     }
 
-    // ¼±ÅÃ/ÀÌµ¿ »óÅÂ¸¦ ¿ÏÀüÈ÷ ÃÊ±âÈ­ÇÑ´Ù. ÀÌµ¿(Áı¾îµç »óÅÂ) ÁßÀÌ¾ú´Ù¸é ¿ø·¡ ÀÚ¸®·Î µÇµ¹¸°´Ù.
+    // ì„ íƒ/ì´ë™ ìƒíƒœë¥¼ ì™„ì „íˆ ì´ˆê¸°í™”í•œë‹¤. ì´ë™(ì§‘ì–´ë“  ìƒíƒœ) ì¤‘ì´ì—ˆë‹¤ë©´ ì›ë˜ ìë¦¬ë¡œ ë˜ëŒë¦°ë‹¤.
     private void ResetSelection()
     {
         if (isMoving && editingFurniture != null)
@@ -515,7 +576,7 @@ public class PlacementController : MonoBehaviour
         selectedIndex = -1;
     }
 
-    // È¸¼ö ¹öÆ° OnClick: ¼±ÅÃµÈ °¡±¸¸¦ º¸°üÇÔÀ¸·Î µ¹·Áº¸³½´Ù (ÆÈ·¹Æ® ¼±ÅÃ ÁßÀÌ¾ú´Ù¸é ¼±ÅÃ¸¸ Ãë¼Ò).
+    // íšŒìˆ˜ ë²„íŠ¼ OnClick: ì„ íƒëœ ê°€êµ¬ë¥¼ ë³´ê´€í•¨ìœ¼ë¡œ ëŒë ¤ë³´ë‚¸ë‹¤ (íŒ”ë ˆíŠ¸ ì„ íƒ ì¤‘ì´ì—ˆë‹¤ë©´ ì„ íƒë§Œ ì·¨ì†Œ).
     private void RetrieveSelected()
     {
         if (editingFurniture != null)
@@ -523,9 +584,9 @@ public class PlacementController : MonoBehaviour
             PlacedFurniture furniture = editingFurniture;
 
             if (isMoving)
-                Destroy(furniture.gameObject); // ÀÌ¹Ì ±×¸®µå¿¡¼­ µé¾î¿Ã·ÁÁø »óÅÂÀÌ¹Ç·Î ¹Ù·Î ÆÄ±«
+                Destroy(furniture.gameObject); // ì´ë¯¸ ê·¸ë¦¬ë“œì—ì„œ ë“¤ì–´ì˜¬ë ¤ì§„ ìƒíƒœì´ë¯€ë¡œ ë°”ë¡œ íŒŒê´´
             else
-                grid.RemoveFurniture(furniture); // ¾ÆÁ÷ ±×¸®µå¿¡ ±×´ë·Î ÀÖÀ¸¹Ç·Î Á¤½ÄÀ¸·Î Á¦°Å
+                grid.RemoveFurniture(furniture); // ì•„ì§ ê·¸ë¦¬ë“œì— ê·¸ëŒ€ë¡œ ìˆìœ¼ë¯€ë¡œ ì •ì‹ìœ¼ë¡œ ì œê±°
 
             isMoving = false;
             editingFurniture = null;
@@ -537,7 +598,7 @@ public class PlacementController : MonoBehaviour
         }
     }
 
-    // °¡±¸°¡ ¼±ÅÃµÇ¾î ÀÖÀ» ¶§¸¸ È¸Àü ¹öÆ°À» º¸¿©ÁØ´Ù.
+    // ê°€êµ¬ê°€ ì„ íƒë˜ì–´ ìˆì„ ë•Œë§Œ íšŒì „ ë²„íŠ¼ì„ ë³´ì—¬ì¤€ë‹¤.
     private void SetRotateButtonActive(bool active)
     {
         if (decoControlPanel != null)
@@ -565,8 +626,8 @@ public class PlacementController : MonoBehaviour
         UpdateDecoControlPanel(pos);
     }
 
-    // decoControlPanelÀ» °í½ºÆ® ÇÁ¸®ºä À§Ä¡(pos + ¿ÀÇÁ¼Â) ±ÙÃ³ÀÇ È­¸é À§Ä¡·Î ¿Å±ä´Ù.
-    // CanvasÀÇ Render Mode(Overlay / Camera / World Space)¿¡ »ó°ü¾øÀÌ µ¿ÀÛÇÏµµ·Ï Ã³¸®ÇÑ´Ù.
+    // decoControlPanelì„ ê³ ìŠ¤íŠ¸ í”„ë¦¬ë·° ìœ„ì¹˜(pos + ì˜¤í”„ì…‹) ê·¼ì²˜ì˜ í™”ë©´ ìœ„ì¹˜ë¡œ ì˜®ê¸´ë‹¤.
+    // Canvasì˜ Render Mode(Overlay / Camera / World Space)ì— ìƒê´€ì—†ì´ ë™ì‘í•˜ë„ë¡ ì²˜ë¦¬í•œë‹¤.
     private void UpdateDecoControlPanel(Vector3 worldPos)
     {
         if (decoControlPanelRect == null || cam == null) return;

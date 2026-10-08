@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 8bb3bb95441c8664fb0b7924ace3fcd8, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -8354,7 +8354,7 @@ MonoBehaviour:
   rotateButton: {fileID: 1519148515}
   decoControlPanel: {fileID: 1754148158}
   decoControlCanvas: {fileID: 1754148162}
-  decoControlPanelOffset: {x: 0, y: 5, z: 0}
+  decoControlPanelOffset: {x: 0, y: 10, z: 0}
   retrieveButton: {fileID: 1612851399}
   moveButton: {fileID: 94353491}
   spawnManager: {fileID: 1390144150}
