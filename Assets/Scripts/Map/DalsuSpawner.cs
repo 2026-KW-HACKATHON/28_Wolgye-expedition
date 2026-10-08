@@ -46,6 +46,13 @@ public class DalsuSpawner : MonoBehaviour
     [SerializeField]
     private GameObject _dalsuMarker;
 
+    [Header("Test Spawn")]
+    [SerializeField]
+    private bool _spawnTestDalsuOnFirstLocation = true;
+
+    [SerializeField]
+    private float _testSpawnDistance = 2f;
+
     // 현재 Map Scene에 실제로 생성되어 있는 GameObject
     // instanceId -> Marker GameObject
     private readonly Dictionary<string, GameObject> _spawnedInstances = new();
@@ -94,6 +101,12 @@ public class DalsuSpawner : MonoBehaviour
             Debug.Log(
                 "[DalsuSpawner] 최초 위치 저장 / " +
                 $"다음 Spawn까지 {_currentSpawnTriggerDistance:F2}m");
+
+            // =====================================================
+            // 테스트용 최초 Dalsu Spawn
+            // =====================================================
+
+            SpawnTestDalsuNearPlayer();
 
             return;
         }
@@ -305,6 +318,88 @@ public class DalsuSpawner : MonoBehaviour
             $"name = {selectedDalsu.dalsuName} / " +
             $"instanceId = {instanceId} / " +
             $"area = {areaId ?? "DEFAULT"} / " +
+            $"lat = {spawnLocation.Latitude:F6} / " +
+            $"lon = {spawnLocation.Longitude:F6}");
+    }
+
+    // =========================================================
+    // Test Spawn
+    // =========================================================
+
+    private void SpawnTestDalsuNearPlayer()
+    {
+        if (StateManager == null)
+        {
+            Debug.LogError(
+                "[DalsuSpawner] " +
+                "DalsuSpawnStateManager가 없습니다.");
+
+            return;
+        }
+
+        if (_defaultDalsu == null)
+        {
+            Debug.LogWarning(
+                "[DalsuSpawner] " +
+                "테스트 Spawn할 Default Dalsu가 없습니다.");
+
+            return;
+        }
+
+        // -----------------------------------------------------
+        // 플레이어 바로 옆 위치
+        // -----------------------------------------------------
+
+        // 북쪽 약 2m 위치
+        const double testDistance = 2.0;
+        const double metersPerDegreeLatitude = 111320.0;
+
+        double latitude =
+            _currentLocation.Latitude +
+            testDistance / metersPerDegreeLatitude;
+
+        double longitude =
+            _currentLocation.Longitude;
+
+        LatitudeLongitude spawnLocation =
+            new LatitudeLongitude(
+                latitude,
+                longitude);
+
+        // -----------------------------------------------------
+        // Spawn 데이터 생성
+        // -----------------------------------------------------
+
+        string instanceId =
+            Guid.NewGuid().ToString();
+
+        DalsuSpawnStateManager.SpawnedDalsuData spawnedDalsu =
+            new DalsuSpawnStateManager.SpawnedDalsuData
+            {
+                instanceId = instanceId,
+                data = _defaultDalsu,
+                areaId = null,
+                location = spawnLocation
+            };
+
+        // -----------------------------------------------------
+        // Persistent State 저장
+        // -----------------------------------------------------
+
+        StateManager.AddDalsu(
+            spawnedDalsu);
+
+        // -----------------------------------------------------
+        // GameObject 생성
+        // -----------------------------------------------------
+
+        SpawnDalsu(
+            spawnedDalsu);
+
+        Debug.Log(
+            "[DalsuSpawner] 테스트 Dalsu Spawn 완료 / " +
+            $"name = {_defaultDalsu.dalsuName} / " +
+            $"distance = {testDistance:F2}m / " +
             $"lat = {spawnLocation.Latitude:F6} / " +
             $"lon = {spawnLocation.Longitude:F6}");
     }

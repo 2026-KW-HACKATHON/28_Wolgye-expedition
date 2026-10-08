@@ -1381,6 +1381,8 @@ MonoBehaviour:
   _minSpawnDistance: 10
   _maxPositionAttempts: 30
   _dalsuMarker: {fileID: 5687499155010298105, guid: a4393658222d7ba4b9f05d797ac1ca98, type: 3}
+  _spawnTestDalsuOnFirstLocation: 0
+  _testSpawnDistance: 2
 --- !u!4 &1167436372
 Transform:
   m_ObjectHideFlags: 0
@@ -2280,6 +2282,30 @@ PrefabInstance:
     - target: {fileID: 1863580249392724595, guid: 6538601228535e94d90763e2fda4901f, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308191134177256496, guid: 6538601228535e94d90763e2fda4901f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308191134177256496, guid: 6538601228535e94d90763e2fda4901f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308191134177256496, guid: 6538601228535e94d90763e2fda4901f, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308191134177256496, guid: 6538601228535e94d90763e2fda4901f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308191134177256496, guid: 6538601228535e94d90763e2fda4901f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 675
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308191134177256496, guid: 6538601228535e94d90763e2fda4901f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 883.80005
       objectReference: {fileID: 0}
     - target: {fileID: 7721151982668306710, guid: 6538601228535e94d90763e2fda4901f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -19278,7 +19304,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
