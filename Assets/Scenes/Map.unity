@@ -803,6 +803,30 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6318066235293461428, guid: 197a6c7b2acf14e4cb0236ffe111767c, type: 3}
   m_PrefabInstance: {fileID: 786550926164218748}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &880000001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4159444325179369709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c6bda591ca94f45ab3f85b71e3cc900, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CurrencyDisplay
+--- !u!114 &880000002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8612549843192986671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c6bda591ca94f45ab3f85b71e3cc900, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CurrencyDisplay
 --- !u!1 &985205833
 GameObject:
   m_ObjectHideFlags: 0
@@ -1383,6 +1407,7 @@ MonoBehaviour:
   _mapBehaviour: {fileID: 1316629399}
   _spawnAreas:
   - {fileID: 11400000, guid: 93310a8174ddaa74b8e0c730ca5dbd01, type: 2}
+  - {fileID: 11400000, guid: b5df5059181fde749b14646596163268, type: 2}
   _defaultDalsu: {fileID: 11400000, guid: 0549b35ccda840b4b89921cd9857651e, type: 2}
   _minSpawnTriggerDistance: 25
   _maxSpawnTriggerDistance: 50
@@ -4683,7 +4708,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24f07d9de08d51e4882c5f67547688dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DalsuCollectionSlot
-  dalsuData: {fileID: 11400000, guid: f36042d9b2e292f46b225591b0f3259f, type: 2}
+  dalsuData: {fileID: 11400000, guid: 97b87d722be56e341820c886673d20cd, type: 2}
 --- !u!1 &1280140793084781096
 GameObject:
   m_ObjectHideFlags: 0
@@ -11598,7 +11623,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2f0e5ff1b758a2148b37e6621b693908, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 19c443842bbcf214888b252f755f4042, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -14281,10 +14306,10 @@ RectTransform:
   - {fileID: 6741262141557978676}
   m_Father: {fileID: 6855417144541399233}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 800}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 483.1437, y: -1744}
+  m_SizeDelta: {x: 906.2874, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6122941634742229522
 CanvasRenderer:
@@ -14436,10 +14461,10 @@ RectTransform:
   - {fileID: 7410841598675994382}
   m_Father: {fileID: 6855417144541399233}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 800}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 483.1437, y: -932}
+  m_SizeDelta: {x: 906.2874, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &6186913483211452198
 RectTransform:
@@ -14638,7 +14663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24f07d9de08d51e4882c5f67547688dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DalsuCollectionSlot
-  dalsuData: {fileID: 11400000, guid: f36042d9b2e292f46b225591b0f3259f, type: 2}
+  dalsuData: {fileID: 0}
 --- !u!224 &6358300097941070811
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15629,7 +15654,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 2168}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!224 &6857535314308477092
 RectTransform:
@@ -17263,7 +17288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24f07d9de08d51e4882c5f67547688dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DalsuCollectionSlot
-  dalsuData: {fileID: 11400000, guid: 84d49857080c9ff4f943e7072c0beb8f, type: 2}
+  dalsuData: {fileID: 11400000, guid: 0549b35ccda840b4b89921cd9857651e, type: 2}
 --- !u!114 &7599943755027599572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20444,7 +20469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24f07d9de08d51e4882c5f67547688dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DalsuCollectionSlot
-  dalsuData: {fileID: 0}
+  dalsuData: {fileID: 11400000, guid: 823a99a085c0dae49961dde3b1e72b7a, type: 2}
 --- !u!114 &9119338698603103135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20520,10 +20545,10 @@ RectTransform:
   - {fileID: 4334110432427335169}
   m_Father: {fileID: 6855417144541399233}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 500}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 483.1437, y: -270}
+  m_SizeDelta: {x: 906.2874, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9171864361442284117
 CanvasRenderer:
@@ -20707,27 +20732,3 @@ SceneRoots:
   - {fileID: 1710475947}
   - {fileID: 7020973077074319345}
   - {fileID: 257693563}
---- !u!114 &880000001
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4159444325179369709}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c6bda591ca94f45ab3f85b71e3cc900, type: 3}
-  m_Name:
-  m_EditorClassIdentifier: Assembly-CSharp::CurrencyDisplay
---- !u!114 &880000002
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8612549843192986671}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c6bda591ca94f45ab3f85b71e3cc900, type: 3}
-  m_Name:
-  m_EditorClassIdentifier: Assembly-CSharp::CurrencyDisplay
