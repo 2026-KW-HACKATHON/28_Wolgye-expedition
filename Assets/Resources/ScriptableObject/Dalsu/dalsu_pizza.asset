@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f5c34f0a8ded4447b1377c811bb08d0, type: 3}
-  m_Name: dalsu_dalbit_coffee
+  m_Name: dalsu_pizza
   m_EditorClassIdentifier: Assembly-CSharp::DalsuData
-  id: Dalsu_003
-  dalsuName: "\uCE74\uD398\uB2EC\uC218"
+  id: Dalsu_006
+  dalsuName: "\uD53C\uC790\uB2EC\uC218"
   type: 
   description: 
-  rarity: 1
-  icon: {fileID: 21300000, guid: 19c443842bbcf214888b252f755f4042, type: 3}
-  prefab: {fileID: 7920453874104579306, guid: 1918f323cafb1a84aa078727f9419a68, type: 3}
+  rarity: 3
+  icon: {fileID: 21300000, guid: 2c50b52bb23d8b74d8b486b60b99b8e1, type: 3}
+  prefab: {fileID: 6636294413883961644, guid: 4a86a91adfcbb144eaab9c73302d4a43, type: 3}
   latitude: 0
   longitude: 0
-  spawnRadius: 50
+  spawnRadius: 30

@@ -19,9 +19,13 @@ MonoBehaviour:
   radius: 100
   maxSpawnCount: 5
   spawnEntries:
+  - dalsuData: {fileID: 11400000, guid: 0549b35ccda840b4b89921cd9857651e, type: 2}
+    weight: 4
   - dalsuData: {fileID: 11400000, guid: 823a99a085c0dae49961dde3b1e72b7a, type: 2}
     weight: 2
-  - dalsuData: {fileID: 11400000, guid: 0549b35ccda840b4b89921cd9857651e, type: 2}
-    weight: 6
   - dalsuData: {fileID: 11400000, guid: 97b87d722be56e341820c886673d20cd, type: 2}
+    weight: 1
+  - dalsuData: {fileID: 11400000, guid: 930e67ef58107624896ef16cf186bb86, type: 2}
     weight: 2
+  - dalsuData: {fileID: 11400000, guid: 91d807e06ca38e04ba1b47f7a90648fb, type: 2}
+    weight: 1
