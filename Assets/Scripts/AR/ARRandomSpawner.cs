@@ -30,12 +30,74 @@ public class ARRandomSpawner : MonoBehaviour
     [SerializeField] private int samplesPerPlane = 30;
     [SerializeField] private float retryInterval = 0.25f;
 
+    [Header("Guide UI")]
+    [SerializeField] private GameObject lookAroundText;
+
+    private bool dalsuFound = false;
+
     private GameObject spawnedObject;
     private GameObject anchorRoot;
 
     private string spawnDalsuId;
     private DalsuData currentDalsuData;
 
+    private void Awake()
+    {
+        dalsuFound = false;
+
+        if (lookAroundText != null)
+        {
+            lookAroundText.SetActive(true);
+        }
+    }
+
+    private void Update()
+    {
+        if (dalsuFound)
+            return;
+
+        // 바닥 인식 중이거나 아직 스폰되지 않았다면
+        // 안내 UI를 그대로 유지
+        if (spawnedObject == null || arCamera == null)
+            return;
+
+        if (IsDalsuInCameraView())
+        {
+            dalsuFound = true;
+
+            if (lookAroundText != null)
+            {
+                lookAroundText.SetActive(false);
+            }
+
+            Debug.Log("[DALSU] 달수 발견! 안내 UI 비활성화");
+        }
+    }
+
+    private bool IsDalsuInCameraView()
+    {
+        Plane[] planes =
+            GeometryUtility.CalculateFrustumPlanes(arCamera);
+
+        Renderer[] renderers =
+            spawnedObject.GetComponentsInChildren<Renderer>();
+
+        foreach (Renderer renderer in renderers)
+        {
+            if (!renderer.enabled ||
+                !renderer.gameObject.activeInHierarchy)
+                continue;
+
+            if (GeometryUtility.TestPlanesAABB(
+                planes,
+                renderer.bounds))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     private IEnumerator Start()
     {
