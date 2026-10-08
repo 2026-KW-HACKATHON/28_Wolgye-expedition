@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f5c34f0a8ded4447b1377c811bb08d0, type: 3}
-  m_Name: dalsu_raccoon
+  m_Name: dalsu_default
   m_EditorClassIdentifier: Assembly-CSharp::DalsuData
-  id: Dalsu_002
+  id: Dalsu_001
   dalsuName: "\uB2EC\uC218"
   type: 
   description: 
-  rarity: 0
-  icon: {fileID: 0}
+  rarity: 1
+  icon: {fileID: 21300000, guid: 2f0e5ff1b758a2148b37e6621b693908, type: 3}
   prefab: {fileID: 6636294413883961644, guid: d806b464e22da3342afc52980c2510dc, type: 3}
   latitude: 0
   longitude: 0
