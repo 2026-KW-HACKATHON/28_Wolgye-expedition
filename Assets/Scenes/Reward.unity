@@ -587,6 +587,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CatchResultUI
   dalsuDatabase: {fileID: 11400000, guid: cafb53b2f0c5dd74c84cba824fa7d196, type: 2}
   photoPreview: {fileID: 1426059961}
+  captureDateText: {fileID: 1426012210}
   caughtText: {fileID: 1373482155}
   dalsuIcon: {fileID: 0}
   dalsuParent: {fileID: 2079803571}
@@ -2872,8 +2873,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uD68D\uB4DD \uC7A5\uC18C : \uB178\uC6D0\uAD6C \uAD11\uC6B4\uB85C 20\n\uC77C\uC2DC
-    :  2026-09-29"
+  m_text: "\uC77C\uC2DC :  2026-09-29"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a9037d2dcddae30499958abb201bad3c, type: 2}
   m_sharedMaterial: {fileID: 3641973764028186982, guid: a9037d2dcddae30499958abb201bad3c, type: 2}

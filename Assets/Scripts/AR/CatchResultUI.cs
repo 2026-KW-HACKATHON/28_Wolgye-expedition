@@ -14,6 +14,8 @@ public class CatchResultUI : MonoBehaviour
     [SerializeField]
     private RawImage photoPreview;
 
+    [SerializeField] private TMP_Text captureDateText;
+
     [Header("Dalsu Info")]
     [SerializeField]
     private TMP_Text caughtText;
@@ -52,6 +54,13 @@ public class CatchResultUI : MonoBehaviour
             photoPath;
 
         LoadPreview(photoPath);
+        if (captureDateText != null && File.Exists(photoPath))
+        {
+            string date = File.GetLastWriteTime(photoPath).ToString(
+                "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+            captureDateText.text = System.Text.RegularExpressions.Regex.Replace(
+                captureDateText.text, @"\d{4}-\d{2}-\d{2}", date);
+        }
         UpdateDalsuInfo();
     }
 
