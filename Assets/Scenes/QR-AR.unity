@@ -363,7 +363,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DalsooCaptureManager
   arCamera: {fileID: 2104272197}
   captureUI: {fileID: 404840491}
-  catchResultUI: {fileID: 0}
   screenMargin: 0.1
   maxCatchDistance: 5
 --- !u!4 &1278055736
@@ -465,7 +464,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1278055735}
         m_TargetAssemblyTypeName: DalsooCaptureManager, Assembly-CSharp
-        m_MethodName: TakePhoto
+        m_MethodName: Capture
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

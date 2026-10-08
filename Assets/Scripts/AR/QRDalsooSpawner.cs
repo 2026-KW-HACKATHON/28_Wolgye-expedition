@@ -37,7 +37,7 @@ public class QRDalsooSpawner : MonoBehaviour
     {
         Debug.LogError("[DALSU] QRSpawner Start 실행됨");
         // QR 머지 전 임시 테스트
-        DalsuSceneContext.SelectedDalsuId = "Dalsu_001";
+        //DalsuSceneContext.SelectedDalsuId = "Dalsu_001";
         SpawnDalsoo();
     }
 
