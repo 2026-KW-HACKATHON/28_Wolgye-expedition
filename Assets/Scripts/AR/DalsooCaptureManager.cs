@@ -252,6 +252,6 @@ public class DalsooCaptureManager : MonoBehaviour
     //======================================
     public void ClickBackBtn()
     {
-        SceneManager.LoadScene("Map");
+        SceneLoader.Instance.Load("Map", waitForSceneReady: true);
     }
 }
