@@ -25,6 +25,7 @@ public class CatchResultUI : MonoBehaviour
 
     private string currentTempPhotoPath;
     private Texture2D previewTexture;
+    private bool photoSaved;
 
     private DalsuData caughtDalsuData;
 
@@ -148,6 +149,12 @@ public class CatchResultUI : MonoBehaviour
 
     public void OnSaveButton()
     {
+        if (photoSaved)
+        {
+            ShowSavedMessage();
+            return;
+        }
+
         if (
             string.IsNullOrEmpty(
                 currentTempPhotoPath))
@@ -169,9 +176,30 @@ public class CatchResultUI : MonoBehaviour
             return;
         }
 
-        DeleteTempPhoto();
+        photoSaved = true;
+        ShowSavedMessage();
+    }
 
-        Close();
+    private void ShowSavedMessage()
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        UnityEngine.Android.AndroidApplication.InvokeOnUIThread(() =>
+        {
+            using var toastClass = new AndroidJavaClass("android.widget.Toast");
+            using var toast = toastClass.CallStatic<AndroidJavaObject>(
+                "makeText", UnityEngine.Android.AndroidApplication.currentActivity,
+                "사진이 저장되었습니다", toastClass.GetStatic<int>("LENGTH_SHORT"));
+            toast.Call("show");
+        });
+#endif
+    }
+
+    private void OnDestroy()
+    {
+        // Keep the photo available for sharing until the result screen is left.
+        DeleteTempPhoto();
+        if (previewTexture != null)
+            Destroy(previewTexture);
     }
 
     public void OnDiscardButton()
@@ -231,4 +259,18 @@ public class CatchResultUI : MonoBehaviour
         if (caughtDalsuData == null) return;
         GameObject dalsu = Instantiate(caughtDalsuData.prefab, dalsuParent);
     }
+
+
+    public void OnShareButton()
+    {
+        if (string.IsNullOrEmpty(currentTempPhotoPath)
+            || !File.Exists(currentTempPhotoPath))
+        {
+            Debug.LogError("[DALSU] 공유할 사진이 없습니다.");
+            return;
+        }
+
+        AndroidPhotoShare.ShareImage(currentTempPhotoPath);
+    }
+
 }
