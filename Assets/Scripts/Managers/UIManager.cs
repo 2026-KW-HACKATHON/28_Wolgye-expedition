@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject couponPanel;
     [SerializeField] private GameObject couponDetailPanel;
     [SerializeField] private GameObject qrScanPanel;
+    [SerializeField] private GameObject minimapPanel;
 
     [Header("Scenes")]
     [SerializeField] private string roomScene = "Room";
@@ -76,6 +77,12 @@ public class UIManager : MonoBehaviour
         qrScanPanel.transform.SetAsLastSibling();
     }
 
+    public void ShowMinimap()
+    {
+        minimapPanel.SetActive(true);
+        minimapPanel.transform.SetAsLastSibling();
+    }
+
     // =========================
     // 뒤로가기
     // =========================
@@ -102,6 +109,11 @@ public class UIManager : MonoBehaviour
     public void CloseQRScan()
     {
         qrScanPanel.SetActive(false);
+    }
+
+    public void CloseMinimap()
+    {
+        minimapPanel.SetActive(false);
     }
 
     // =========================

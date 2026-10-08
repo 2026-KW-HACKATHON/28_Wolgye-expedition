@@ -342,6 +342,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8707442560920960176}
     - target: {fileID: 1447362595294251665, guid: 2b98b95c634013f4f9c42887d5297bb1, type: 3}
+      propertyPath: minimapPanel
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1447362595294251665, guid: 2b98b95c634013f4f9c42887d5297bb1, type: 3}
       propertyPath: collectionPanel
       value: 
       objectReference: {fileID: 8562609858736680787}
