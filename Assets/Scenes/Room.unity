@@ -4699,6 +4699,7 @@ GameObject:
   - component: {fileID: 920270215}
   - component: {fileID: 920270218}
   - component: {fileID: 920270219}
+  - component: {fileID: 920270220}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4856,6 +4857,28 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
+--- !u!114 &920270220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 920270214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 580fb5bbe79be934aa8ebbfc7f64a61d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraOcclusionFader
+  cam: {fileID: 920270216}
+  targetSwitcher: {fileID: 2062843808}
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 128
+  targetHeightOffset: 0.5
+  castRadius: 0.25
+  rescanInterval: 0.5
+  fadedDither: 0.3
+  fadeSpeed: 6
 --- !u!1 &938776840
 GameObject:
   m_ObjectHideFlags: 0
@@ -6143,6 +6166,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7648502956408741331, guid: 51613580bc134aa4d926a4ac7d5a8ec7, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -7628274954807177987, guid: 51613580bc134aa4d926a4ac7d5a8ec7, type: 3}
       propertyPath: m_Materials.Array.size
       value: 2
@@ -6191,6 +6218,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[2]'
       value: 
       objectReference: {fileID: 2100000, guid: cb65b20d406fd9d4da1f8bc8aafd83a0, type: 2}
+    - target: {fileID: 7333631254909853010, guid: 51613580bc134aa4d926a4ac7d5a8ec7, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: -652209905907201759, guid: 51613580bc134aa4d926a4ac7d5a8ec7, type: 3}

@@ -106,6 +106,7 @@ public class PlayerLocation : MonoBehaviour
 
         // Player를 MapRoot에 배치
         SetupPlayer();
+        SceneLoader.NotifySceneReady(); // 여기서 로딩 완료
 
         // 위치 이벤트 연결
         _locationProvider.OnLocationUpdated -= OnLocationUpdated;
