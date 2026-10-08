@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 
@@ -48,6 +50,16 @@ public class DalsuInputController : MonoBehaviour
     private void TryFindDalsu(
         Vector2 screenPosition)
     {
+        // UI 위를 클릭/터치했다면
+        // 뒤쪽의 Dalsu는 클릭하지 않는다.
+        if (IsPointerOverUI(screenPosition))
+        {
+            Debug.Log(
+                $"[DalsuInput] UI 위 터치: {screenPosition}"
+            );
+            return;
+        }
+
         Ray ray =
             _mainCamera.ScreenPointToRay(
                 screenPosition
@@ -73,6 +85,28 @@ public class DalsuInputController : MonoBehaviour
         );
 
         dalsu.Catch();
+    }
+
+    private bool IsPointerOverUI(
+    Vector2 screenPosition)
+    {
+        if (EventSystem.current == null)
+            return false;
+
+        PointerEventData eventData =
+            new PointerEventData(EventSystem.current);
+
+        eventData.position =
+            screenPosition;
+
+        List<RaycastResult> results =
+            new List<RaycastResult>();
+
+        EventSystem.current.RaycastAll(
+            eventData,
+            results);
+
+        return results.Count > 0;
     }
 
 #if UNITY_EDITOR

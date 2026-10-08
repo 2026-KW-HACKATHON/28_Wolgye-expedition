@@ -1383,14 +1383,15 @@ MonoBehaviour:
   _mapBehaviour: {fileID: 1316629399}
   _spawnAreas:
   - {fileID: 11400000, guid: 93310a8174ddaa74b8e0c730ca5dbd01, type: 2}
-  _dalsuMarker: {fileID: 5687499155010298105, guid: a4393658222d7ba4b9f05d797ac1ca98, type: 3}
-  _despawnExtraDistance: 10
+  _defaultDalsu: {fileID: 11400000, guid: 0549b35ccda840b4b89921cd9857651e, type: 2}
+  _minSpawnTriggerDistance: 25
+  _maxSpawnTriggerDistance: 50
+  _spawnRadius: 30
   _minSpawnDistance: 10
   _maxPositionAttempts: 30
-  _visibleDistance: 30
-  _rarity1Probability: 80
-  _rarity2Probability: 40
-  _rarity3Probability: 10
+  _dalsuMarker: {fileID: 5687499155010298105, guid: a4393658222d7ba4b9f05d797ac1ca98, type: 3}
+  _spawnTestDalsuOnFirstLocation: 0
+  _testSpawnDistance: 2
 --- !u!4 &1167436372
 Transform:
   m_ObjectHideFlags: 0
@@ -1724,7 +1725,6 @@ MonoBehaviour:
   _playerAnimator: {fileID: 1880428554}
   _moveThreshold: 2
   _moveAnimationDuration: 1
-  _debugText: {fileID: 0}
   _dalsuSpawner: {fileID: 1167436371}
 --- !u!1 &1710475945
 GameObject:
@@ -1958,18 +1958,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2222615538149900119, guid: fb66f9facad617d4fbdf32ce20130d1b, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.025
-      objectReference: {fileID: 0}
-    - target: {fileID: 2222615538149900119, guid: fb66f9facad617d4fbdf32ce20130d1b, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.025
-      objectReference: {fileID: 0}
-    - target: {fileID: 2222615538149900119, guid: fb66f9facad617d4fbdf32ce20130d1b, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.025
-      objectReference: {fileID: 0}
     - target: {fileID: 2222615538149900119, guid: fb66f9facad617d4fbdf32ce20130d1b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2303,6 +2291,30 @@ PrefabInstance:
     - target: {fileID: 1863580249392724595, guid: 6538601228535e94d90763e2fda4901f, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308191134177256496, guid: 6538601228535e94d90763e2fda4901f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308191134177256496, guid: 6538601228535e94d90763e2fda4901f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308191134177256496, guid: 6538601228535e94d90763e2fda4901f, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308191134177256496, guid: 6538601228535e94d90763e2fda4901f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308191134177256496, guid: 6538601228535e94d90763e2fda4901f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 675
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308191134177256496, guid: 6538601228535e94d90763e2fda4901f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 883.80005
       objectReference: {fileID: 0}
     - target: {fileID: 7721151982668306710, guid: 6538601228535e94d90763e2fda4901f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -19302,7 +19314,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
