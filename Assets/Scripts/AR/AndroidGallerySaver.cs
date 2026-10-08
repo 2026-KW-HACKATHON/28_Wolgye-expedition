@@ -46,7 +46,7 @@ public static class AndroidGallerySaver
 
             values.Call(
                 "put",
-                "display_name",
+                "_display_name",
                 fileName
             );
 
@@ -62,11 +62,8 @@ public static class AndroidGallerySaver
                 "Pictures/Dalsoo"
             );
 
-            values.Call(
-                "put",
-                "is_pending",
-                1
-            );
+            using AndroidJavaObject pending1 = new AndroidJavaObject("java.lang.Integer", 1);
+            values.Call("put", "is_pending", pending1);
 
 
             using AndroidJavaClass media =
@@ -128,11 +125,8 @@ public static class AndroidGallerySaver
             // 저장 완료 처리
             values.Call("clear");
 
-            values.Call(
-                "put",
-                "is_pending",
-                0
-            );
+            using AndroidJavaObject pending0 = new AndroidJavaObject("java.lang.Integer", 0);
+            values.Call("put", "is_pending", pending0);
 
 
             resolver.Call<int>(

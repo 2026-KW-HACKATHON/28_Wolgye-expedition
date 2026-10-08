@@ -37,13 +37,25 @@ public static class AndroidPhotoShare
                     activity.Call<string>("getPackageName")
                     + ".dalsoo.fileprovider";
 
+                // Keep the shared copy even when Save/Discard deletes the original.
+                using var cache = activity.Call<AndroidJavaObject>("getCacheDir");
+                string directory = Path.Combine(cache.Call<string>("getAbsolutePath"), "dalsoo-share");
+                Directory.CreateDirectory(directory);
+                foreach (string previous in Directory.GetFiles(directory, "*.png"))
+                {
+                    if (File.GetLastWriteTimeUtc(previous) < DateTime.UtcNow.AddDays(-7))
+                        File.Delete(previous);
+                }
+                string sharedPath = Path.Combine(directory, Guid.NewGuid().ToString("N") + ".png");
+                File.Copy(imagePath, sharedPath);
+
                 using (AndroidJavaClass provider =
                     new AndroidJavaClass(
                         "androidx.core.content.FileProvider"))
                 using (AndroidJavaClass intentClass =
                     new AndroidJavaClass("android.content.Intent"))
                 using (AndroidJavaObject file =
-                    new AndroidJavaObject("java.io.File", imagePath))
+                    new AndroidJavaObject("java.io.File", sharedPath))
                 {
                     using (AndroidJavaObject uri =
                         provider.CallStatic<AndroidJavaObject>(
@@ -68,6 +80,13 @@ public static class AndroidPhotoShare
                             "addFlags",
                             intentClass.GetStatic<int>(
                                 "FLAG_GRANT_READ_URI_PERMISSION"));
+
+                        using (var clipDataClass = new AndroidJavaClass("android.content.ClipData"))
+                        using (var clipData = clipDataClass.CallStatic<AndroidJavaObject>(
+                            "newRawUri", "Dalsu photo", uri))
+                        {
+                            intent.Call("setClipData", clipData);
+                        }
 
                         using (AndroidJavaObject chooser =
                             intentClass.CallStatic<AndroidJavaObject>(

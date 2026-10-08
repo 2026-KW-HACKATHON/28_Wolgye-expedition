@@ -1,0 +1,10 @@
+apply plugin: 'com.android.library'
+android {
+    namespace 'com.dalsoo.sharing'
+    compileSdk getProperty('unity.compileSdkVersion') as int
+    buildToolsVersion getProperty('unity.buildToolsVersion')
+    defaultConfig { minSdk getProperty('unity.minSdkVersion') as int }
+}
+dependencies {
+    implementation 'androidx.core:core:1.9.0'
+}
