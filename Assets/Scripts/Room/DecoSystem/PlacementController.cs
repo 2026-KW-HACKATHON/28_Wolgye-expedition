@@ -1,10 +1,12 @@
-using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UI;
-using TMPro;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using Newtonsoft.Json;
+using TMPro;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 /// 가구 배치 입력 처리.
 /// 가구 선택: UI 버튼 (소지한 가구 하나당 버튼 하나) / R: 시계 방향 회전 / Q: 반시계 방향 회전
@@ -362,12 +364,12 @@ public class PlacementController : MonoBehaviour
 
         SetRotateButtonActive(Selected != null);
 
-        Mouse mouse = Mouse.current;
-        if (mouse == null) return;
+        Pointer pointer = Pointer.current;
+        if (pointer == null) return;
 
         HandleKeys(Keyboard.current);
 
-        bool hasPoint = grid.TryGetGridPointFromScreen(mouse.position.ReadValue(), cam, out Vector2 point);
+        bool hasPoint = grid.TryGetGridPointFromScreen(pointer.position.ReadValue(), cam, out Vector2 point);
         Vector2Int hoveredCell = hasPoint
             ? new Vector2Int(Mathf.FloorToInt(point.x), Mathf.FloorToInt(point.y))
             : default;
@@ -375,13 +377,11 @@ public class PlacementController : MonoBehaviour
 
         UpdatePreview(point, hoveredInBounds);
 
-        if (mouse.leftButton.wasPressedThisFrame)
+        if (pointer.press.wasPressedThisFrame)
         {
-            // 아무것도 선택되어 있지 않을 때 배치된 가구를 클릭하면 선택 상태로 전환한다.
-            // (아직 집어들지는 않는다 - 실제로 따라다니게 하려면 '이동' 버튼을 눌러야 한다.)
             if (Selected == null && hoveredInBounds) SelectPlacedFurniture(hoveredCell);
         }
-        else if (mouse.rightButton.wasPressedThisFrame)
+        else if (Mouse.current != null && Mouse.current.rightButton.wasPressedThisFrame)  // 우클릭은 마우스 전용
         {
             if (editingFurniture != null || selectedIndex >= 0) ResetSelection();
             else if (hoveredInBounds) TryRemove(hoveredCell);
@@ -509,8 +509,8 @@ public class PlacementController : MonoBehaviour
         bool canCommit = false;
         Vector2Int origin = default;
 
-        if (Mouse.current != null &&
-            grid.TryGetGridPointFromScreen(Mouse.current.position.ReadValue(), cam, out Vector2 point))
+        if (Pointer.current != null &&
+            grid.TryGetGridPointFromScreen(Pointer.current.position.ReadValue(), cam, out Vector2 point))
         {
             Vector2Int hoveredCell = new Vector2Int(Mathf.FloorToInt(point.x), Mathf.FloorToInt(point.y));
             if (grid.InBounds(hoveredCell))
