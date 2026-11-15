@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8a2c3306e6c50b48a56a7b9b44a5add, type: 3}
+  m_Name: Area_007
+  m_EditorClassIdentifier: Assembly-CSharp::DalsuSpawnArea
+  areaId: Area_007
+  areaName: "\uAD11\uC6B4\uB300\uB204\uB9AC\uAD00"
+  latitude: 37.62047413343246
+  longitude: 127.0549426201458
+  radius: 100
+  maxSpawnCount: 5
+  spawnEntries:
+  - dalsuData: {fileID: 11400000, guid: 97b87d722be56e341820c886673d20cd, type: 2}
+    weight: 5
+  - dalsuData: {fileID: 11400000, guid: 91d807e06ca38e04ba1b47f7a90648fb, type: 2}
+    weight: 2
+  - dalsuData: {fileID: 11400000, guid: 0549b35ccda840b4b89921cd9857651e, type: 2}
+    weight: 3

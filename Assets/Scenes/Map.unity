@@ -1409,12 +1409,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 93310a8174ddaa74b8e0c730ca5dbd01, type: 2}
   - {fileID: 11400000, guid: b5df5059181fde749b14646596163268, type: 2}
   - {fileID: 11400000, guid: add35273835bae145982f6eb240a32a4, type: 2}
+  - {fileID: 11400000, guid: 99355a74808d599479535aeb5d69dd71, type: 2}
+  - {fileID: 11400000, guid: 2b12063f66c1bab42b0af1fe7a9627eb, type: 2}
+  - {fileID: 11400000, guid: 141e978e31e42974fa10cc3291580497, type: 2}
+  - {fileID: 11400000, guid: f27e9c6e88e579545a77b608f0e43af4, type: 2}
+  - {fileID: 11400000, guid: dd3990321d1275b40a35df0784b272db, type: 2}
   _defaultDalsu: {fileID: 11400000, guid: 0549b35ccda840b4b89921cd9857651e, type: 2}
   _minSpawnTriggerDistance: 25
   _maxSpawnTriggerDistance: 50
   _spawnRadius: 30
   _minSpawnDistance: 10
   _maxPositionAttempts: 30
+  _despawnDistance: 50
   _dalsuMarker: {fileID: 5687499155010298105, guid: a4393658222d7ba4b9f05d797ac1ca98, type: 3}
   _spawnTestDalsuOnFirstLocation: 0
   _testSpawnDistance: 2
