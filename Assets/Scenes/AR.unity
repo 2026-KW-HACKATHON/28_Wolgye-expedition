@@ -216,6 +216,7 @@ RectTransform:
   - {fileID: 1289376201}
   - {fileID: 1231894325}
   - {fileID: 2137705697}
+  - {fileID: 1637914325}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -944,6 +945,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1595835553}
+  - component: {fileID: 1595835554}
   m_Layer: 0
   m_Name: GameManagers
   m_TagString: Untagged
@@ -968,6 +970,40 @@ Transform:
   - {fileID: 1278055736}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1595835554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1595835552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e3ff357a33a763408a81a0abc6c5fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AROffscreenArrow
+  arCamera: {fileID: 2104272197}
+  canvasRect: {fileID: 404840495}
+  arrowRect: {fileID: 1637914325}
+  glowColor: {r: 1, g: 0.94161224, b: 0.5803922, a: 1}
+  maxOpacity: 0.551
+  glowThickness: 70
+  edgeInset: 0
+  pulsePeriod: 2.8
+  fadeSpeed: 4
+  enableSparkles: 1
+  sparklesPerEdge: 200
+  sparkleSize: 5
+  sparkleEdgeOffset: 1
+  sparkleSpread: 58.1
+  sparkleNearEdgeBias: 6
+  sparkleMaxOpacity: 1
+  sparklePeriod: 0.6
+  sparkleColor: {r: 1, g: 0.9487194, b: 0, a: 1}
+  targetHeight: 0.5
+  viewportInset: 0.05
+  edgeResponseRange: 0.2
+  previewTopLeft: 0
 --- !u!1 &1637914324
 GameObject:
   m_ObjectHideFlags: 0
@@ -976,48 +1012,73 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1637914326}
   - component: {fileID: 1637914325}
-  m_Layer: 0
-  m_Name: S25 Live Scene
+  - component: {fileID: 1637914327}
+  - component: {fileID: 1637914326}
+  m_Layer: 5
+  m_Name: "\uC704"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1637914325
+  m_IsActive: 0
+--- !u!224 &1637914325
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637914324}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 404840495}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1637914326
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1637914324}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ebd436306370534eb145aad88920b9c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::S25LiveSceneAR
-  rearCameraManager: {fileID: 0}
-  arSession: {fileID: 0}
-  frontCameraId: 1
-  trackingMaxDimension: 960
-  monsterTexture: {fileID: 0}
-  monsterHeightMeters: 0.16
---- !u!4 &1637914326
-Transform:
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1637914327
+CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1637914324}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_CullTransparentMesh: 1
 --- !u!1 &1885253020
 GameObject:
   m_ObjectHideFlags: 0
@@ -1048,6 +1109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ARRandomSpawner
   planeManager: {fileID: 1514759036}
+  raycastManager: {fileID: 1514759035}
   arCamera: {fileID: 2104272197}
   dalsuRuntimePrefab: {fileID: 2430921579833938177, guid: 88141f530c2686a448fc89bb17fe0972, type: 3}
   dalsuDatabase: {fileID: 11400000, guid: cafb53b2f0c5dd74c84cba824fa7d196, type: 2}
@@ -1059,7 +1121,26 @@ MonoBehaviour:
   screenPadding: 0.05
   samplesPerPlane: 30
   retryInterval: 0.25
+  allowVisiblePlaneAfterSeconds: 3
+  useDepthAfterSeconds: 5
+  useVirtualFloorAfterSeconds: 7
+  maximumBelowCamera: 2.2
+  maximumDepthFloorTilt: 30
+  depthHeightTolerance: 0.25
+  minimumConsistentDepthHits: 2
+  estimatedCameraHeight: 1.3
+  estimatedForwardDistance: 1.5
+  estimatedMovementRadius: 0.75
+  upgradeSearchInterval: 0.5
+  maxUpgradeHorizontalShift: 0.75
+  maxUpgradeVerticalShift: 1
+  upgradeMoveSpeed: 0.8
+  upgradePlaneEdgeMargin: 0.15
   lookAroundText: {fileID: 2137705696}
+  offscreenArrow: {fileID: 1595835554}
+  confirmVisibleDuration: 0.35
+  useTestDalsu: 1
+  testDalsuId: Dalsu_001
 --- !u!4 &1885253022
 Transform:
   m_ObjectHideFlags: 0
@@ -1514,4 +1595,3 @@ SceneRoots:
   - {fileID: 1595835553}
   - {fileID: 404840495}
   - {fileID: 786809442}
-  - {fileID: 1637914326}

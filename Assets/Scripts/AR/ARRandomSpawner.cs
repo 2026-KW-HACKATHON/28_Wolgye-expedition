@@ -71,6 +71,10 @@ public class ARRandomSpawner : MonoBehaviour
     [SerializeField] private AROffscreenArrow offscreenArrow;
     [SerializeField] private float confirmVisibleDuration = 0.35f;
 
+    [Header("Test Dalsu")]
+    [SerializeField] private bool useTestDalsu = true;
+    [SerializeField] private string testDalsuId = "";
+
     private readonly List<ARRaycastHit> raycastHits = new List<ARRaycastHit>();
     private readonly List<Vector3> depthCandidates = new List<Vector3>();
 
@@ -107,8 +111,21 @@ public class ARRandomSpawner : MonoBehaviour
             yield break;
         }
 
+        // 이전 씬에서 선택한 달수 ID
         string selectedId = DalsuSceneContext.SelectedDalsuId;
+
+        // 테스트 모드이거나 선택한 달수가 없으면 기본 달수 사용
+        if (useTestDalsu || string.IsNullOrEmpty(selectedId))
+        {
+            selectedId = testDalsuId;
+
+            Debug.Log(
+                $"[DALSU] 테스트 달수 사용: {selectedId}"
+            );
+        }
+
         currentDalsuData = dalsuDatabase.GetById(selectedId);
+
         if (currentDalsuData == null)
         {
             Debug.LogError($"[DALSU] 데이터 검색 실패: {selectedId}");
