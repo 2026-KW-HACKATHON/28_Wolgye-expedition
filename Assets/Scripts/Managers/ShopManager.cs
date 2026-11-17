@@ -112,7 +112,19 @@ public class ShopManager : MonoBehaviour
     {
         if (!CurrencyManager.TrySpend(item.Price)) return;
 
-        // TODO: 인벤토리에 추가
-        Debug.Log($"구매 완료: {item.DisplayName}");
+        switch (item.Category)
+        {
+            case ShopCategory.Furniture:
+                FurnitureInventory.Add(item.Id, 1);
+                break;
+            case ShopCategory.Character:
+                Debug.Log($"캐릭터 구매: {item.Id}");   // TODO
+                break;
+            case ShopCategory.RoomExpand:
+                Debug.Log($"방 확장 구매: {item.Id}");   // TODO
+                break;
+        }
+
+        purchasePopup.OpenNotice($"{item.DisplayName} 구매 완료!", item.Icon);
     }
 }

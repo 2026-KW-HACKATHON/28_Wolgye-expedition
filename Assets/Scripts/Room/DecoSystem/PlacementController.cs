@@ -110,6 +110,25 @@ public class PlacementController : MonoBehaviour
     private Vector2Int CurrentSize =>
         Selected != null ? GridRotation.RotateSize(Selected.Size, rotation) : Vector2Int.one;
 
+    // ★ 추가: 상점에서 구매했을 때 소지 목록을 다시 읽기 위한 이벤트 구독
+    private void OnEnable()
+    {
+        FurnitureInventory.InventoryChanged += OnInventoryChanged;
+    }
+
+    // ★ 추가
+    private void OnDisable()
+    {
+        FurnitureInventory.InventoryChanged -= OnInventoryChanged;
+    }
+
+    // ★ 추가: 파일에서 소지 목록을 다시 읽고, 다음 프레임에 버튼을 갱신한다.
+    private void OnInventoryChanged()
+    {
+        ReadOwnFurnitureJson();
+        furnitureButtonsDirty = true;
+    }
+
     private void Start()
     {
         if (cam == null) cam = Camera.main;
@@ -284,7 +303,8 @@ public class PlacementController : MonoBehaviour
         return count;
     }
 
-    // 소지한 가구 하나당 버튼을 하나씩 만들어 클릭으로 선택하게 한다.
+    // 가구 하나당 버튼을 하나씩 만들어 클릭으로 선택하게 한다.
+    // (소지 수량이 0인 가구는 RefreshFurnitureButtons가 숨기므로, 상점에서 새로 산 가구도 바로 나타난다.)
     private void CreateFurnitureButtons()
     {
         if (furnitureButtonPrefab == null || furnitureButtonParent == null || furnitureList == null) return;
@@ -292,7 +312,7 @@ public class PlacementController : MonoBehaviour
         for (int i = 0; i < furnitureList.Length; i++)
         {
             FurnitureData data = furnitureList[i];
-            if (GetOwnedCount(data) <= 0) continue; // 소지 수량이 없으면 버튼을 만들지 않는다.
+            if (data == null) continue; // ★ 변경: 소지 수량 체크(GetOwnedCount <= 0) 대신 null 체크만
 
             int index = i; // 람다 캡처용 지역 변수
 
