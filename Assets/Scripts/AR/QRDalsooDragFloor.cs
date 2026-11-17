@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.XR.ARFoundation;
 
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
@@ -24,6 +25,10 @@ public class QRDalsooDragFloor : MonoBehaviour
     [SerializeField, Range(0f, 85f)] private float maxVisualTiltDegrees = 75f;
     [SerializeField, Min(0f)] private float visualTiltFollowSpeed = 12f;
     [SerializeField] private bool invertVisualTilt = false;
+
+    [Header("QR Initial Screen Centering")]
+    [SerializeField, Range(0f, 4f)] private float initialCenterHoldSeconds = 1.2f;
+    [SerializeField, Range(0.2f, 8f)] private float maxCenterWaitSeconds = 3f;
 
     [Header("Two Finger Pinch (QR Only)")]
     [SerializeField] private bool enablePinchZoom = true;
@@ -55,6 +60,11 @@ public class QRDalsooDragFloor : MonoBehaviour
     private Vector3 touchOffset;
     private Transform visualPitchPivot;
     private DalsuActor actor;
+    private bool initialCenterActive;
+    private float initialCenterStartTime;
+    private float initialCenterMinEndTime;
+    private float initialCenterMaxEndTime;
+    private bool hasArCameraManager;
 
     private enum PointerPhase { None, Began, Holding, Ended }
 
@@ -70,7 +80,9 @@ public class QRDalsooDragFloor : MonoBehaviour
         bool verticalFacing = true,
         float maxTilt = 75f,
         float tiltSmoothSpeed = 12f,
-        bool reverseTilt = false)
+        bool reverseTilt = false,
+        float centerHoldSeconds = 1.2f,
+        float maxTrackingWaitSeconds = 3f)
     {
         arCamera = camera != null ? camera : Camera.main;
         modelRotationOffsetY = modelYawOffset;
@@ -84,6 +96,10 @@ public class QRDalsooDragFloor : MonoBehaviour
         maxVisualTiltDegrees = Mathf.Clamp(maxTilt, 0f, 85f);
         visualTiltFollowSpeed = Mathf.Max(0f, tiltSmoothSpeed);
         invertVisualTilt = reverseTilt;
+        initialCenterHoldSeconds = Mathf.Max(0f, centerHoldSeconds);
+        maxCenterWaitSeconds = Mathf.Max(initialCenterHoldSeconds, maxTrackingWaitSeconds);
+        hasArCameraManager = arCamera != null &&
+            arCamera.GetComponent<ARCameraManager>() != null;
         actor = GetComponent<DalsuActor>();
         behavior = GetComponent<DalsooBehaviorController>();
 
@@ -101,30 +117,49 @@ public class QRDalsooDragFloor : MonoBehaviour
             virtualFloor = holder.transform;
         }
 
-        // 애니메이션 및 바닥 계산은 수평 루트를 그대로 사용하고,
-        // 모델만 중심 피벗을 기준으로 살짝 기울인다.
+        // QR Actor.SetupQR()이 행동을 꺼둔 상태에서 들어온다.
+        // 먼저 일시정지하고 중심 정렬이 끝난 후에만 행동을 시작한다.
+        behavior.SetTrackingPresentationPaused(true);
+
+        // 이동 루트는 수평 그대로 두고 모델의 시각적 기울기만 제어한다.
         CreateVisualPitchPivot();
         ApplyVisualTilt(true);
 
         if (centerModelOnSpawn)
         {
-            CenterVisibleModelOnScreen();
-            transform.rotation = GetFaceCameraRotation(arCamera, transform.position, modelRotationOffsetY);
+            // 카메라 프레임이 준비된 다음 딱 한 번만 중앙 보정합니다.
+            // 매 프레임 Renderer.bounds를 다시 읽으면 특히 SkinnedMeshRenderer가
+            // 있는 모델에서 AR 배경 렌더링이 끊길 수 있습니다.
+            transform.rotation = GetFaceCameraRotation(
+                arCamera, transform.position, modelRotationOffsetY);
             ApplyVisualTilt(true);
             CenterVisibleModelOnScreen();
         }
+
+        initialCenterActive = false;
 
         if (addColliderIfMissing)
             EnsureDragCollider();
 
         configured = true;
-        RebuildFloorAndResume();
+        RebuildFloorAndResume(true);
     }
 
     private void LateUpdate()
     {
         if (!configured || arCamera == null) return;
+        // 시각적 얼굴 각도만 보정. 캐릭터 루트의 화면 중앙 위치는 매 프레임 이동시키지 않습니다.
         ApplyVisualTilt(false);
+    }
+
+    private void FinishInitialCentering(bool resumeBehavior)
+    {
+        if (!initialCenterActive) return;
+        initialCenterActive = false;
+        // 최종 정렬 위치 기준으로 가상 바닥 중심을 다시 계산한다.
+        if (resumeBehavior)
+            RebuildFloorAndResume(true);
+        Debug.Log("[DALSU][QR] 화면 중앙 정렬 완료 / 사용자 조작 허용");
     }
 
     // QR용 시각 피벗: 모델의 바운딩 중심을 기준으로 기울여 발에서 통째로 꺾이지 않게 한다.
@@ -178,19 +213,57 @@ public class QRDalsooDragFloor : MonoBehaviour
         }
     }
 
-    // Prefab 루트가 아니라 실제 렌더링되는 모델의 중심을 화면 (0.5, 0.5)에 둔다.
+    // Renderer의 3D 바운딩 박스 중심은 카메라의 화면 중심과 다를 수 있다.
+    // 렌더러 8개 꼭짓점을 실제 화면으로 투영한 후, 화면상 직사각형의
+    // 중심이 (0.5,0.5)가 되도록 루트를 평행 이동한다.
     private void CenterVisibleModelOnScreen()
     {
-        Bounds bounds;
-        if (arCamera == null || !TryGetVisibleBounds(out bounds)) return;
+        if (arCamera == null || actor == null || actor.ModelInstance == null) return;
 
-        Vector3 viewport = arCamera.WorldToViewportPoint(bounds.center);
-        if (viewport.z <= arCamera.nearClipPlane) return;
+        Renderer[] renderers = actor.ModelInstance.GetComponentsInChildren<Renderer>(true);
+        if (renderers == null || renderers.Length == 0) return;
 
-        Vector3 desiredCenter = arCamera.ViewportToWorldPoint(
-            new Vector3(0.5f, 0.5f, viewport.z));
-        transform.position += desiredCenter - bounds.center;
-        Debug.Log("[DALSU][QR] 달수 모델 중심 화면 중앙 배치 완료");
+        // 원근 차이 때문에 1회 이동으로는 오차가 남을 수 있다.
+        for (int iteration = 0; iteration < 3; iteration++)
+        {
+            Vector2 min = new Vector2(float.PositiveInfinity, float.PositiveInfinity);
+            Vector2 max = new Vector2(float.NegativeInfinity, float.NegativeInfinity);
+            float totalDepth = 0f;
+            int pointCount = 0;
+
+            foreach (Renderer renderer in renderers)
+            {
+                if (renderer == null || !renderer.enabled ||
+                    !renderer.gameObject.activeInHierarchy) continue;
+
+                Bounds b = renderer.bounds;
+                for (int c = 0; c < 8; c++)
+                {
+                    Vector3 worldCorner = new Vector3(
+                        (c & 1) == 0 ? b.min.x : b.max.x,
+                        (c & 2) == 0 ? b.min.y : b.max.y,
+                        (c & 4) == 0 ? b.min.z : b.max.z);
+                    Vector3 point = arCamera.WorldToViewportPoint(worldCorner);
+                    if (point.z <= arCamera.nearClipPlane) continue;
+                    min = Vector2.Min(min, new Vector2(point.x, point.y));
+                    max = Vector2.Max(max, new Vector2(point.x, point.y));
+                    totalDepth += point.z;
+                    pointCount++;
+                }
+            }
+
+            if (pointCount == 0) return;
+            Vector2 screenCenter = (min + max) * 0.5f;
+            if ((screenCenter - new Vector2(0.5f, 0.5f)).sqrMagnitude < 0.000001f)
+                break;
+
+            float depth = totalDepth / pointCount;
+            Vector3 currentPoint = arCamera.ViewportToWorldPoint(
+                new Vector3(screenCenter.x, screenCenter.y, depth));
+            Vector3 desiredPoint = arCamera.ViewportToWorldPoint(
+                new Vector3(0.5f, 0.5f, depth));
+            transform.position += desiredPoint - currentPoint;
+        }
     }
 
     private bool TryGetVisibleBounds(out Bounds combined)
@@ -260,6 +333,7 @@ public class QRDalsooDragFloor : MonoBehaviour
         Vector3 projected = arCamera.WorldToScreenPoint(transform.position);
         if (projected.z <= arCamera.nearClipPlane) return;
 
+        FinishInitialCentering(false);
         pinching = true;
         dragging = false;
         pinchStartSpan = span;
@@ -349,6 +423,7 @@ public class QRDalsooDragFloor : MonoBehaviour
 
         if (!IsTouchingActor(screen)) return;
 
+        FinishInitialCentering(false);
         dragging = true;
         heldDepth = Mathf.Max(0.3f,
             arCamera.WorldToScreenPoint(transform.position).z);
@@ -397,7 +472,7 @@ public class QRDalsooDragFloor : MonoBehaviour
 
     // 드래그를 놓을 때마다 새 높이에 바닥이 생긴다고 가정하지만,
     // Actor는 놓은 세계 좌표를 유지한다. (아래로 순간이동 X)
-    private void RebuildFloorAndResume()
+    private void RebuildFloorAndResume(bool resumeBehavior = true)
     {
         if (virtualFloor == null || behavior == null) return;
         virtualFloor.position = transform.position - Vector3.up * floorBelowActor;
@@ -406,6 +481,7 @@ public class QRDalsooDragFloor : MonoBehaviour
         if (!behavior.enabled)
             behavior.enabled = true;
 
+        behavior.SetTrackingPresentationPaused(true);
         behavior.InitializeVirtualFloor(
             virtualFloor.position,
             movementRadius,
@@ -413,7 +489,8 @@ public class QRDalsooDragFloor : MonoBehaviour
             arCamera,
             keepMovementOnScreen,
             screenMargin);
-        behavior.SetTrackingPresentationPaused(false);
+        if (resumeBehavior)
+            behavior.SetTrackingPresentationPaused(false);
     }
 
     // 기존 QR 모델 정면 오프셋과 동일한 방향 사용.
