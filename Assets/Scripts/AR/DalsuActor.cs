@@ -6,7 +6,8 @@ public class DalsuActor : MonoBehaviour
     public enum SpawnMode
     {
         PlaneAR,
-        QR
+        QR,
+        EstimatedFloor
     }
 
     [Header("Runtime")]
@@ -26,6 +27,8 @@ public class DalsuActor : MonoBehaviour
     public GameObject ModelInstance => modelInstance;
     public Animator Animator => animator;
     public Transform Hip => hip;
+    public bool IsInitialized { get; private set; }
+    public SpawnMode CurrentSpawnMode { get; private set; }
 
 
     private void Awake()
@@ -55,8 +58,10 @@ public class DalsuActor : MonoBehaviour
     public void Initialize(
         DalsuData newData,
         SpawnMode spawnMode,
-        ARPlane plane = null)
+        ARPlane plane = null,
+        float virtualFloorRadius = 1.2f)
     {
+        IsInitialized = false;
         Debug.Log("[DALSU] ==============================");
         Debug.Log("[DALSU] Initialize 시작");
         Debug.Log($"[DALSU] SpawnMode = {spawnMode}");
@@ -173,7 +178,13 @@ public class DalsuActor : MonoBehaviour
                     "[DALSU] PlaneAR 모드 초기화"
                 );
 
-                SetupPlaneAR(plane);
+                if (plane != null)
+                    SetupPlaneAR(plane);
+                else
+                {
+                    Debug.LogWarning("[DALSU] PlaneAR에 Plane 없음: EstimatedFloor로 전환");
+                    SetupEstimatedFloor(virtualFloorRadius);
+                }
 
                 break;
 
@@ -187,7 +198,16 @@ public class DalsuActor : MonoBehaviour
                 SetupQR();
 
                 break;
+
+            case SpawnMode.EstimatedFloor:
+                Debug.Log("[DALSU] 추정 바닥 모드 초기화");
+                SetupEstimatedFloor(virtualFloorRadius);
+                break;
         }
+
+        CurrentSpawnMode = spawnMode == SpawnMode.PlaneAR && plane == null
+            ? SpawnMode.EstimatedFloor : spawnMode;
+        IsInitialized = true;
 
 
         gameObject.name =
@@ -378,6 +398,13 @@ public class DalsuActor : MonoBehaviour
     private void SetupPlaneAR(
         ARPlane plane)
     {
+        if (plane == null)
+        {
+            Debug.LogWarning("[DALSU] PlaneAR에 ARPlane이 없어서 추정 바닥 모드로 전환합니다.");
+            Debug.LogError("[DALSU] PlaneAR 초기화에 Plane이 필요합니다.");
+            return;
+        }
+
         if (lookController != null)
         {
             lookController.enabled = true;
@@ -391,13 +418,69 @@ public class DalsuActor : MonoBehaviour
 
         if (behaviorController != null)
         {
-            behaviorController.enabled = true;
+            // EstimatedFloor에서 비활성화한 컨트롤러를 다시 켤 때,
+            // OnEnable보다 먼저 실제 Plane 정보를 전달한다.
             behaviorController.Initialize(plane);
+            behaviorController.enabled = true;
 
             Debug.Log(
                 "[DALSU] ✅ PlaneAR BehaviorController ON"
             );
         }
+    }
+
+
+    // ==================================================
+    // Depth / 카메라 높이 기반 추정 바닥 모드
+    // 추정 바닥에서도 Wander, Approach를 제한된 반경 안에서 실행한다.
+    // ==================================================
+
+    private void SetupEstimatedFloor(float radius)
+    {
+        if (lookController != null)
+        {
+            lookController.enabled = true;
+            lookController.SetLookAtCamera(true);
+        }
+
+        if (behaviorController != null)
+        {
+            // 현재 달수의 발 위치 (Runtime 루트)를 중심으로 이동 영역 생성.
+            behaviorController.InitializeVirtualFloor(transform.position, radius);
+            behaviorController.enabled = true;
+        }
+    }
+
+    public void SetPlacementTransitionPaused(bool paused)
+    {
+        if (behaviorController != null)
+            behaviorController.SetPlacementTransitionPaused(paused);
+    }
+
+    public void SetTrackingPresentationPaused(bool paused)
+    {
+        if (behaviorController != null)
+            behaviorController.SetTrackingPresentationPaused(paused);
+    }
+
+    /// <summary>
+    /// 추정 바닥에 배치한 달수가 실제 ARPlane을 찾았을 때,
+    /// 모델을 재생성하지 않고 행동 컨트롤러만 활성화한다.
+    /// </summary>
+    public bool UpgradeToPlaneAR(ARPlane plane)
+    {
+        if (!IsInitialized || plane == null)
+            return false;
+
+        if (CurrentSpawnMode == SpawnMode.PlaneAR)
+            return true;
+        if (CurrentSpawnMode != SpawnMode.EstimatedFloor)
+            return false; // QR 모드는 임의 전환 금지
+
+        SetupPlaneAR(plane);
+        CurrentSpawnMode = SpawnMode.PlaneAR;
+        Debug.Log("[DALSU] 추정 바닥 → 실제 PlaneAR 전환 완료");
+        return true;
     }
 
 

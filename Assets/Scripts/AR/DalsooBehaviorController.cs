@@ -120,78 +120,120 @@ public class DalsooBehaviorController : MonoBehaviour
 
     public DalsooState CurrentState { get; private set; }
 
+    // 두 종류의 이동 공간을 지원한다.
+    // - 실제 ARPlane: 기존 경계 검사 사용
+    // - EstimatedFloor: 추정한 위치 중심의 제한된 원형 영역 사용
+    // 가상 영역은 실제 지형을 인증하지 않는다. 계단/장애물 주의.
+    private enum FloorSource { None, TrackedPlane, EstimatedFloor }
+    private FloorSource floorSource = FloorSource.None;
     private ARPlane movementPlane;
-
-    // 최초 달수가 Plane 위에 생성됐을 때의 높이 유지
     private float planeHeightOffset;
+    private Vector3 virtualFloorCenter;
+    private float virtualFloorRadius;
+    private bool initialized;
 
     private Coroutine behaviorRoutine;
     private bool trackingPresentationPaused;
+    private bool placementTransitionPaused;
+
+    public bool UsingEstimatedFloor => floorSource == FloorSource.EstimatedFloor;
+
     public void SetTrackingPresentationPaused(bool paused)
     {
         if (trackingPresentationPaused == paused) return;
         trackingPresentationPaused = paused;
-        if (paused)
-        {
-            if (behaviorRoutine != null) StopCoroutine(behaviorRoutine);
-            behaviorRoutine = null;
-            SetWalking(false);
-            SetLookAtCamera(false);
-            if (animator != null) animator.SetBool("Sitting", false);
-            CurrentState = DalsooState.Idle;
-        }
-        else if (isActiveAndEnabled && behaviorRoutine == null)
-            behaviorRoutine = StartCoroutine(BehaviorLoop());
+        RefreshBehaviorState();
     }
 
-
-
-    // =========================================================
-    // Unity
-    // =========================================================
+    // 실제 Plane에 스냅 이동 중에는 동작을 멈추고 이중 이동을 방지한다.
+    public void SetPlacementTransitionPaused(bool paused)
+    {
+        if (placementTransitionPaused == paused) return;
+        placementTransitionPaused = paused;
+        RefreshBehaviorState();
+    }
 
     private void Awake()
     {
-        if (animator == null)
-            animator = GetComponentInChildren<Animator>();
-
-        if (lookController == null)
-            lookController = GetComponent<DalsooLookController>();
-
-        if (arCamera == null)
-            arCamera = Camera.main;
+        if (animator == null) animator = GetComponentInChildren<Animator>();
+        if (lookController == null) lookController = GetComponent<DalsooLookController>();
+        if (arCamera == null) arCamera = Camera.main;
     }
 
-
-    // =========================================================
-    // 초기화
-    // =========================================================
-
-    public void Initialize(ARPlane plane)
+    private void OnEnable()
     {
-        movementPlane = plane;
+        RefreshBehaviorState();
+    }
 
-        if (arCamera == null)
-            arCamera = Camera.main;
+    private void OnDisable()
+    {
+        StopBehavior();
+    }
 
-        if (movementPlane != null)
+    private void OnDestroy()
+    {
+        StopBehavior();
+    }
+
+    private void RefreshBehaviorState()
+    {
+        if (!initialized || !isActiveAndEnabled ||
+            trackingPresentationPaused || placementTransitionPaused)
         {
-            planeHeightOffset =
-                Vector3.Dot(
-                    transform.position -
-                    movementPlane.transform.position,
-
-                    movementPlane.transform.up
-                );
+            StopBehavior();
+            return;
         }
 
         if (behaviorRoutine == null)
+            behaviorRoutine = StartCoroutine(BehaviorLoop());
+    }
+
+    private void StopBehavior()
+    {
+        if (behaviorRoutine != null)
         {
-            behaviorRoutine =
-                StartCoroutine(BehaviorLoop());
+            StopCoroutine(behaviorRoutine);
+            behaviorRoutine = null;
+        }
+        SetWalking(false);
+        SetLookAtCamera(false);
+        if (animator != null) animator.SetBool("Sitting", false);
+        CurrentState = DalsooState.Idle;
+    }
+
+    // 기존 호출부 호환: 실제 ARPlane 영역 내에서 걷는다.
+    public void Initialize(ARPlane plane)
+    {
+        if (plane == null)
+        {
+            Debug.LogWarning("[DALSU] Initialize(null) 대신 InitializeVirtualFloor()를 사용하세요.");
+            return;
         }
 
-        Debug.Log("달수 Behavior 시작!");
+        StopBehavior();
+        floorSource = FloorSource.TrackedPlane;
+        movementPlane = plane;
+        planeHeightOffset = Vector3.Dot(
+            transform.position - plane.transform.position,
+            plane.transform.up);
+        initialized = true;
+        if (arCamera == null) arCamera = Camera.main;
+        RefreshBehaviorState();
+        Debug.Log("[DALSU] 실제 ARPlane 행동 시작");
+    }
+
+    // 추정 바닥용 이동 반경은 실제로 스캔된 안전 공간이 아니다.
+    public void InitializeVirtualFloor(Vector3 center, float radius)
+    {
+        StopBehavior();
+        movementPlane = null;
+        floorSource = FloorSource.EstimatedFloor;
+        virtualFloorCenter = center;
+        virtualFloorRadius = Mathf.Max(0.25f, radius);
+        initialized = true;
+        if (arCamera == null) arCamera = Camera.main;
+        RefreshBehaviorState();
+        Debug.Log($"[DALSU] 가상 바닥 행동 시작 / radius={virtualFloorRadius:F2}m");
     }
 
 
@@ -211,15 +253,15 @@ public class DalsooBehaviorController : MonoBehaviour
             yield return IdleRoutine();
 
 
-            float totalWeight =
-                wanderWeight +
-                turnWeight +
-                sitWeight +
-                approachCameraWeight;
+            float totalWeight = Mathf.Max(0f, wanderWeight) +
+                Mathf.Max(0f, turnWeight) +
+                Mathf.Max(0f, sitWeight) +
+                Mathf.Max(0f, approachCameraWeight);
 
+            if (totalWeight <= 0f)
+                continue;
 
-            float roll =
-                Random.Range(0f, totalWeight);
+            float roll = Random.Range(0f, totalWeight);
 
 
             if (roll < wanderWeight)
@@ -639,11 +681,8 @@ public class DalsooBehaviorController : MonoBehaviour
             // ★ 핵심
             // 걸으면서도 Plane 밖인지 계속 검사
             if (
-                stopAtPlaneEdge &&
-                !IsSafeWorldPointOnPlane(
-                    nextPosition,
-                    planeEdgeMargin
-                )
+                (UsingEstimatedFloor || stopAtPlaneEdge) &&
+                !IsSafeMovementPoint(nextPosition, planeEdgeMargin)
             )
             {
                 Debug.Log(
@@ -675,6 +714,8 @@ public class DalsooBehaviorController : MonoBehaviour
     {
         result = Vector3.zero;
 
+        if (UsingEstimatedFloor)
+            return TryGetVirtualWanderDestination(out result);
 
         ARPlane plane =
             GetActivePlane();
@@ -838,6 +879,8 @@ public class DalsooBehaviorController : MonoBehaviour
         if (arCamera == null)
             return false;
 
+        if (UsingEstimatedFloor)
+            return TryGetVirtualApproachDestination(out result);
 
         ARPlane plane =
             GetActivePlane();
@@ -993,53 +1036,99 @@ public class DalsooBehaviorController : MonoBehaviour
 
 
     // =========================================================
-    // World 위치가 안전하게 Plane 안인지 확인
+    // 추정 바닥: 제한된 가상 원형 영역에서 Wander / Approach
     // =========================================================
 
-    private bool IsSafeWorldPointOnPlane(
-        Vector3 worldPosition,
-        float margin)
+    private bool TryGetVirtualWanderDestination(out Vector3 result)
     {
-        ARPlane plane =
-            GetActivePlane();
+        result = Vector3.zero;
+        float safeRadius = Mathf.Max(0.1f, virtualFloorRadius - planeEdgeMargin);
 
-
-        if (plane == null)
-            return false;
-
-
-        NativeArray<Vector2> boundary =
-            plane.boundary;
-
-
-        if (
-            !boundary.IsCreated ||
-            boundary.Length < 3
-        )
+        for (int i = 0; i < destinationAttempts; i++)
         {
-            return false;
+            Vector2 disk = Random.insideUnitCircle * safeRadius;
+            Vector3 candidate = new Vector3(
+                virtualFloorCenter.x + disk.x,
+                virtualFloorCenter.y,
+                virtualFloorCenter.z + disk.y);
+
+            Vector3 diff = candidate - transform.position;
+            diff.y = 0f;
+            if (diff.magnitude < minWanderDistance ||
+                diff.magnitude > maxWanderDistance)
+                continue;
+
+            if (IsSafeMovementPoint(candidate, planeEdgeMargin))
+            {
+                result = candidate;
+                return true;
+            }
         }
+        return false;
+    }
 
+    private bool TryGetVirtualApproachDestination(out Vector3 result)
+    {
+        result = Vector3.zero;
+        if (arCamera == null) return false;
 
-        Vector3 local =
-            plane.transform.InverseTransformPoint(
-                worldPosition
-            );
+        Vector3 toCamera = arCamera.transform.position - transform.position;
+        toCamera.y = 0f;
+        float distToCamera = toCamera.magnitude;
+        if (distToCamera <= cameraStopDistance || distToCamera < 0.001f)
+            return false;
 
+        float allowed = distToCamera - cameraStopDistance;
+        float desiredMove = Mathf.Min(
+            Random.Range(minApproachDistance, maxApproachDistance), allowed);
+        Vector3 direction = toCamera.normalized;
 
-        Vector2 point =
-            new Vector2(
-                local.x,
-                local.z
-            );
+        for (int i = 0; i < 12; i++)
+        {
+            Vector3 candidate = transform.position + direction * desiredMove;
+            candidate.y = virtualFloorCenter.y;
+            if (IsSafeMovementPoint(candidate, planeEdgeMargin))
+            {
+                result = candidate;
+                return true;
+            }
+            desiredMove *= 0.75f;
+            if (desiredMove < 0.05f) break;
+        }
+        return false;
+    }
 
+    private bool IsSafeMovementPoint(Vector3 worldPosition, float margin)
+    {
+        if (UsingEstimatedFloor)
+        {
+            Vector3 delta = worldPosition - virtualFloorCenter;
+            if (Mathf.Abs(delta.y) > 0.25f)
+                return false;
+            delta.y = 0f;
+            float usableRadius = Mathf.Max(0.1f, virtualFloorRadius - Mathf.Max(0f, margin));
+            return delta.sqrMagnitude <= usableRadius * usableRadius;
+        }
+        return IsSafeWorldPointOnPlane(worldPosition, margin);
+    }
 
-        return
-            IsPointSafelyInsidePolygon(
-                point,
-                boundary,
-                margin
-            );
+    // =========================================================
+    // World 위치가 안전하게 실제 Plane 안인지 확인
+    // =========================================================
+
+    private bool IsSafeWorldPointOnPlane(Vector3 worldPosition, float margin)
+    {
+        ARPlane plane = GetActivePlane();
+        if (plane == null || plane.trackingState != TrackingState.Tracking)
+            return false;
+
+        NativeArray<Vector2> boundary = plane.boundary;
+        if (!boundary.IsCreated || boundary.Length < 3)
+            return false;
+
+        Vector3 local = plane.transform.InverseTransformPoint(worldPosition);
+        Vector2 point = new Vector2(local.x, local.z);
+        return IsPointSafelyInsidePolygon(point, boundary, margin);
     }
 
 
@@ -1117,6 +1206,7 @@ public class DalsooBehaviorController : MonoBehaviour
 
     private ARPlane GetActivePlane()
     {
+        if (floorSource != FloorSource.TrackedPlane) return null;
         while (
             movementPlane != null &&
             movementPlane.subsumedBy != null
