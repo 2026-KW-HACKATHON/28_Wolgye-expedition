@@ -986,7 +986,7 @@ MonoBehaviour:
   canvasRect: {fileID: 404840495}
   arrowRect: {fileID: 1637914325}
   glowColor: {r: 1, g: 0.94161224, b: 0.5803922, a: 1}
-  maxOpacity: 0.551
+  maxOpacity: 0.4
   glowThickness: 70
   edgeInset: 0
   pulsePeriod: 2.8
@@ -1139,7 +1139,7 @@ MonoBehaviour:
   lookAroundText: {fileID: 2137705696}
   offscreenArrow: {fileID: 1595835554}
   confirmVisibleDuration: 0.35
-  useTestDalsu: 1
+  useTestDalsu: 0
   testDalsuId: Dalsu_001
 --- !u!4 &1885253022
 Transform:

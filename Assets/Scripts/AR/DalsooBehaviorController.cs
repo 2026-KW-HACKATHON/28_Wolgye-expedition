@@ -130,6 +130,11 @@ public class DalsooBehaviorController : MonoBehaviour
     private float planeHeightOffset;
     private Vector3 virtualFloorCenter;
     private float virtualFloorRadius;
+    // 드롭 지점 아래에 floor가 있어도 Actor는 원래 높이에서 움직인다.
+    private float virtualFloorActorHeight;
+    private bool constrainVirtualMovementToScreen;
+    private float virtualScreenMargin = 0.13f;
+    private float virtualScreenCheckHeight = 0.25f;
     private bool initialized;
 
     private Coroutine behaviorRoutine;
@@ -223,17 +228,27 @@ public class DalsooBehaviorController : MonoBehaviour
     }
 
     // 추정 바닥용 이동 반경은 실제로 스캔된 안전 공간이 아니다.
-    public void InitializeVirtualFloor(Vector3 center, float radius)
+    public void InitializeVirtualFloor(
+        Vector3 center,
+        float radius,
+        float actorHeightAboveFloor = 0f,
+        Camera screenCamera = null,
+        bool keepMovementOnScreen = false,
+        float screenMargin = 0.13f)
     {
         StopBehavior();
         movementPlane = null;
         floorSource = FloorSource.EstimatedFloor;
         virtualFloorCenter = center;
         virtualFloorRadius = Mathf.Max(0.25f, radius);
+        virtualFloorActorHeight = actorHeightAboveFloor;
+        if (screenCamera != null) arCamera = screenCamera;
+        else if (arCamera == null) arCamera = Camera.main;
+        constrainVirtualMovementToScreen = keepMovementOnScreen;
+        virtualScreenMargin = Mathf.Clamp(screenMargin, 0.01f, 0.4f);
         initialized = true;
-        if (arCamera == null) arCamera = Camera.main;
         RefreshBehaviorState();
-        Debug.Log($"[DALSU] 가상 바닥 행동 시작 / radius={virtualFloorRadius:F2}m");
+        Debug.Log($"[DALSU] 가상 바닥 행동 시작 / radius={virtualFloorRadius:F2}m, above={virtualFloorActorHeight:F2}m");
     }
 
 
@@ -1049,7 +1064,7 @@ public class DalsooBehaviorController : MonoBehaviour
             Vector2 disk = Random.insideUnitCircle * safeRadius;
             Vector3 candidate = new Vector3(
                 virtualFloorCenter.x + disk.x,
-                virtualFloorCenter.y,
+                virtualFloorCenter.y + virtualFloorActorHeight,
                 virtualFloorCenter.z + disk.y);
 
             Vector3 diff = candidate - transform.position;
@@ -1086,7 +1101,7 @@ public class DalsooBehaviorController : MonoBehaviour
         for (int i = 0; i < 12; i++)
         {
             Vector3 candidate = transform.position + direction * desiredMove;
-            candidate.y = virtualFloorCenter.y;
+            candidate.y = virtualFloorCenter.y + virtualFloorActorHeight;
             if (IsSafeMovementPoint(candidate, planeEdgeMargin))
             {
                 result = candidate;
@@ -1103,11 +1118,24 @@ public class DalsooBehaviorController : MonoBehaviour
         if (UsingEstimatedFloor)
         {
             Vector3 delta = worldPosition - virtualFloorCenter;
-            if (Mathf.Abs(delta.y) > 0.25f)
+            if (Mathf.Abs(delta.y - virtualFloorActorHeight) > 0.12f)
                 return false;
             delta.y = 0f;
             float usableRadius = Mathf.Max(0.1f, virtualFloorRadius - Mathf.Max(0f, margin));
-            return delta.sqrMagnitude <= usableRadius * usableRadius;
+            if (delta.sqrMagnitude > usableRadius * usableRadius)
+                return false;
+
+            // 가상 바닥 위에서 조금 움직이되 현재 화면을 벗어나지 않도록 검사.
+            if (constrainVirtualMovementToScreen && arCamera != null)
+            {
+                Vector3 view = arCamera.WorldToViewportPoint(
+                    worldPosition + Vector3.up * virtualScreenCheckHeight);
+                if (view.z <= 0f ||
+                    view.x < virtualScreenMargin || view.x > 1f - virtualScreenMargin ||
+                    view.y < virtualScreenMargin || view.y > 1f - virtualScreenMargin)
+                    return false;
+            }
+            return true;
         }
         return IsSafeWorldPointOnPlane(worldPosition, margin);
     }
