@@ -26,12 +26,15 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private Transform contentRoot;
     [SerializeField] private ShopSlot slotPrefab;
 
+    [Header("구매")]
+    [SerializeField] private PurchasePopup purchasePopup;
+
     [Header("전체 아이템 데이터")]
     [SerializeField] private List<ShopItemBase> allItems;
 
     private readonly List<ShopSlot> spawnedSlots = new List<ShopSlot>();
 
-    private void Start()
+    private void Awake()
     {
         foreach (var tab in tabs)
         {
@@ -41,14 +44,25 @@ public class ShopManager : MonoBehaviour
                 RefreshTabVisual(captured, isOn);
                 if (isOn) ShowCategory(captured.category);
             });
+        }
+    }
 
-            // 시작 시 모두 비선택 상태로 초기화
-            RefreshTabVisual(captured, false);
+    private void OnEnable()
+    {
+        SelectCategory(ShopCategory.Furniture);
+    }
+
+    /// <summary>탭 선택 상태와 목록을 강제로 맞춘다.</summary>
+    private void SelectCategory(ShopCategory category)
+    {
+        foreach (var tab in tabs)
+        {
+            bool isTarget = tab.category == category;
+            tab.toggle.SetIsOnWithoutNotify(isTarget);   // 이벤트 없이 상태만 변경
+            RefreshTabVisual(tab, isTarget);             // 스프라이트 갱신
         }
 
-        // 첫 번째 탭을 기본 선택
-        tabs[0].toggle.SetIsOnWithoutNotify(false);
-        tabs[0].toggle.isOn = true;
+        ShowCategory(category);                          // 목록 직접 표시
     }
 
     private void RefreshTabVisual(TabEntry tab, bool isOn)
@@ -66,7 +80,7 @@ public class ShopManager : MonoBehaviour
             if (item == null || item.Category != category) continue;
 
             ShopSlot slot = Instantiate(slotPrefab, contentRoot);
-            slot.Setup(item);
+            slot.Setup(item, OnSlotClicked);
             spawnedSlots.Add(slot);
         }
 
@@ -79,5 +93,26 @@ public class ShopManager : MonoBehaviour
         foreach (var slot in spawnedSlots)
             if (slot != null) Destroy(slot.gameObject);
         spawnedSlots.Clear();
+    }
+
+    private void OnSlotClicked(ShopItemBase item)
+    {
+        Debug.Log($"슬롯 클릭됨: {item.DisplayName}");
+        if (!CurrencyManager.CanAfford(item.Price))
+        {
+            int shortage = item.Price - CurrencyManager.Balance;
+            purchasePopup.OpenNotice($"코인이 부족합니다.\n({shortage:N0} 코인 더 필요해요)");
+            return;
+        }
+
+        purchasePopup.Open(item, () => Purchase(item));
+    }
+
+    private void Purchase(ShopItemBase item)
+    {
+        if (!CurrencyManager.TrySpend(item.Price)) return;
+
+        // TODO: 인벤토리에 추가
+        Debug.Log($"구매 완료: {item.DisplayName}");
     }
 }

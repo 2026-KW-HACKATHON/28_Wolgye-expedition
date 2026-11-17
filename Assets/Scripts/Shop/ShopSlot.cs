@@ -1,3 +1,5 @@
+// ShopSlot.cs
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -11,25 +13,25 @@ public class ShopSlot : MonoBehaviour
 
     private Button button;
     private ShopItemBase data;
+    private Action<ShopItemBase> onClicked;
 
     private void Awake()
     {
         button = GetComponent<Button>();
     }
 
-    public void Setup(ShopItemBase item)
+    public void Setup(ShopItemBase item, Action<ShopItemBase> clickCallback)
     {
         data = item;
+        onClicked = clickCallback;
+
+        if (button == null) button = GetComponent<Button>();
+
         nameText.text = item.DisplayName;
         iconImage.sprite = item.Icon;
         priceText.text = item.Price.ToString("N0");
 
         button.onClick.RemoveAllListeners();
-        button.onClick.AddListener(OnClickBuy);
-    }
-
-    private void OnClickBuy()
-    {
-        Debug.Log($"구매 시도: {data.DisplayName} / {data.Price}");
+        button.onClick.AddListener(() => onClicked?.Invoke(data));
     }
 }
