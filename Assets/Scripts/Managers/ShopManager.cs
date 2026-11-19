@@ -19,8 +19,6 @@ public class ShopManager : MonoBehaviour
 
     [Header("탭")]
     [SerializeField] private List<TabEntry> tabs;
-    //[SerializeField] private Color selectedTextColor = Color.white;
-    //[SerializeField] private Color normalTextColor = Color.black;
 
     [Header("목록")]
     [SerializeField] private Transform contentRoot;
@@ -33,6 +31,7 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private List<ShopItemBase> allItems;
 
     private readonly List<ShopSlot> spawnedSlots = new List<ShopSlot>();
+    private ShopCategory currentCategory = ShopCategory.Furniture;   // ★ 추가
 
     private void Awake()
     {
@@ -73,14 +72,28 @@ public class ShopManager : MonoBehaviour
 
     private void ShowCategory(ShopCategory category)
     {
+        currentCategory = category;
         ClearSlots();
 
         foreach (var item in allItems)
         {
             if (item == null || item.Category != category) continue;
 
+            bool locked = false;
+            bool owned = false;
+
+            if (item is RoomExpandData expand)
+            {
+                owned = RoomCapacity.IsPurchased(expand.Step);                 // 이미 산 단계
+                locked = !owned && !RoomCapacity.IsNextStep(expand.Step);      // 아직 못 사는 단계
+            }
+            else if (item.Category == ShopCategory.Character)
+            {
+                owned = CharacterInventory.Has(item.Id);
+            }
+
             ShopSlot slot = Instantiate(slotPrefab, contentRoot);
-            slot.Setup(item, OnSlotClicked);
+            slot.Setup(item, OnSlotClicked, locked, owned);
             spawnedSlots.Add(slot);
         }
 
@@ -97,7 +110,26 @@ public class ShopManager : MonoBehaviour
 
     private void OnSlotClicked(ShopItemBase item)
     {
-        Debug.Log($"슬롯 클릭됨: {item.DisplayName}");
+        if (item is RoomExpandData expand)
+        {
+            if (RoomCapacity.IsPurchased(expand.Step))
+            {
+                purchasePopup.OpenNotice("이미 구매한 확장입니다.");
+                return;
+            }
+            if (!RoomCapacity.IsNextStep(expand.Step))
+            {
+                purchasePopup.OpenNotice("이전 단계를 먼저 구매해주세요.");
+                return;
+            }
+        }
+
+        if (item.Category == ShopCategory.Character && CharacterInventory.Has(item.Id))
+        {
+            purchasePopup.OpenNotice("이미 보유한 아이템입니다.");
+            return;
+        }
+
         if (!CurrencyManager.CanAfford(item.Price))
         {
             int shortage = item.Price - CurrencyManager.Balance;
@@ -117,11 +149,15 @@ public class ShopManager : MonoBehaviour
             case ShopCategory.Furniture:
                 FurnitureInventory.Add(item.Id, 1);
                 break;
+
             case ShopCategory.Character:
-                Debug.Log($"캐릭터 구매: {item.Id}");   // TODO
+                CharacterInventory.Add(item.Id);
                 break;
+
             case ShopCategory.RoomExpand:
-                Debug.Log($"방 확장 구매: {item.Id}");   // TODO
+                // 단계 저장 + 목록 갱신 (구매한 단계 제거, 다음 단계 해금)
+                RoomCapacity.SetLevel(((RoomExpandData)item).Step);
+                ShowCategory(ShopCategory.RoomExpand);
                 break;
         }
 

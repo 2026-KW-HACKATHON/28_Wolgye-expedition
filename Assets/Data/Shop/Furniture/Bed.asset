@@ -15,6 +15,6 @@ MonoBehaviour:
   id: Bed
   displayName: "\uCE68\uB300"
   icon: {fileID: 21300000, guid: deb99fe359782d4468d885e2cb6a736d, type: 3}
-  price: 100
+  price: 2500
   prefab: {fileID: 6316604834118286719, guid: 455df29e3d3fbe940bb8842a9d4161c8, type: 3}
   size: {x: 2, y: 3}

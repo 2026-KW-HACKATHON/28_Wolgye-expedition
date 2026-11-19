@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Step1
   m_EditorClassIdentifier: Assembly-CSharp::RoomExpandData
   id: Step1
-  displayName: 
-  icon: {fileID: 0}
+  displayName: "1\uB2E8\uACC4"
+  icon: {fileID: 21300000, guid: 3922c692d1262d848b505bf767df1a1b, type: 3}
   price: 0
-  expandSize: {x: 1, y: 1}
+  step: 1

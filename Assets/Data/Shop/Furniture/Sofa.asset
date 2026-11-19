@@ -15,5 +15,6 @@ MonoBehaviour:
   id: Sofa
   displayName: "\uC18C\uD30C"
   icon: {fileID: 21300000, guid: 65e6f83d16d70cc47adcba33131d32cb, type: 3}
+  price: 1500
   prefab: {fileID: 7782635363469817366, guid: 4883be53d72860b43b70090938094f52, type: 3}
   size: {x: 2, y: 1}
