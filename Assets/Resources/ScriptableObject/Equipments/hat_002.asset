@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0adff4e00280ae5448144e7a107dc659, type: 3}
+  m_Name: hat_002
+  m_EditorClassIdentifier: Assembly-CSharp::EquipmentData
+  equipmentId: hat_002
+  equipmentName: "\uC911\uC808\uBAA8"
+  prefab: {fileID: 981517336351936576, guid: 3af505d0376683848a084ccae76d962e, type: 3}
+  localPosition: {x: 0, y: 0, z: 0}
+  localRotation: {x: -90, y: 0, z: 0}
+  localScale: {x: 0.2, y: 0.2, z: 0.2}
