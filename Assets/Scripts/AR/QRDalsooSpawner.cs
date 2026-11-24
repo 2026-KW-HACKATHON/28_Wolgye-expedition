@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.XR.ARFoundation;
 
 /// <summary>
 /// QR 전용 스포너. 일반 ARRandomSpawner는 변경하지 않는다.
@@ -29,6 +31,12 @@ public class QRDalsooSpawner : MonoBehaviour
     [Tooltip("모델 정면 축이 반대일 때만 체크하세요.")]
     [SerializeField] private bool invertVisualTilt = false;
 
+    [Header("QR 생성 중앙 정렬 유지")]
+    [Tooltip("생성 직후 카메라 자세·애니메이션이 안정될 때까지 화면 정중앙에 유지하는 최소 시간(초)")]
+    [SerializeField, Range(0f, 4f)] private float initialCenterHoldSeconds = 1.2f;
+    [Tooltip("AR Tracking이 늦을 때에도 중앙 정렬을 유지하는 최대 시간(초)")]
+    [SerializeField, Range(0.2f, 8f)] private float maxCenterWaitSeconds = 3f;
+
     [Header("QR Virtual Floor")]
     [Tooltip("달수 루트보다 몇 m 아래에 가상 바닥을 둘지")]
     [SerializeField, Min(0f)] private float floorBelowActor = 0.08f;
@@ -47,6 +55,16 @@ public class QRDalsooSpawner : MonoBehaviour
     [Header("QR Scene Auto Spawn")]
     [Tooltip("QR을 찍고 이 씬으로 넘어왔을 때 SelectedDalsuId가 있으면 자동 소환. ID가 늦게 들어와도 감지합니다.")]
     [SerializeField] private bool autoSpawnWhenSelectedIdAvailable = true;
+
+    [Header("QR Camera Readiness")]
+    [Tooltip("두 번째 AR 씬의 실제 카메라 프레임이 들어온 다음 달수를 생성합니다.")]
+    [SerializeField] private bool waitForCameraFrame = true;
+    [SerializeField, Range(1, 5)] private int cameraFramesBeforeSpawn = 2;
+    [SerializeField, Min(0.5f)] private float maximumCameraWait = 6f;
+
+    private Coroutine pendingSpawn;
+    private ARCameraManager watchedCameraManager;
+    private int receivedCameraFrames;
 
     private string lastAutoAttemptedId = null;
     private GameObject spawnedDalsoo;
@@ -90,8 +108,120 @@ public class QRDalsooSpawner : MonoBehaviour
         SpawnDalsoo();
     }
 
-    // QR 인식 스크립트에서 직접 호출.
+    // QR 스캔 스크립트에서 호출되거나, 씬의 Start에서 자동 호출됩니다.
+    // 실제 카메라 프레임이 준비되기 전에는 모델이 검은 배경 위에 나타나지 않도록 대기합니다.
     public void SpawnDalsoo()
+    {
+        if (hasSpawned || pendingSpawn != null)
+            return;
+
+        if (!isActiveAndEnabled)
+        {
+            Debug.LogWarning("[DALSU][QR] QRSpawner가 비활성화되어 소환하지 못했습니다.");
+            return;
+        }
+
+        pendingSpawn = StartCoroutine(SpawnWhenCameraReady());
+    }
+
+    private IEnumerator SpawnWhenCameraReady()
+    {
+        if (arCamera == null)
+            arCamera = Camera.main;
+
+        if (arCamera != null && waitForCameraFrame)
+        {
+            ARCameraManager cameraManager = arCamera.GetComponent<ARCameraManager>();
+            if (cameraManager != null && cameraManager.isActiveAndEnabled)
+            {
+                receivedCameraFrames = 0;
+                watchedCameraManager = cameraManager;
+                watchedCameraManager.frameReceived += OnCameraFrameReceived;
+                float started = Time.realtimeSinceStartup;
+
+                while (receivedCameraFrames < cameraFramesBeforeSpawn &&
+                       Time.realtimeSinceStartup - started < maximumCameraWait)
+                {
+                    yield return null;
+                }
+
+                StopWatchingCamera();
+
+                if (receivedCameraFrames < cameraFramesBeforeSpawn)
+                    Debug.LogWarning("[DALSU][QR] 카메라 프레임 대기 시간 초과. ARCameraBackground/ARCameraManager를 점검하세요.");
+                else
+                    Debug.Log("[DALSU][QR] 카메라 프레임 준비 완료. 달수 생성 시작");
+
+                // 수신 직후가 아니라 카메라 배경을 한 프레임 렌더한 뒤 생성합니다.
+                yield return new WaitForEndOfFrame();
+                yield return null;
+            }
+            else
+            {
+                Debug.LogWarning("[DALSU][QR] 활성 ARCameraManager가 없어 카메라 대기를 생략합니다.");
+            }
+        }
+
+        if (!Application.isEditor)
+        {
+            float waitStarted = Time.realtimeSinceStartup;
+            float trackingSince = -1f;
+            const float requiredTrackingSeconds = 0.8f;
+
+            while (true)
+            {
+                float now = Time.realtimeSinceStartup;
+
+                if (ARSession.state == ARSessionState.SessionTracking)
+                {
+                    if (trackingSince < 0f)
+                        trackingSince = now;
+
+                    if (now - trackingSince >= requiredTrackingSeconds)
+                        break;
+                }
+                else
+                {
+                    trackingSince = -1f;
+                }
+
+                if (now - waitStarted >= maximumCameraWait)
+                {
+                    Debug.LogWarning(
+                        "[DALSU][QR] 위치 추적 준비 시간 초과. " +
+                        "달수를 생성하지 않았습니다. 주변을 비춘 뒤 다시 소환하세요.");
+
+                    pendingSpawn = null;
+                    yield break;
+                }
+
+                yield return null;
+            }
+
+            // 해당 프레임의 카메라 자세 갱신 이후에 배치
+            yield return new WaitForEndOfFrame();
+        }
+
+        pendingSpawn = null;
+        SpawnDalsooNow();
+    }
+
+    private void OnCameraFrameReceived(ARCameraFrameEventArgs args)
+    {
+        receivedCameraFrames++;
+    }
+
+    private void StopWatchingCamera()
+    {
+        if (watchedCameraManager != null)
+        {
+            watchedCameraManager.frameReceived -= OnCameraFrameReceived;
+            watchedCameraManager = null;
+        }
+    }
+
+    // 기존 소환 과정은 변경하지 않습니다.
+    private void SpawnDalsooNow()
     {
         Debug.Log("[DALSU][QR] SpawnDalsoo() 호출 확인");
         if (hasSpawned && spawnedDalsoo != null)
@@ -126,9 +256,12 @@ public class QRDalsooSpawner : MonoBehaviour
 
         // 생성 기준은 화면 중앙의 시선(Ray). 모델의 실제 렌더링 중심은
         // Initialize 후 QRDalsooDragFloor.Setup에서 다시 정확히 중앙으로 맞춘다.
+        // 화면 중앙 Ray에서 시작. Center Model On Spawn가 켜진 동안에는
+        // 과거 Inspector에 저장된 Vertical Offset 값을 무시한다.
         Vector3 spawnPosition = arCamera.ViewportToWorldPoint(
-            new Vector3(0.5f, 0.5f, Mathf.Max(0.3f, spawnDistance)))
-            + arCamera.transform.up * verticalOffset;
+            new Vector3(0.5f, 0.5f, Mathf.Max(0.3f, spawnDistance)));
+        if (!centerModelOnSpawn)
+            spawnPosition += arCamera.transform.up * verticalOffset;
 
         Quaternion spawnRotation = QRDalsooDragFloor.GetFaceCameraRotation(
             arCamera, spawnPosition, modelRotationOffsetY);
@@ -165,14 +298,31 @@ public class QRDalsooSpawner : MonoBehaviour
             addDragColliderIfMissing,
             centerModelOnSpawn, faceCameraVertically,
             maxVisualTiltDegrees, visualTiltFollowSpeed,
-            invertVisualTilt);
+            invertVisualTilt, initialCenterHoldSeconds,
+            maxCenterWaitSeconds);
 
         hasSpawned = true;
         Debug.Log($"[DALSU][QR] 소환 완료: {currentDalsuData.dalsuName} / {selectedId}");
     }
 
+    private void OnDisable()
+    {
+        StopWatchingCamera();
+        if (pendingSpawn != null)
+        {
+            StopCoroutine(pendingSpawn);
+            pendingSpawn = null;
+        }
+    }
+
     public void ResetDalsoo()
     {
+        StopWatchingCamera();
+        if (pendingSpawn != null)
+        {
+            StopCoroutine(pendingSpawn);
+            pendingSpawn = null;
+        }
         if (spawnedDalsoo != null)
             Destroy(spawnedDalsoo);
         spawnedDalsoo = null;
