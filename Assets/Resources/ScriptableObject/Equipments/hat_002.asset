@@ -15,6 +15,6 @@ MonoBehaviour:
   equipmentId: hat_002
   equipmentName: "\uC911\uC808\uBAA8"
   prefab: {fileID: 981517336351936576, guid: 3af505d0376683848a084ccae76d962e, type: 3}
-  localPosition: {x: 0, y: 0, z: 0}
+  localPosition: {x: 0, y: -0.05, z: 0}
   localRotation: {x: -90, y: 0, z: 0}
   localScale: {x: 0.2, y: 0.2, z: 0.2}
