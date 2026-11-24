@@ -17,24 +17,6 @@ public class EquipmentManager : MonoBehaviour
         LoadEquipment();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            EquipHat("hat_001");
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            EquipHat("hat_002");
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            UnequipHat();
-        }
-    }
-
     // 모자 장착
     public void EquipHat(string equipmentId)
     {

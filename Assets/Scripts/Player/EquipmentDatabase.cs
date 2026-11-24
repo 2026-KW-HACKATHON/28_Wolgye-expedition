@@ -16,4 +16,10 @@ public class EquipmentDatabase : ScriptableObject
             equipment => equipment.equipmentId == equipmentId
         );
     }
+
+    // 전체 장비 목록 반환
+    public IReadOnlyList<EquipmentData> GetAllEquipments()
+    {
+        return equipments;
+    }
 }
