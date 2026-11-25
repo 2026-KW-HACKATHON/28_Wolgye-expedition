@@ -63,6 +63,9 @@ public class EquipmentListReturnManager : MonoBehaviour
 
         GameObject element = Instantiate(listPrefab, listParent);
 
+        element.transform.Find("Icon").GetComponentInChildren<Image>().sprite =
+            data.icon;
+
         element.GetComponentInChildren<TextMeshProUGUI>().text =
             data.equipmentName;
 

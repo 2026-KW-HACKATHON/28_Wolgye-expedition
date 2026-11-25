@@ -9,6 +9,8 @@ public class EquipmentData : ScriptableObject
     [Header("Basic Info")]
     public string equipmentId;
     public string equipmentName;
+    public int price;
+    public Sprite icon;
 
     [Header("Prefab")]
     public GameObject prefab;

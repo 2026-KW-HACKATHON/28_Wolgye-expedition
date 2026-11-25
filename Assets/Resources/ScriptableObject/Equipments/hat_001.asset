@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EquipmentData
   equipmentId: hat_001
   equipmentName: "\uC5B4\uB9B0\uC774\uBAA8\uC790"
+  price: 0
+  icon: {fileID: 21300000, guid: 5baa64efcc8613a4d82988180f504f93, type: 3}
   prefab: {fileID: 5691161991116888266, guid: 39f19a0bae790e34f80e04a8b625d98c, type: 3}
   localPosition: {x: 0, y: -0.1, z: 0}
-  localRotation: {x: -90, y: 0, z: 0}
+  localRotation: {x: -90, y: 120, z: 0}
   localScale: {x: 0.2, y: 0.2, z: 0.2}
