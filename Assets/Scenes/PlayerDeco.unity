@@ -177,7 +177,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7c022d330c4736c429301bec8d4b64a1, type: 3}
+  m_Sprite: {fileID: -182966478, guid: de85a601ce8c52444a408ac969fdbc02, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -205,8 +205,9 @@ GameObject:
   m_Component:
   - component: {fileID: 140124919}
   - component: {fileID: 140124920}
+  - component: {fileID: 140124921}
   m_Layer: 5
-  m_Name: Toggle_furniture
+  m_Name: Toggle_hat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -229,8 +230,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 135, y: -175.88638}
-  m_SizeDelta: {x: 270, y: 175.88638}
+  m_AnchoredPosition: {x: 295, y: -151.88617}
+  m_SizeDelta: {x: 390, y: 151.88617}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &140124920
 MonoBehaviour:
@@ -280,6 +281,26 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 1
+--- !u!114 &140124921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 140124918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: 1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &151156381
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,8 +370,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 540, y: -441.92798}
-  m_SizeDelta: {x: 1080, y: 581.144}
+  m_AnchoredPosition: {x: 540, y: -436.9277}
+  m_SizeDelta: {x: 1080, y: 591.1436}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &212662341
 MonoBehaviour:
@@ -370,7 +391,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: -70
+  m_Spacing: -20
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
@@ -431,8 +452,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 102.77125, y: -75.67799}
-  m_SizeDelta: {x: 205.5425, y: 151.35599}
+  m_AnchoredPosition: {x: 96.6725, y: -70.67795}
+  m_SizeDelta: {x: 193.345, y: 141.3559}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &230931824
 MonoBehaviour:
@@ -492,7 +513,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 540, y: 0}
-  m_SizeDelta: {x: 1080, y: 175.88638}
+  m_SizeDelta: {x: 1080, y: 151.88617}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &240323520
 MonoBehaviour:
@@ -540,12 +561,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.HorizontalLayoutGroup
   m_Padding:
-    m_Left: 0
-    m_Right: 0
+    m_Left: 100
+    m_Right: 100
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 7
-  m_Spacing: 0
+  m_Spacing: 100
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
@@ -957,7 +978,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 642dc757107b36545aa2b908380b8d26, type: 3}
+  m_Sprite: {fileID: 772962717, guid: de85a601ce8c52444a408ac969fdbc02, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -985,8 +1006,9 @@ GameObject:
   m_Component:
   - component: {fileID: 640943973}
   - component: {fileID: 640943974}
+  - component: {fileID: 640943975}
   m_Layer: 5
-  m_Name: Toggle_props
+  m_Name: Toggle_skincolor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1009,8 +1031,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 405, y: -175.88638}
-  m_SizeDelta: {x: 270, y: 175.88638}
+  m_AnchoredPosition: {x: 785, y: -151.88617}
+  m_SizeDelta: {x: 390, y: 151.88617}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &640943974
 MonoBehaviour:
@@ -1060,6 +1082,26 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 0
+--- !u!114 &640943975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640943972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: 1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &668225338
 GameObject:
   m_ObjectHideFlags: 0
@@ -1362,8 +1404,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 102.77125, y: -75.67799}
-  m_SizeDelta: {x: 205.5425, y: 151.35599}
+  m_AnchoredPosition: {x: 983.3275, y: -70.67795}
+  m_SizeDelta: {x: 193.345, y: 141.3559}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &737690110
 MonoBehaviour:
@@ -1423,8 +1465,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 540, y: -581.144}
-  m_SizeDelta: {x: 1080, y: 475.2576}
+  m_AnchoredPosition: {x: 540, y: -591.1436}
+  m_SizeDelta: {x: 1080, y: 459.25745}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &740743846
 MonoBehaviour:
@@ -2076,7 +2118,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1c39e11f846cd2a419da0d11b4435369, type: 3}
+  m_Sprite: {fileID: 411456614, guid: de85a601ce8c52444a408ac969fdbc02, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2281,8 +2323,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 673232765}
         m_TargetAssemblyTypeName: PlayerDecoUiManager, Assembly-CSharp
-        m_MethodName: SendMessage
-        m_Mode: 5
+        m_MethodName: PrevBtn
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3160,7 +3202,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d9a933bf590ab9740bf64a4b438e4f1e, type: 3}
+  m_Sprite: {fileID: -753142699, guid: de85a601ce8c52444a408ac969fdbc02, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3436,8 +3478,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 535, y: 0}
-  m_SizeDelta: {x: 658.915, y: 151.35599}
+  m_AnchoredPosition: {x: 540, y: 0}
+  m_SizeDelta: {x: 693.31, y: 141.3559}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1724264215
 MonoBehaviour:
@@ -3598,7 +3640,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 732.5}
+  m_SizeDelta: {x: 0, y: 732.4995}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!95 &1920615979
 Animator:
@@ -3723,8 +3765,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 540, y: -75.67799}
-  m_SizeDelta: {x: 1080, y: 151.35599}
+  m_AnchoredPosition: {x: 540, y: -70.67795}
+  m_SizeDelta: {x: 1080, y: 141.3559}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1946204416
 MonoBehaviour:
@@ -3785,7 +3827,7 @@ GameObject:
   - component: {fileID: 2039068932}
   - component: {fileID: 2039068931}
   m_Layer: 5
-  m_Name: Player_DecoList
+  m_Name: Player_EquipmentList
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

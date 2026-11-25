@@ -1,0 +1,237 @@
+fileFormatVersion: 2
+guid: de85a601ce8c52444a408ac969fdbc02
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: "PlayerDeco \uCE74\uD14C\uACE0\uB9AC_7"
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 425
+        width: 578
+        height: 259
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c59a77f312d358f42a8dbf68d3ec8669
+      internalID: -182966478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "PlayerDeco \uCE74\uD14C\uACE0\uB9AC_8"
+      rect:
+        serializedVersion: 2
+        x: 732
+        y: 420
+        width: 576
+        height: 264
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1307b2d0cbc0c9b4db97c4d9d22bb6f1
+      internalID: 772962717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "PlayerDeco \uCE74\uD14C\uACE0\uB9AC_12"
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 80
+        width: 578
+        height: 262
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df5e7f192f213c548b904ba5e738ae9b
+      internalID: -753142699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "PlayerDeco \uCE74\uD14C\uACE0\uB9AC_13"
+      rect:
+        serializedVersion: 2
+        x: 732
+        y: 78
+        width: 576
+        height: 264
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5e49bd482584344bb1fb3a265ac6168
+      internalID: 411456614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: e445c13323ad2d542a46f3454df7cec0
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      "PlayerDeco \uCE74\uD14C\uACE0\uB9AC_0": -110921830
+      "PlayerDeco \uCE74\uD14C\uACE0\uB9AC_1": 1458895960
+      "PlayerDeco \uCE74\uD14C\uACE0\uB9AC_10": 1593957002
+      "PlayerDeco \uCE74\uD14C\uACE0\uB9AC_11": 546225639
+      "PlayerDeco \uCE74\uD14C\uACE0\uB9AC_12": -753142699
+      "PlayerDeco \uCE74\uD14C\uACE0\uB9AC_13": 411456614
+      "PlayerDeco \uCE74\uD14C\uACE0\uB9AC_14": 120636501
+      "PlayerDeco \uCE74\uD14C\uACE0\uB9AC_15": -1793188693
+      "PlayerDeco \uCE74\uD14C\uACE0\uB9AC_16": 563849336
+      "PlayerDeco \uCE74\uD14C\uACE0\uB9AC_2": -921715040
+      "PlayerDeco \uCE74\uD14C\uACE0\uB9AC_3": 2039591118
+      "PlayerDeco \uCE74\uD14C\uACE0\uB9AC_4": -1800805144
+      "PlayerDeco \uCE74\uD14C\uACE0\uB9AC_5": -1548947711
+      "PlayerDeco \uCE74\uD14C\uACE0\uB9AC_6": 1877657749
+      "PlayerDeco \uCE74\uD14C\uACE0\uB9AC_7": -182966478
+      "PlayerDeco \uCE74\uD14C\uACE0\uB9AC_8": 772962717
+      "PlayerDeco \uCE74\uD14C\uACE0\uB9AC_9": 486248401
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
