@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerDecoUiManager : MonoBehaviour
 {
@@ -20,14 +21,12 @@ public class PlayerDecoUiManager : MonoBehaviour
     [Header("Panels")]
     [SerializeField] private PanelUI decoList = new PanelUI();
 
-    [Header("Camera")]
-    [SerializeField] private Transform mainCamera;
+    [Header("Category Toggles")]
+    [SerializeField] private Toggle hatToggle;
+    [SerializeField] private Toggle skinColorToggle;
 
-    [SerializeField] private Vector3 cameraStartPosition;
-    [SerializeField] private Vector3 cameraTargetPosition;
-
-    [SerializeField] private float cameraMoveDuration = 1f;
-
+    [Header("Equipment List")]
+    [SerializeField] private EquipmentListReturnManager equipmentListManager;
 
     [Header("MainScene")]
     [SerializeField] private string mainScene;
@@ -41,8 +40,16 @@ public class PlayerDecoUiManager : MonoBehaviour
     {
         OpenDecoList();
 
-        if (mainCamera != null)
-            StartCoroutine(PlayCameraMove());
+        // Toggle 이벤트 등록
+        hatToggle.onValueChanged.AddListener(OnHatToggle);
+        skinColorToggle.onValueChanged.AddListener(OnSkinColorToggle);
+
+        // 초기 카테고리 설정
+        if (hatToggle.isOn)
+            equipmentListManager.ChangeCategory(EquipmentType.Hat);
+        else if (skinColorToggle.isOn)
+            equipmentListManager.ChangeCategory(EquipmentType.SkinColor);
+
     }
 
     private void Prepare(PanelUI ui)
@@ -66,31 +73,33 @@ public class PlayerDecoUiManager : MonoBehaviour
         }
     }
 
-    private IEnumerator PlayCameraMove()
+    // 모자 카테고리 선택
+    private void OnHatToggle(bool isOn)
     {
-        float elapsed = 0f;
+        if (!isOn) return;
 
-        while (elapsed < cameraMoveDuration)
-        {
-            elapsed += Time.deltaTime;
+        equipmentListManager.ChangeCategory(EquipmentType.Hat);
+    }
 
-            float t = Mathf.Clamp01(elapsed / cameraMoveDuration);
-            t = Mathf.SmoothStep(0f, 1f, t);
+    // 피부색 카테고리 선택
+    private void OnSkinColorToggle(bool isOn)
+    {
+        if (!isOn) return;
 
-            mainCamera.position = Vector3.Lerp(
-                cameraStartPosition,
-                cameraTargetPosition,
-                t
-            );
-
-            yield return null;
-        }
-
-        mainCamera.position = cameraTargetPosition;
+        equipmentListManager.ChangeCategory(EquipmentType.SkinColor);
     }
 
     public void PrevBtn()
     {
         SceneLoader.Instance.Load(mainScene, waitForSceneReady: true);
+    }
+
+    private void OnDestroy()
+    {
+        if (hatToggle != null)
+            hatToggle.onValueChanged.RemoveListener(OnHatToggle);
+
+        if (skinColorToggle != null)
+            skinColorToggle.onValueChanged.RemoveListener(OnSkinColorToggle);
     }
 }

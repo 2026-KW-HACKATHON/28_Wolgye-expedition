@@ -2,30 +2,32 @@ using UnityEngine;
 
 public class CharacterEquipment : MonoBehaviour
 {
-    [SerializeField]
-    private Transform headTopEnd;
+    [Header("Equipment")]
+    [SerializeField] private Transform hatPosition;
+
+    [Header("Character")]
+    [SerializeField] private Renderer bodyRenderer;
 
     private GameObject currentHat;
 
+    // 원래 Material 저장
+    private Material defaultSkinMaterial;
+
+    private void Awake()
+    {
+        defaultSkinMaterial = bodyRenderer.sharedMaterial;
+    }
+
+    // 모자 장착
     public void EquipHat(EquipmentData equipment)
     {
-        // 기존 모자 제거
-        if (currentHat != null)
-        {
-            Destroy(currentHat);
-            currentHat = null;
-        }
+        UnequipHat();
 
-        if (equipment == null || equipment.prefab == null)
-            return;
-
-        // 모자 생성
         currentHat = Instantiate(
             equipment.prefab,
-            headTopEnd
+            hatPosition
         );
 
-        // 위치 및 회전 설정
         currentHat.transform.localPosition =
             equipment.localPosition;
 
@@ -36,6 +38,7 @@ public class CharacterEquipment : MonoBehaviour
             equipment.localScale;
     }
 
+    // 모자 해제
     public void UnequipHat()
     {
         if (currentHat != null)
@@ -43,5 +46,17 @@ public class CharacterEquipment : MonoBehaviour
             Destroy(currentHat);
             currentHat = null;
         }
+    }
+
+    // 피부색 변경
+    public void SetSkinColor(Color color)
+    {
+        bodyRenderer.material.color = color;
+    }
+
+    // 원래 Material 복원
+    public void ResetSkinColor()
+    {
+        bodyRenderer.material = defaultSkinMaterial;
     }
 }

@@ -1287,10 +1287,9 @@ MonoBehaviour:
     panel: {fileID: 2039068930}
     animator: {fileID: 1920615979}
     openTrigger: Open
-  mainCamera: {fileID: 883196137}
-  cameraStartPosition: {x: 0, y: 0.21, z: -7.6}
-  cameraTargetPosition: {x: 0, y: 0.21, z: -7.6}
-  cameraMoveDuration: 0.5
+  hatToggle: {fileID: 140124920}
+  skinColorToggle: {fileID: 640943974}
+  equipmentListManager: {fileID: 1605820391}
   mainScene: Map
 --- !u!1 &688779277
 GameObject:
@@ -3442,6 +3441,7 @@ MonoBehaviour:
   listParent: {fileID: 755974454}
   equipmentDatabase: {fileID: 11400000, guid: 9312470d61eac824fb2f70586f7c6787, type: 2}
   equipmentManager: {fileID: 1579157904}
+  unequippedIcon: {fileID: 0}
   selectedColor: {r: 0.6, g: 0.8, b: 1, a: 1}
 --- !u!1 &1724264213
 GameObject:

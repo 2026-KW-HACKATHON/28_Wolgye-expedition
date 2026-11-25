@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class EquipmentListReturnManager : MonoBehaviour
 {
-    // 리스트에 추가된 장비 하나
     private class Entry
     {
         public GameObject element;
@@ -14,6 +13,7 @@ public class EquipmentListReturnManager : MonoBehaviour
         public Image rootImage;
         public Color normalColor;
         public bool selected;
+        public bool isUnequipped;
     }
 
     [Header("UI")]
@@ -24,6 +24,9 @@ public class EquipmentListReturnManager : MonoBehaviour
     [SerializeField] private EquipmentDatabase equipmentDatabase;
     [SerializeField] private EquipmentManager equipmentManager;
 
+    [Header("Unequipped")]
+    [SerializeField] private Sprite unequippedIcon;
+
     [Header("Selection")]
     [SerializeField]
     private Color selectedColor =
@@ -33,12 +36,26 @@ public class EquipmentListReturnManager : MonoBehaviour
 
     private Entry selectedEntry;
 
-    private void Start()
+    private EquipmentType currentType;
+
+    // 외부에서 카테고리 변경
+    public void ChangeCategory(EquipmentType type)
     {
+        currentType = type;
+
+        // 기존 리스트 제거
+        foreach (Entry entry in entries)
+        {
+            Destroy(entry.element);
+        }
+
+        entries.Clear();
+        selectedEntry = null;
+
+        // 새 리스트 생성
         InitializeEquipmentList();
     }
 
-    // Database의 전체 장비를 UI에 등록
     private void InitializeEquipmentList()
     {
         if (equipmentDatabase == null)
@@ -47,24 +64,51 @@ public class EquipmentListReturnManager : MonoBehaviour
             return;
         }
 
+        AddUnequippedList();
+
         IReadOnlyList<EquipmentData> equipments =
             equipmentDatabase.GetAllEquipments();
 
         foreach (EquipmentData equipment in equipments)
         {
+            if (equipment.equipmentType != currentType)
+                continue;
+
             AddEquipmentList(equipment);
         }
     }
 
-    // 장비 리스트에 항목 추가
+    private void AddUnequippedList()
+    {
+        GameObject element = Instantiate(listPrefab, listParent);
+
+        element.transform.Find("Icon")
+            .GetComponentInChildren<Image>().sprite = unequippedIcon;
+
+        element.GetComponentInChildren<TextMeshProUGUI>().text =
+            currentType == EquipmentType.Hat
+                ? "미장착"
+                : "기본 피부색";
+
+        Entry entry = new Entry
+        {
+            element = element,
+            rootImage = element.GetComponent<Image>(),
+            isUnequipped = true
+        };
+
+        RegisterEntry(entry);
+    }
+
     public void AddEquipmentList(EquipmentData data)
     {
-        if (data == null) return;
+        if (data == null || data.equipmentType != currentType)
+            return;
 
         GameObject element = Instantiate(listPrefab, listParent);
 
-        element.transform.Find("Icon").GetComponentInChildren<Image>().sprite =
-            data.icon;
+        element.transform.Find("Icon")
+            .GetComponentInChildren<Image>().sprite = data.icon;
 
         element.GetComponentInChildren<TextMeshProUGUI>().text =
             data.equipmentName;
@@ -76,39 +120,51 @@ public class EquipmentListReturnManager : MonoBehaviour
             rootImage = element.GetComponent<Image>()
         };
 
+        RegisterEntry(entry);
+    }
+
+    private void RegisterEntry(Entry entry)
+    {
         if (entry.rootImage != null)
             entry.normalColor = entry.rootImage.color;
 
         entries.Add(entry);
 
-        Button button = element.GetComponent<Button>();
+        Button button = entry.element.GetComponent<Button>();
 
         if (button == null)
-            button = element.GetComponentInChildren<Button>();
+            button = entry.element.GetComponentInChildren<Button>();
 
         if (button != null)
             button.onClick.AddListener(() => ToggleSelect(entry));
     }
 
-    // 항목 클릭: 선택 및 즉시 장착
     private void ToggleSelect(Entry entry)
     {
-        if (equipmentManager == null || entry.data == null)
+        if (equipmentManager == null)
             return;
 
-        // 실제 장비 장착
-        equipmentManager.EquipHat(entry.data.equipmentId);
+        if (entry.isUnequipped)
+        {
+            if (currentType == EquipmentType.Hat)
+                equipmentManager.UnequipHat();
+            else if (currentType == EquipmentType.SkinColor)
+                equipmentManager.UnequipSkinColor();
+        }
+        else
+        {
+            equipmentManager.Equip(entry.data.equipmentId);
+        }
 
-        // 기존 선택 항목 색상 복구
         if (selectedEntry != null)
         {
             selectedEntry.selected = false;
 
             if (selectedEntry.rootImage != null)
-                selectedEntry.rootImage.color = selectedEntry.normalColor;
+                selectedEntry.rootImage.color =
+                    selectedEntry.normalColor;
         }
 
-        // 새로운 항목 선택
         selectedEntry = entry;
         entry.selected = true;
 

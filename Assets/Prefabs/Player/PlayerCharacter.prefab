@@ -773,7 +773,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa4296d8df99ec640a689ecf72bc31bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
-  headTopEnd: {fileID: 1711740550847699166}
+  hatPosition: {fileID: 1711740550847699166}
+  bodyRenderer: {fileID: 4528812574583756579}
 --- !u!1 &7193394844209572896
 GameObject:
   m_ObjectHideFlags: 0

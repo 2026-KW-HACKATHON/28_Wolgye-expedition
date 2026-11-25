@@ -3,6 +3,7 @@ using UnityEngine;
 public class EquipmentManager : MonoBehaviour
 {
     private const string HAT_KEY = "EquippedHatId";
+    private const string SKIN_COLOR_KEY = "EquippedSkinColorId";
 
     [Header("Database")]
     [SerializeField] private EquipmentDatabase equipmentDatabase;
@@ -11,14 +12,15 @@ public class EquipmentManager : MonoBehaviour
     [SerializeField] private CharacterEquipment characterEquipment;
 
     private string equippedHatId;
+    private string equippedSkinColorId;
 
     private void Start()
     {
         LoadEquipment();
     }
 
-    // 모자 장착
-    public void EquipHat(string equipmentId)
+    // 장비 장착
+    public void Equip(string equipmentId)
     {
         EquipmentData equipment =
             equipmentDatabase.GetEquipment(equipmentId);
@@ -31,16 +33,46 @@ public class EquipmentManager : MonoBehaviour
             return;
         }
 
-        // 캐릭터에 실제 장착
+        switch (equipment.equipmentType)
+        {
+            case EquipmentType.Hat:
+                EquipHat(equipment);
+                break;
+
+            case EquipmentType.SkinColor:
+                EquipSkinColor(equipment);
+                break;
+        }
+    }
+
+    // 모자 장착
+    private void EquipHat(EquipmentData equipment)
+    {
         characterEquipment.EquipHat(equipment);
 
-        // 장착 정보 저장
-        equippedHatId = equipmentId;
+        equippedHatId = equipment.equipmentId;
 
         PlayerPrefs.SetString(HAT_KEY, equippedHatId);
         PlayerPrefs.Save();
 
         Debug.Log($"모자 장착 완료: {equipment.equipmentName}");
+    }
+
+    // 피부색 변경
+    private void EquipSkinColor(EquipmentData equipment)
+    {
+        characterEquipment.SetSkinColor(equipment.skinColor);
+
+        equippedSkinColorId = equipment.equipmentId;
+
+        PlayerPrefs.SetString(
+            SKIN_COLOR_KEY,
+            equippedSkinColorId
+        );
+
+        PlayerPrefs.Save();
+
+        Debug.Log($"피부색 변경 완료: {equipment.equipmentName}");
     }
 
     // 모자 해제
@@ -54,27 +86,60 @@ public class EquipmentManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    public void UnequipSkinColor()
+    {
+        characterEquipment.ResetSkinColor();
+
+        equippedSkinColorId = "";
+
+        PlayerPrefs.DeleteKey(SKIN_COLOR_KEY);
+        PlayerPrefs.Save();
+    }
+
     // 저장된 장착 정보 불러오기
     private void LoadEquipment()
     {
+        // 모자 불러오기
         equippedHatId = PlayerPrefs.GetString(HAT_KEY, "");
 
-        if (string.IsNullOrEmpty(equippedHatId))
-            return;
-
-        EquipmentData equipment =
-            equipmentDatabase.GetEquipment(equippedHatId);
-
-        if (equipment == null)
+        if (!string.IsNullOrEmpty(equippedHatId))
         {
-            Debug.LogWarning(
-                $"저장된 장비를 Database에서 찾을 수 없습니다: {equippedHatId}"
-            );
-            return;
+            EquipmentData hat =
+                equipmentDatabase.GetEquipment(equippedHatId);
+
+            if (hat != null &&
+                hat.equipmentType == EquipmentType.Hat)
+            {
+                characterEquipment.EquipHat(hat);
+            }
+            else
+            {
+                Debug.LogWarning(
+                    $"저장된 모자를 찾을 수 없습니다: {equippedHatId}"
+                );
+            }
         }
 
-        characterEquipment.EquipHat(equipment);
+        // 피부색 불러오기
+        equippedSkinColorId =
+            PlayerPrefs.GetString(SKIN_COLOR_KEY, "");
 
-        Debug.Log($"저장된 모자 적용: {equipment.equipmentName}");
+        if (!string.IsNullOrEmpty(equippedSkinColorId))
+        {
+            EquipmentData skin =
+                equipmentDatabase.GetEquipment(equippedSkinColorId);
+
+            if (skin != null &&
+                skin.equipmentType == EquipmentType.SkinColor)
+            {
+                characterEquipment.SetSkinColor(skin.skinColor);
+            }
+            else
+            {
+                Debug.LogWarning(
+                    $"저장된 피부색을 찾을 수 없습니다: {equippedSkinColorId}"
+                );
+            }
+        }
     }
 }
