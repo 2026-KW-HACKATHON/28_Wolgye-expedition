@@ -120,9 +120,13 @@ Material:
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
     - _GlossMapScale: 1
-    - _Glossiness: 0.35
+    - _Glossiness: 0.1
     - _GlossyReflections: 1
     - _LightIntensity: 1
+    - _MAIN_LIGHT_SHADOWS: 0
+    - _MAIN_LIGHT_SHADOWS_1: 0
+    - _MAIN_LIGHT_SHADOWS_CASCADE: 0
+    - _MAIN_LIGHT_SHADOWS_SCREEN: 0
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -130,8 +134,9 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RimAmount: 0.716
-    - _RimThreshold: 0.1
+    - _RimAmount: 0.63
+    - _RimThreshold: 0
+    - _SHADOWS_SOFT: 0
     - _Smoothness: 0.35
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1

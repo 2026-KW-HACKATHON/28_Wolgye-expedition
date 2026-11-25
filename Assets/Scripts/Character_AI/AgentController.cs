@@ -11,30 +11,30 @@ public enum MoveState
 
 public class AgentController : MonoBehaviour
 {
-    public float updateInterval = 3.5f; // ¸ñÇ¥ À§Ä¡¸¦ °»½ÅÇÒ ½Ã°£ °£°İ (ÃÊ)
+    public float updateInterval = 3.5f; // ëª©í‘œ ìœ„ì¹˜ë¥¼ ê°±ì‹ í•  ì‹œê°„ ê°„ê²© (ì´ˆ)
     public float minUpdateInterval = 3f;
     public float maxUpdateInterval = 5f;
 
-    private NavMeshAgent agent; // NavMeshAgent¸¦ ÀúÀåÇÒ º¯¼ö
-    private float timeSinceLastUpdate; // ¸¶Áö¸·À¸·Î ¸ñÇ¥ À§Ä¡¸¦ °»½ÅÇß´ø ½Ã°£
+    private NavMeshAgent agent; // NavMeshAgentë¥¼ ì €ì¥í•  ë³€ìˆ˜
+    private float timeSinceLastUpdate; // ë§ˆì§€ë§‰ìœ¼ë¡œ ëª©í‘œ ìœ„ì¹˜ë¥¼ ê°±ì‹ í–ˆë˜ ì‹œê°„
 
     public Animator animator;
     [SerializeField] private MoveState moveState = MoveState.IDLE;
 
     void Start()
     {
-        timeSinceLastUpdate = updateInterval; // ÃÊ±â¿¡ ¸ñÇ¥ À§Ä¡¸¦ ¼³Á¤ÇÏ±â À§ÇØ ½Ã°£ °ªÀ» ¼³Á¤ÇÕ´Ï´Ù.
+        timeSinceLastUpdate = updateInterval; // ì´ˆê¸°ì— ëª©í‘œ ìœ„ì¹˜ë¥¼ ì„¤ì •í•˜ê¸° ìœ„í•´ ì‹œê°„ ê°’ì„ ì„¤ì •í•©ë‹ˆë‹¤.
         updateInterval = Random.Range(minUpdateInterval, maxUpdateInterval);
-        agent = GetComponent<NavMeshAgent>(); // NavMeshAgent ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿É´Ï´Ù.
+        agent = GetComponent<NavMeshAgent>(); // NavMeshAgent ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì ¸ì˜µë‹ˆë‹¤.
     }
 
     void Update()
     {
         if (animator == null) return;
 
-        timeSinceLastUpdate += Time.deltaTime; // ½Ã°£ °ªÀ» °»½ÅÇÕ´Ï´Ù.
+        timeSinceLastUpdate += Time.deltaTime; // ì‹œê°„ ê°’ì„ ê°±ì‹ í•©ë‹ˆë‹¤.
 
-        if (timeSinceLastUpdate >= updateInterval) // ¼³Á¤ÇÑ ½Ã°£ °£°İÀÌ Áö³µ´ÂÁö È®ÀÎÇÕ´Ï´Ù.
+        if (timeSinceLastUpdate >= updateInterval) // ì„¤ì •í•œ ì‹œê°„ ê°„ê²©ì´ ì§€ë‚¬ëŠ”ì§€ í™•ì¸í•©ë‹ˆë‹¤.
         {
             float state = Random.Range(0f, 1f);
 
@@ -64,11 +64,11 @@ public class AgentController : MonoBehaviour
             else
             {
                 moveState = MoveState.WALK;
-                Vector3 randomPosition = GetRandomPositionOnNavMesh(); // NavMesh À§ÀÇ ·£´ıÇÑ À§Ä¡¸¦ °¡Á®¿É´Ï´Ù.
-                agent.SetDestination(randomPosition); // NavMeshAgentÀÇ ¸ñÇ¥ À§Ä¡¸¦ ·£´ı À§Ä¡·Î ¼³Á¤ÇÕ´Ï´Ù.
+                Vector3 randomPosition = GetRandomPositionOnNavMesh(); // NavMesh ìœ„ì˜ ëœë¤í•œ ìœ„ì¹˜ë¥¼ ê°€ì ¸ì˜µë‹ˆë‹¤.
+                agent.SetDestination(randomPosition); // NavMeshAgentì˜ ëª©í‘œ ìœ„ì¹˜ë¥¼ ëœë¤ ìœ„ì¹˜ë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
                 animator.SetBool("Sitting", false);
                 animator.SetBool("Walk", true);
-                timeSinceLastUpdate = 0f; // ½Ã°£ °ªÀ» ÃÊ±âÈ­ÇÕ´Ï´Ù.
+                timeSinceLastUpdate = 0f; // ì‹œê°„ ê°’ì„ ì´ˆê¸°í™”í•©ë‹ˆë‹¤.
             }
         }
         else if (IsAgentArrived())
@@ -79,29 +79,29 @@ public class AgentController : MonoBehaviour
 
     Vector3 GetRandomPositionOnNavMesh()
     {
-        Vector3 randomDirection = Random.insideUnitSphere * 20f; // ¿øÇÏ´Â ¹üÀ§ ³»ÀÇ ·£´ıÇÑ ¹æÇâ º¤ÅÍ¸¦ »ı¼ºÇÕ´Ï´Ù.
-        randomDirection += transform.position; // ·£´ı ¹æÇâ º¤ÅÍ¸¦ ÇöÀç À§Ä¡¿¡ ´õÇÕ´Ï´Ù.
+        Vector3 randomDirection = Random.insideUnitSphere * 20f; // ì›í•˜ëŠ” ë²”ìœ„ ë‚´ì˜ ëœë¤í•œ ë°©í–¥ ë²¡í„°ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+        randomDirection += transform.position; // ëœë¤ ë°©í–¥ ë²¡í„°ë¥¼ í˜„ì¬ ìœ„ì¹˜ì— ë”í•©ë‹ˆë‹¤.
 
         NavMeshHit hit;
-        if (NavMesh.SamplePosition(randomDirection, out hit, 20f, NavMesh.AllAreas)) // ·£´ı À§Ä¡°¡ NavMesh À§¿¡ ÀÖ´ÂÁö È®ÀÎÇÕ´Ï´Ù.
+        if (NavMesh.SamplePosition(randomDirection, out hit, 20f, NavMesh.AllAreas)) // ëœë¤ ìœ„ì¹˜ê°€ NavMesh ìœ„ì— ìˆëŠ”ì§€ í™•ì¸í•©ë‹ˆë‹¤.
         {
-            return hit.position; // NavMesh À§ÀÇ ·£´ı À§Ä¡¸¦ ¹İÈ¯ÇÕ´Ï´Ù.
+            return hit.position; // NavMesh ìœ„ì˜ ëœë¤ ìœ„ì¹˜ë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤.
         }
         else
         {
-            return transform.position; // NavMesh À§ÀÇ ·£´ı À§Ä¡¸¦ Ã£Áö ¸øÇÑ °æ¿ì ÇöÀç À§Ä¡¸¦ ¹İÈ¯ÇÕ´Ï´Ù.
+            return transform.position; // NavMesh ìœ„ì˜ ëœë¤ ìœ„ì¹˜ë¥¼ ì°¾ì§€ ëª»í•œ ê²½ìš° í˜„ì¬ ìœ„ì¹˜ë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤.
         }
     }
 
     bool IsAgentArrived()
     {
-        // °æ·Î¸¦ °è»ê ÁßÀÌÁö ¾Ê°í
+        // ê²½ë¡œë¥¼ ê³„ì‚° ì¤‘ì´ì§€ ì•Šê³ 
         if (!agent.pathPending)
         {
-            // ³²Àº °Å¸®°¡ Á¤Áö °Å¸® ÀÌÇÏÀÌ¸ç
+            // ë‚¨ì€ ê±°ë¦¬ê°€ ì •ì§€ ê±°ë¦¬ ì´í•˜ì´ë©°
             if (agent.remainingDistance <= agent.stoppingDistance)
             {
-                // ¼Óµµ°¡ °ÅÀÇ ¾ø°Å³ª °æ·Î°¡ Á¸ÀçÇÏÁö ¾Ê´Â´Ù¸é µµÂøÀ¸·Î ÆÇ´Ü
+                // ì†ë„ê°€ ê±°ì˜ ì—†ê±°ë‚˜ ê²½ë¡œê°€ ì¡´ì¬í•˜ì§€ ì•ŠëŠ”ë‹¤ë©´ ë„ì°©ìœ¼ë¡œ íŒë‹¨
                 if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
                 {
                     return true;
