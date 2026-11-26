@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0adff4e00280ae5448144e7a107dc659, type: 3}
   m_Name: hat_002
   m_EditorClassIdentifier: Assembly-CSharp::EquipmentData
-  equipmentId: hat_002
-  equipmentName: "\uC911\uC808\uBAA8"
-  price: 0
+  id: hat_002
+  displayName: "\uC911\uC808\uBAA8"
   icon: {fileID: 21300000, guid: e7945c8aa40cee849b6d01e0999cf682, type: 3}
+  price: 0
+  equipmentType: 0
   prefab: {fileID: 981517336351936576, guid: 3af505d0376683848a084ccae76d962e, type: 3}
   localPosition: {x: 0, y: -0.05, z: 0}
   localRotation: {x: -90, y: 0, z: 0}
   localScale: {x: 0.2, y: 0.2, z: 0.2}
+  skinColor: {r: 1, g: 1, b: 1, a: 1}

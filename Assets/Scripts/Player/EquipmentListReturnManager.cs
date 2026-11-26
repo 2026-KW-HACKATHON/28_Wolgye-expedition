@@ -74,6 +74,10 @@ public class EquipmentListReturnManager : MonoBehaviour
             if (equipment.equipmentType != currentType)
                 continue;
 
+            if (equipment.equipmentType == EquipmentType.Hat &&
+                !CharacterInventory.Has(equipment.Id))
+                continue;
+
             AddEquipmentList(equipment);
         }
     }
@@ -108,10 +112,10 @@ public class EquipmentListReturnManager : MonoBehaviour
         GameObject element = Instantiate(listPrefab, listParent);
 
         element.transform.Find("Icon")
-            .GetComponentInChildren<Image>().sprite = data.icon;
+            .GetComponentInChildren<Image>().sprite = data.Icon;
 
         element.GetComponentInChildren<TextMeshProUGUI>().text =
-            data.equipmentName;
+            data.DisplayName;
 
         Entry entry = new Entry
         {
@@ -153,7 +157,7 @@ public class EquipmentListReturnManager : MonoBehaviour
         }
         else
         {
-            equipmentManager.Equip(entry.data.equipmentId);
+            equipmentManager.Equip(entry.data.Id);
         }
 
         if (selectedEntry != null)

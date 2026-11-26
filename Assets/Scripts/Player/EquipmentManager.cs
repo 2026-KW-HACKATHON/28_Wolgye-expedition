@@ -50,12 +50,12 @@ public class EquipmentManager : MonoBehaviour
     {
         characterEquipment.EquipHat(equipment);
 
-        equippedHatId = equipment.equipmentId;
+        equippedHatId = equipment.Id;
 
         PlayerPrefs.SetString(HAT_KEY, equippedHatId);
         PlayerPrefs.Save();
 
-        Debug.Log($"모자 장착 완료: {equipment.equipmentName}");
+        Debug.Log($"모자 장착 완료: {equipment.DisplayName}");
     }
 
     // 피부색 변경
@@ -63,7 +63,7 @@ public class EquipmentManager : MonoBehaviour
     {
         characterEquipment.SetSkinColor(equipment.skinColor);
 
-        equippedSkinColorId = equipment.equipmentId;
+        equippedSkinColorId = equipment.Id;
 
         PlayerPrefs.SetString(
             SKIN_COLOR_KEY,
@@ -72,7 +72,7 @@ public class EquipmentManager : MonoBehaviour
 
         PlayerPrefs.Save();
 
-        Debug.Log($"피부색 변경 완료: {equipment.equipmentName}");
+        Debug.Log($"피부색 변경 완료: {equipment.DisplayName}");
     }
 
     // 모자 해제
