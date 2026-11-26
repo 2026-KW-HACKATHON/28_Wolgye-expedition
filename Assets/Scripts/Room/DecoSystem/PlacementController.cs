@@ -12,31 +12,7 @@ using UnityEngine.UI;
 /// 가구 선택: UI 버튼 (소지한 가구 하나당 버튼 하나) / R: 시계 방향 회전 / Q: 반시계 방향 회전
 /// 좌클릭: 배치 / 우클릭: 제거
 
-// 소지한 가구 데이터 (furniture_data.json). DalsuSpawnManager의 OwnDalsus/OwnDalsu 패턴과 동일하다.
-public class OwnFurnitures
-{
-    public List<OwnFurniture> furnitures;
-}
-public class OwnFurniture
-{
-    public string id;
-
-    // 소지한 수량. 이 수량만큼만 동시에 배치할 수 있다.
-    public int count;
-}
-
-// 배치된 가구 상태 (placed_furniture.json). 세션이 끝나도 배치 상태가 유지되도록 저장/복원한다.
-public class PlacedFurnitureSave
-{
-    public List<PlacedFurnitureEntry> items = new List<PlacedFurnitureEntry>();
-}
-public class PlacedFurnitureEntry
-{
-    public string id;
-    public int x;
-    public int y;
-    public int rotation;
-}
+// OwnFurnitures / PlacedFurnitureSave 등 저장 데이터 클래스는 FurnitureSaveData.cs로 옮겼다.
 
 public class PlacementController : MonoBehaviour
 {

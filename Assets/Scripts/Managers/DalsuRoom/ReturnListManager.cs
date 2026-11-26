@@ -35,8 +35,16 @@ public class ReturnListManager : MonoBehaviour
 
     private readonly List<Entry> entries = new List<Entry>();
 
+    private void Awake()
+    {
+        // 요소가 추가/삭제될 때마다 ScrollView의 Content 높이가 자동으로 맞춰지도록 설정
+        ScrollContentUtil.EnableAutoHeight(listParent);
+    }
+
     public void AddReturnList(OwnDalsuData data)
     {
+        ScrollContentUtil.EnableAutoHeight(listParent); // Awake보다 먼저 호출되는 경우 대비 (이미 설정돼 있으면 무시)
+
         GameObject element = Instantiate(listPrefab, listParent);
 
         element.transform.Find("DalsuImage").GetComponent<Image>().sprite = data.dalsuData.icon;

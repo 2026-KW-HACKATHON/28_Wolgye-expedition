@@ -13,8 +13,16 @@ public class DalsuListManager : MonoBehaviour
     // 각 소유 달수(data)와 그 UI 엘리먼트를 추적한다. (돌려보내기 등에서 항목을 제거할 때 사용)
     private readonly Dictionary<OwnDalsuData, GameObject> entries = new Dictionary<OwnDalsuData, GameObject>();
 
+    private void Awake()
+    {
+        // 요소가 추가/삭제될 때마다 ScrollView의 Content 높이가 자동으로 맞춰지도록 설정
+        ScrollContentUtil.EnableAutoHeight(listParent);
+    }
+
     public void AddDalsuList(OwnDalsuData data)
     {
+        ScrollContentUtil.EnableAutoHeight(listParent); // Awake보다 먼저 호출되는 경우 대비 (이미 설정돼 있으면 무시)
+
         GameObject element = Instantiate(listPrefab, listParent);
 
         element.transform.Find("DalsuImage").GetComponent<Image>().sprite = data.dalsuData.icon;
