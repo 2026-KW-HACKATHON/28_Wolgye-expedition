@@ -110,6 +110,12 @@ public class ShopManager : MonoBehaviour
 
     private void OnSlotClicked(ShopItemBase item)
     {
+        if (item is SurfaceShopItem s && SurfaceInventory.Has(s.OwnedKey))
+        {
+            purchasePopup.OpenNotice("이미 보유한 아이템입니다.");
+            return;
+        }
+
         if (item is RoomExpandData expand)
         {
             if (RoomCapacity.IsPurchased(expand.Step))
@@ -147,7 +153,14 @@ public class ShopManager : MonoBehaviour
         switch (item.Category)
         {
             case ShopCategory.Furniture:
-                FurnitureInventory.Add(item.Id, 1);
+                Debug.Log($"구매 타입: {item.GetType().Name}, id: {item.Id}");
+                if (item is SurfaceShopItem s)
+                {
+                    Debug.Log($"Surface 저장: {s.OwnedKey}");
+                    SurfaceInventory.Add(s.OwnedKey);
+                }
+                else
+                    FurnitureInventory.Add(item.Id, 1);
                 break;
 
             case ShopCategory.Character:

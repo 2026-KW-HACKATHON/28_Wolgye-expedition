@@ -995,6 +995,13 @@ MonoBehaviour:
   surfaceManager: {fileID: 2085704758}
   optionButtonPrefab: {fileID: 6809300539901537627, guid: e20758f053af00944baff318b6de713a, type: 3}
   selectedColor: {r: 1, g: 0.85, b: 0.45, a: 1}
+  surfaceShopItems:
+  - {fileID: 11400000, guid: 171c96a28b385cb4a94924fbab076b9a, type: 2}
+  - {fileID: 11400000, guid: 939cd0bc82efbab4e92342330c328b5a, type: 2}
+  - {fileID: 11400000, guid: 14b6397d29ddcb04d8ffcd5b1490d172, type: 2}
+  - {fileID: 11400000, guid: 60079161843453c4c9d8e1add6972d99, type: 2}
+  - {fileID: 11400000, guid: 78badd71bd5813746893d2282c83556f, type: 2}
+  - {fileID: 11400000, guid: b0587b37bf81a904e8d6280d1c54c669, type: 2}
 --- !u!1 &206769988
 GameObject:
   m_ObjectHideFlags: 0

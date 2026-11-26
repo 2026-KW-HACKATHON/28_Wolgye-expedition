@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d21743e046979342a2dd488462e2786, type: 3}
+  m_Name: BlueWall
+  m_EditorClassIdentifier: Assembly-CSharp::SurfaceShopItem
+  id: BlueWall
+  displayName: "\uD30C\uB780\uBCBD\uC9C0"
+  icon: {fileID: 0}
+  price: 0
+  surface: {fileID: 11400000, guid: bc8d1ef058af04243baf9f9394bca51c, type: 2}
+  slot: 0

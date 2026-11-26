@@ -19,7 +19,7 @@ public enum DecoTab
 /// - 탭마다 버튼 목록 부모(Content)를 따로 두고, 선택한 탭의 Content만 켜서 ScrollRect에 연결한다.
 /// - 가구 탭은 기존 Content(FurnitureEditController가 가구 버튼을 만드는 곳)를 그대로 쓴다.
 /// - Content를 비워둔 탭은 기존 Content의 크기·레이아웃을 본떠 실행 시 자동으로 만든다.
-/// - 벽지/바닥 버튼은 RoomSurfaceManager의 옵션 목록으로 만들고, 누르면 바로 적용·저장된다.
+/// - 벽지/바닥 버튼은 상점 아이템(SurfaceShopItem) 중 구매한 것만 만들고, 누르면 바로 적용·저장된다.
 /// </summary>
 public class RoomDecoTabUI : MonoBehaviour
 {
@@ -52,9 +52,13 @@ public class RoomDecoTabUI : MonoBehaviour
     [Tooltip("현재 적용된 벽지/바닥 버튼의 배경 색")]
     [SerializeField] private Color selectedColor = new Color(1f, 0.85f, 0.45f, 1f);
 
+    [Header("Surface Shop Items (상점 아이템)")]
+    [SerializeField] private List<SurfaceShopItem> surfaceShopItems;
+
     private class OptionButton
     {
         public SurfaceOption option;
+        public GameObject root;          // ★ 추가: 다시 만들 때 지우기 위한 참조
         public Image background;
         public Color normalColor;
     }
@@ -72,6 +76,9 @@ public class RoomDecoTabUI : MonoBehaviour
     {
         if (scrollRect != null) originalContent = scrollRect.content;
         PrepareContents();
+
+        // ★ 추가: 구매하면 바로 목록 갱신
+        SurfaceInventory.InventoryChanged += RebuildOptionButtons;
     }
 
     private void Start()
@@ -102,6 +109,8 @@ public class RoomDecoTabUI : MonoBehaviour
     {
         if (surfaceManager != null)
             surfaceManager.SurfaceChanged -= OnSurfaceChanged;
+
+        SurfaceInventory.InventoryChanged -= RebuildOptionButtons;   // ★ 추가
     }
 
     // ── 탭 ──
@@ -210,36 +219,56 @@ public class RoomDecoTabUI : MonoBehaviour
     {
         TabEntry entry = FindEntry(tab);
         if (surfaceManager == null || optionButtonPrefab == null || entry?.content == null) return;
+        if (surfaceShopItems == null) return;
 
-        foreach (SurfaceOption option in surfaceManager.Options)
+        foreach (SurfaceShopItem shopItem in surfaceShopItems)
         {
-            if (option == null || option.material == null) continue;
+            if (shopItem == null || shopItem.Slot != slot) continue;      // 이 탭(벽/바닥)에 맞는 것만
+            if (shopItem.Surface == null || shopItem.Surface.material == null) continue;
+            if (!SurfaceInventory.Has(shopItem.OwnedKey)) continue;       // 산 것만
+
+            SurfaceOption option = shopItem.Surface;
 
             Button button = Instantiate(optionButtonPrefab, entry.content);
-            button.name = $"{slot}_{option.Id}";
+            button.name = $"{slot}_{shopItem.Id}";
 
             TextMeshProUGUI label = button.GetComponentInChildren<TextMeshProUGUI>(true);
-            if (label != null) label.text = option.GetDisplayName(slot);
+            if (label != null) label.text = shopItem.DisplayName;
 
             Transform iconTransform = button.transform.Find("Icon");
             if (iconTransform != null && iconTransform.TryGetComponent(out Image icon))
             {
-                Sprite thumbnail = option.GetThumbnail(slot);
-                icon.sprite = thumbnail;
-                icon.enabled = thumbnail != null; // 썸네일이 아직 없으면 흰 사각형 대신 비워둔다.
+                icon.sprite = shopItem.Icon;
+                icon.enabled = shopItem.Icon != null;
             }
 
-            SurfaceOption captured = option;
-            button.onClick.AddListener(() => surfaceManager.Select(slot, captured));
+            button.onClick.AddListener(() => surfaceManager.Select(slot, option));
 
             Image background = button.targetGraphic as Image ?? button.GetComponent<Image>();
             optionButtons[slot].Add(new OptionButton
             {
                 option = option,
+                root = button.gameObject,    // ★ 추가
                 background = background,
                 normalColor = background != null ? background.color : Color.white,
             });
         }
+    }
+
+    // ★ 추가: 구매 직후 호출. 기존 버튼을 지우고 보유 상태 기준으로 다시 만든다.
+    private void RebuildOptionButtons()
+    {
+        foreach (var list in optionButtons.Values)
+        {
+            foreach (var ob in list)
+                if (ob.root != null) Destroy(ob.root);
+            list.Clear();
+        }
+
+        BuildOptionButtons(SurfaceSlot.Wall, DecoTab.Wall);
+        BuildOptionButtons(SurfaceSlot.Floor, DecoTab.Floor);
+        RefreshSelection(SurfaceSlot.Wall);
+        RefreshSelection(SurfaceSlot.Floor);
     }
 
     private void OnSurfaceChanged(SurfaceSlot slot, SurfaceOption option) => RefreshSelection(slot);
