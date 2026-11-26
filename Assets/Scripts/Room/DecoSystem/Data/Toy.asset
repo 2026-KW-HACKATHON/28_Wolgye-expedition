@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f451d7ea7ee4a3c4a9a1ac675d9af8cd, type: 3}
+  m_Name: Toy
+  m_EditorClassIdentifier: Assembly-CSharp::FurnitureData
+  id: Toy
+  displayName: "\uC7A5\uB09C\uAC10"
+  icon: {fileID: 21300000, guid: 9915514effb476c4e942406d77af13cd, type: 3}
+  prefab: {fileID: 7160186237434029612, guid: 21ba9fbf3ecc20f40971f9eda482b431, type: 3}
+  size: {x: 1, y: 1}

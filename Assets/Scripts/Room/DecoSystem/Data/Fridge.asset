@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f451d7ea7ee4a3c4a9a1ac675d9af8cd, type: 3}
+  m_Name: Fridge
+  m_EditorClassIdentifier: Assembly-CSharp::FurnitureData
+  id: Fridge
+  displayName: "\uB0C9\uC7A5\uACE0"
+  icon: {fileID: 21300000, guid: 25c5d842b5e6a164596fab2b62ea1b26, type: 3}
+  prefab: {fileID: 7146638228473226153, guid: 6cab6b327a915814e926236557eefa0b, type: 3}
+  size: {x: 1, y: 1}
