@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0adff4e00280ae5448144e7a107dc659, type: 3}
   m_Name: skincolor_001
   m_EditorClassIdentifier: Assembly-CSharp::EquipmentData
-  equipmentId: skincolor_001
-  equipmentName: "\uB178\uB780\uC0C9"
-  equipmentType: 1
-  price: 0
+  id: skincolor_001
+  displayName: "\uB178\uB780\uC0C9"
   icon: {fileID: 0}
+  price: 0
+  equipmentType: 1
   prefab: {fileID: 0}
   localPosition: {x: 0, y: 0, z: 0}
   localRotation: {x: -90, y: 0, z: 0}

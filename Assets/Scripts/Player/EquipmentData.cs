@@ -1,17 +1,16 @@
 using UnityEngine;
 
-[CreateAssetMenu(
-    fileName = "EquipmentData",
-    menuName = "Equipment/Data"
-)]
-public class EquipmentData : ScriptableObject
+public enum EquipmentType
 {
-    [Header("Basic Info")]
-    public string equipmentId;
-    public string equipmentName;
+    Hat,
+    SkinColor
+}
+
+[CreateAssetMenu(fileName = "EquipmentData", menuName = "Equipment/Data")]
+public class EquipmentData : ShopItemBase
+{
+    [Header("Equipment")]
     public EquipmentType equipmentType;
-    public int price;
-    public Sprite icon;
 
     [Header("Prefab")]
     public GameObject prefab;
@@ -23,10 +22,6 @@ public class EquipmentData : ScriptableObject
 
     [Header("Skin Color")]
     public Color skinColor = Color.white;
-}
 
-public enum EquipmentType
-{
-    Hat,
-    SkinColor
+    public override ShopCategory Category => ShopCategory.Character;
 }

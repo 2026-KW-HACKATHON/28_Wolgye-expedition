@@ -3,12 +3,12 @@
   <Project Path="AYellowpaper.SerializedCollections.csproj" />
   <Project Path="MapboxBaseModule.csproj" />
   <Project Path="UnityMapModule.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="MapboxDebug.csproj" />
   <Project Path="Mapbox.LocationModule.Tests.csproj" />
   <Project Path="MapboxImageryModule.Editor.csproj" />
   <Project Path="MapboxComponentSystem.csproj" />
   <Project Path="MapboxDirectionsApi.csproj" />
-  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="MapboxExamples.csproj" />
   <Project Path="MapboxCustomImageryModule.csproj" />
   <Project Path="AYellowpaper.SerializedCollections.Editor.csproj" />

@@ -1,32 +1,38 @@
+// FurnitureData.cs
 using UnityEngine;
 
+/// <summary>ê°€êµ¬ì¸ì§€ ì†Œí’ˆì¸ì§€ êµ¬ë¶„ (ìƒì  ì„œë¸Œíƒ­, ê¾¸ë¯¸ê¸° íƒ­ ë¶„ë¥˜ìš©)</summary>
+public enum FurnitureKind
+{
+    Furniture, // ê°€êµ¬
+    Prop       // ì†Œí’ˆ
+}
+
 /// <summary>
-/// °¡±¸ ÇÑ Á¾·ùÀÇ Á¤ÀÇ µ¥ÀÌÅÍ. (¾À¿¡ ³õÀÎ °³º° °¡±¸°¡ ¾Æ´Ï¶ó "Á¾·ù")
-/// Project Ã¢ ¿ìÅ¬¸¯ > Create > Room > Furniture Data ·Î »ı¼ºÇÕ´Ï´Ù.
+/// ë°© ì•ˆì— ë†“ì„ ìˆ˜ ìˆëŠ” ê°€êµ¬ ë°ì´í„°. (ì‹¤ì œ ë†“ì¸ ê°€êµ¬ê°€ ì•„ë‹ˆë¼ "ì›ë³¸")
+/// Project ì°½ ìš°í´ë¦­ > Create > Room > Furniture Data ë¡œ ìƒì„±í•©ë‹ˆë‹¤.
 /// </summary>
 [CreateAssetMenu(fileName = "NewFurniture", menuName = "Room/Furniture Data")]
-public class FurnitureData : ScriptableObject
+public class FurnitureData : ShopItemBase
 {
-    [Tooltip("ÀúÀå/ºÒ·¯¿À±â¿¡ ¾²ÀÌ´Â °íÀ¯ ID. ÇÑ ¹ø Á¤ÇÏ¸é ¹Ù²ÙÁö ¸¶¼¼¿ä.")]
-    [SerializeField] private string id;
-    [SerializeField] private string displayName;
-    [SerializeField] private Sprite icon;
-
-    [Tooltip("ÇÇ¹ş ±ÔÄ¢: footprint Áß¾Ó, ¹Ù´Ú ³ôÀÌ(y=0)")]
+    [Tooltip("í”¼ë²— ê·œì¹™: footprint ì¤‘ì•™, ë°”ë‹¥ ê¸°ì¤€(y=0)")]
     [SerializeField] private GameObject prefab;
 
-    [Tooltip("Â÷ÁöÇÏ´Â Ä­ ¼ö (x = ±×¸®µå °¡·Î, y = ±×¸®µå ¼¼·Î)")]
+    [Tooltip("ì°¨ì§€í•˜ëŠ” ì¹¸ ìˆ˜ (x = ê·¸ë¦¬ë“œ ê°€ë¡œ, y = ê·¸ë¦¬ë“œ ì„¸ë¡œ)")]
     [SerializeField] private Vector2Int size = Vector2Int.one;
 
-    public string Id => id;
-    public string DisplayName => displayName;
-    public Sprite Icon => icon;
+    [Tooltip("ê°€êµ¬ / ì†Œí’ˆ êµ¬ë¶„. ìƒì  ì„œë¸Œíƒ­ ë¶„ë¥˜ì— ì“°ì…ë‹ˆë‹¤.")]
+    [SerializeField] private FurnitureKind kind = FurnitureKind.Furniture;   // â˜… ì¶”ê°€
+
     public GameObject Prefab => prefab;
     public Vector2Int Size => size;
+    public FurnitureKind Kind => kind;                                       // â˜… ì¶”ê°€
 
-    private void OnValidate()
+    public override ShopCategory Category => ShopCategory.Furniture;
+
+    protected override void OnValidate()
     {
+        base.OnValidate();
         size = Vector2Int.Max(size, Vector2Int.one);
-        if (string.IsNullOrEmpty(id)) id = name;
     }
 }

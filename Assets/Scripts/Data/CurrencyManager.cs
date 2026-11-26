@@ -18,4 +18,16 @@ public static class CurrencyManager
         PlayerPrefs.Save();
         BalanceChanged?.Invoke(balance);
     }
+
+    public static bool CanAfford(int amount) => amount >= 0 && Balance >= amount;
+
+    public static bool TrySpend(int amount)
+    {
+        if (amount < 0 || Balance < amount) return false;
+        int balance = Balance - amount;
+        PlayerPrefs.SetInt(BalanceKey, balance);
+        PlayerPrefs.Save();
+        BalanceChanged?.Invoke(balance);
+        return true;
+    }
 }

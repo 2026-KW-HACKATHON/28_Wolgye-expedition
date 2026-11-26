@@ -13,7 +13,7 @@ public class EquipmentDatabase : ScriptableObject
     public EquipmentData GetEquipment(string equipmentId)
     {
         return equipments.Find(
-            equipment => equipment.equipmentId == equipmentId
+            equipment => equipment.Id == equipmentId
         );
     }
 
