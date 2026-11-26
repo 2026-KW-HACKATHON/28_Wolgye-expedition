@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoomExpandData
   id: Step3
   displayName: "3\uB2E8\uACC4"
-  icon: {fileID: 21300000, guid: 2f0e5ff1b758a2148b37e6621b693908, type: 3}
+  icon: {fileID: 21300000, guid: 784f38f298ecd69408e538d41d08c81b, type: 3}
   price: 0
   step: 3
