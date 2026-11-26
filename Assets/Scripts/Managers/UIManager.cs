@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
 
     [Header("Scenes")]
     [SerializeField] private string roomScene = "Room";
+    [SerializeField] private string equipmentScene = "PlayerDeco";
 
     private void Awake()
     {
@@ -135,5 +136,10 @@ public class UIManager : MonoBehaviour
     public void ShowRoom()
     {
         SceneManager.LoadScene(roomScene);
+    }
+
+    public void ShowEquipment()
+    {
+        SceneManager.LoadScene(equipmentScene);
     }
 }
