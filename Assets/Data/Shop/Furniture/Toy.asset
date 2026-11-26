@@ -15,5 +15,7 @@ MonoBehaviour:
   id: Toy
   displayName: "\uC7A5\uB09C\uAC10"
   icon: {fileID: 21300000, guid: 9915514effb476c4e942406d77af13cd, type: 3}
+  price: 0
   prefab: {fileID: 7160186237434029612, guid: 21ba9fbf3ecc20f40971f9eda482b431, type: 3}
   size: {x: 1, y: 1}
+  kind: 1

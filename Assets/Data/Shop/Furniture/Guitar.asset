@@ -15,5 +15,7 @@ MonoBehaviour:
   id: Guitar
   displayName: "\uAE30\uD0C0"
   icon: {fileID: 21300000, guid: 868f8fcc8f059564ebb16f35cfff1119, type: 3}
+  price: 0
   prefab: {fileID: 1801958902952516517, guid: 8d30cd3623ed0a34e81c2e69ef1f8c49, type: 3}
   size: {x: 1, y: 1}
+  kind: 1

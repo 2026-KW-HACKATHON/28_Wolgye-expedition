@@ -15,5 +15,7 @@ MonoBehaviour:
   id: Flower
   displayName: "\uAF43 \uD654\uBD84"
   icon: {fileID: 21300000, guid: 96dd73a132aa5304b9d43442135ad408, type: 3}
+  price: 0
   prefab: {fileID: 3428039218865905397, guid: 6f8f1a16864a16c45bfd3cb451db3c2b, type: 3}
   size: {x: 1, y: 1}
+  kind: 1

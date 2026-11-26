@@ -15,5 +15,7 @@ MonoBehaviour:
   id: Clock
   displayName: "\uC2DC\uACC4"
   icon: {fileID: 21300000, guid: 8def254ccc12c9c409a3259aa8d36c89, type: 3}
+  price: 0
   prefab: {fileID: 5284198225397869123, guid: ee0659d352423624baf4b8cafc7e3276, type: 3}
   size: {x: 1, y: 1}
+  kind: 1
