@@ -6085,7 +6085,7 @@ GameObject:
   - component: {fileID: 7256562278962350357}
   - component: {fileID: 8683325533825607241}
   m_Layer: 5
-  m_Name: CouponButton
+  m_Name: EquipmentButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17203,7 +17203,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uCFE0\uD3F0"
+  m_text: "\uC758\uC0C1"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a9037d2dcddae30499958abb201bad3c, type: 2}
   m_sharedMaterial: {fileID: 3641973764028186982, guid: a9037d2dcddae30499958abb201bad3c, type: 2}
@@ -18411,7 +18411,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1871050859}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: ShowCoupon
+        m_MethodName: ShowEquipment
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
