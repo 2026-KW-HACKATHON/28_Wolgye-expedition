@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+public enum ShopSubType { Furniture, Prop, Wallpaper, Floor }
+
 public class ShopManager : MonoBehaviour
 {
     [System.Serializable]
@@ -17,12 +19,32 @@ public class ShopManager : MonoBehaviour
         public Sprite normalSprite;        // 선택 안 됐을 때
     }
 
+    [System.Serializable]
+    public class SubTabEntry
+    {
+        public ShopSubType subType;
+        public Toggle toggle;
+
+        [Header("선택 표시")]
+        public Image backgroundImage;      // 서브탭 배경 Image
+        public Sprite selectedSprite;      // 선택됐을 때
+        public Sprite normalSprite;        // 선택 안 됐을 때
+    }
+
     [Header("탭")]
     [SerializeField] private List<TabEntry> tabs;
+
+    [Header("가구 서브탭")]
+    [SerializeField] private GameObject subTabRoot;
+    [SerializeField] private List<SubTabEntry> subTabs;
 
     [Header("목록")]
     [SerializeField] private Transform contentRoot;
     [SerializeField] private ShopSlot slotPrefab;
+
+    [Header("목록 여백")]
+    [SerializeField] private int paddingTopNormal = 20;      // 서브탭 없는 탭
+    [SerializeField] private int paddingTopWithSubTab = 80;  // 가구 탭 (서브탭 높이 + 여유)
 
     [Header("구매")]
     [SerializeField] private PurchasePopup purchasePopup;
@@ -31,7 +53,8 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private List<ShopItemBase> allItems;
 
     private readonly List<ShopSlot> spawnedSlots = new List<ShopSlot>();
-    private ShopCategory currentCategory = ShopCategory.Furniture;   // ★ 추가
+    private ShopCategory currentCategory = ShopCategory.Furniture;
+    private ShopSubType currentSubType = ShopSubType.Furniture;
 
     private void Awake()
     {
@@ -41,7 +64,25 @@ public class ShopManager : MonoBehaviour
             captured.toggle.onValueChanged.AddListener(isOn =>
             {
                 RefreshTabVisual(captured, isOn);
-                if (isOn) ShowCategory(captured.category);
+                if (isOn)
+                {
+                    // 큰 탭을 바꾸면 서브탭은 "가구"로 초기화
+                    currentSubType = ShopSubType.Furniture;
+                    RefreshSubTabVisual();
+                    ShowCategory(captured.category);
+                }
+            });
+        }
+
+        foreach (var sub in subTabs)
+        {
+            var captured = sub;
+            captured.toggle.onValueChanged.AddListener(isOn =>
+            {
+                if (!isOn) return;
+                currentSubType = captured.subType;
+                RefreshSubTabVisual();
+                ShowCategory(ShopCategory.Furniture);
             });
         }
     }
@@ -54,14 +95,17 @@ public class ShopManager : MonoBehaviour
     /// <summary>탭 선택 상태와 목록을 강제로 맞춘다.</summary>
     private void SelectCategory(ShopCategory category)
     {
+        currentSubType = ShopSubType.Furniture;
+        RefreshSubTabVisual();
+
         foreach (var tab in tabs)
         {
             bool isTarget = tab.category == category;
-            tab.toggle.SetIsOnWithoutNotify(isTarget);   // 이벤트 없이 상태만 변경
-            RefreshTabVisual(tab, isTarget);             // 스프라이트 갱신
+            tab.toggle.SetIsOnWithoutNotify(isTarget);
+            RefreshTabVisual(tab, isTarget);
         }
 
-        ShowCategory(category);                          // 목록 직접 표시
+        ShowCategory(category);
     }
 
     private void RefreshTabVisual(TabEntry tab, bool isOn)
@@ -70,26 +114,49 @@ public class ShopManager : MonoBehaviour
             tab.backgroundImage.sprite = isOn ? tab.selectedSprite : tab.normalSprite;
     }
 
+    private void RefreshSubTabVisual()
+    {
+        foreach (var sub in subTabs)
+        {
+            bool isOn = sub.subType == currentSubType;
+            sub.toggle.SetIsOnWithoutNotify(isOn);
+
+            if (sub.backgroundImage != null)
+                sub.backgroundImage.sprite = isOn ? sub.selectedSprite : sub.normalSprite;
+        }
+    }
+
     private void ShowCategory(ShopCategory category)
     {
         currentCategory = category;
+
+        // 가구 탭일 때만 서브탭 표시
+        if (subTabRoot != null) subTabRoot.SetActive(category == ShopCategory.Furniture);
+
+        // 가구 탭만 목록을 서브탭 아래로 내림
+        var grid = contentRoot.GetComponent<GridLayoutGroup>();
+        if (grid != null)
+        {
+            grid.padding.top = category == ShopCategory.Furniture ? paddingTopWithSubTab : paddingTopNormal;
+            LayoutRebuilder.MarkLayoutForRebuild((RectTransform)contentRoot);
+        }
+
         ClearSlots();
 
         foreach (var item in allItems)
         {
             if (item == null || item.Category != category) continue;
 
+            // 가구 탭이면 선택한 서브탭 종류만 표시
+            if (category == ShopCategory.Furniture && GetSubType(item) != currentSubType) continue;
+
             bool locked = false;
             bool owned = false;
 
             if (item is RoomExpandData expand)
             {
-                owned = RoomCapacity.IsPurchased(expand.Step);                 // 이미 산 단계
-                locked = !owned && !RoomCapacity.IsNextStep(expand.Step);      // 아직 못 사는 단계
-            }
-            else if (item.Category == ShopCategory.Character)
-            {
-                owned = CharacterInventory.Has(item.Id);
+                owned = RoomCapacity.IsPurchased(expand.Step);
+                locked = !owned && !RoomCapacity.IsNextStep(expand.Step);
             }
 
             ShopSlot slot = Instantiate(slotPrefab, contentRoot);
@@ -153,14 +220,10 @@ public class ShopManager : MonoBehaviour
         switch (item.Category)
         {
             case ShopCategory.Furniture:
-                Debug.Log($"구매 타입: {item.GetType().Name}, id: {item.Id}");
                 if (item is SurfaceShopItem s)
-                {
-                    Debug.Log($"Surface 저장: {s.OwnedKey}");
-                    SurfaceInventory.Add(s.OwnedKey);
-                }
+                    SurfaceInventory.Add(s.OwnedKey);     // 벽지/바닥: 1회성 보유
                 else
-                    FurnitureInventory.Add(item.Id, 1);
+                    FurnitureInventory.Add(item.Id, 1);   // 가구/소품: 수량 +1
                 break;
 
             case ShopCategory.Character:
@@ -168,12 +231,22 @@ public class ShopManager : MonoBehaviour
                 break;
 
             case ShopCategory.RoomExpand:
-                // 단계 저장 + 목록 갱신 (구매한 단계 제거, 다음 단계 해금)
                 RoomCapacity.SetLevel(((RoomExpandData)item).Step);
                 ShowCategory(ShopCategory.RoomExpand);
                 break;
         }
 
         purchasePopup.OpenNotice($"{item.DisplayName} 구매 완료!", item.Icon);
+    }
+
+    private static ShopSubType GetSubType(ShopItemBase item)
+    {
+        if (item is SurfaceShopItem s)
+            return s.Slot == SurfaceSlot.Wall ? ShopSubType.Wallpaper : ShopSubType.Floor;
+
+        if (item is FurnitureData f && f.Kind == FurnitureKind.Prop)
+            return ShopSubType.Prop;
+
+        return ShopSubType.Furniture;
     }
 }
