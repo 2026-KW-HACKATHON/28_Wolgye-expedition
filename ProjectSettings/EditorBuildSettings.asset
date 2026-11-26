@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Reward.unity
     guid: 23bf001a20762a9469a384ca4d770c2c
+  - enabled: 1
+    path: Assets/Scenes/PlayerDeco.unity
+    guid: 4ba8fdea7cfe6074b82c6fdab1229967
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 5e4ce36c52104af479dca755f5136b73, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

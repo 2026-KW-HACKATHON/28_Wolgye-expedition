@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0adff4e00280ae5448144e7a107dc659, type: 3}
+  m_Name: skincolor_001
+  m_EditorClassIdentifier: Assembly-CSharp::EquipmentData
+  equipmentId: skincolor_001
+  equipmentName: "\uB178\uB780\uC0C9"
+  equipmentType: 1
+  price: 0
+  icon: {fileID: 0}
+  prefab: {fileID: 0}
+  localPosition: {x: 0, y: 0, z: 0}
+  localRotation: {x: -90, y: 0, z: 0}
+  localScale: {x: 0.2, y: 0.2, z: 0.2}
+  skinColor: {r: 1, g: 0.97288257, b: 0.6245283, a: 1}
