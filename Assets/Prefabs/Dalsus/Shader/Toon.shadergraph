@@ -3621,7 +3621,7 @@
         "x"
     ],
     "m_Precision": 0,
-    "m_PreviewExpanded": false,
+    "m_PreviewExpanded": true,
     "m_DismissedVersion": 0,
     "m_PreviewMode": 0,
     "m_CustomColors": {
@@ -4579,10 +4579,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 1688.5001220703125,
-            "y": 967.0000610351563,
-            "width": 255.5001220703125,
-            "height": 142.00006103515626
+            "x": 1652.5,
+            "y": 968.0,
+            "width": 255.5,
+            "height": 326.0
         }
     },
     "m_Slots": [
@@ -4604,7 +4604,7 @@
         "HLSL"
     ],
     "m_Precision": 1,
-    "m_PreviewExpanded": false,
+    "m_PreviewExpanded": true,
     "m_DismissedVersion": 0,
     "m_PreviewMode": 0,
     "m_CustomColors": {
@@ -7400,7 +7400,7 @@
         "m_Id": "016ef7d58c704b6d86fad0dd14a7c5d4"
     },
     "m_AllowMaterialOverride": true,
-    "m_SurfaceType": 1,
+    "m_SurfaceType": 0,
     "m_ZTestMode": 4,
     "m_ZWriteControl": 0,
     "m_AlphaMode": 0,
@@ -7755,8 +7755,8 @@
     "m_ObjectId": "fa098b205044401e828cabc96c977aaa",
     "m_Title": "Calculate Shadow",
     "m_Position": {
-        "x": -1831.4998779296875,
-        "y": 989.0000610351563
+        "x": -1831.5,
+        "y": 989.0
     }
 }
 
