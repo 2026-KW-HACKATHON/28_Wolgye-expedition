@@ -21,7 +21,7 @@ MonoBehaviour:
   spawnEntries:
   - dalsuData: {fileID: 11400000, guid: 0549b35ccda840b4b89921cd9857651e, type: 2}
     weight: 4
-  - dalsuData: {fileID: 11400000, guid: 042e7d62288e9694095845422b87b072, type: 2}
+  - dalsuData: {fileID: 11400000, guid: 4454eca0e3d76ac44871524c6af17f55, type: 2}
     weight: 3
-  - dalsuData: {fileID: 11400000, guid: 823a99a085c0dae49961dde3b1e72b7a, type: 2}
+  - dalsuData: {fileID: 11400000, guid: c2db1d83a76f73b45971f924200fda4a, type: 2}
     weight: 3

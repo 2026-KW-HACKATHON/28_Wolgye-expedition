@@ -20,10 +20,12 @@ MonoBehaviour:
   maxSpawnCount: 5
   spawnEntries:
   - dalsuData: {fileID: 11400000, guid: 0549b35ccda840b4b89921cd9857651e, type: 2}
-    weight: 3
+    weight: 2
   - dalsuData: {fileID: 11400000, guid: 823a99a085c0dae49961dde3b1e72b7a, type: 2}
     weight: 4
-  - dalsuData: {fileID: 11400000, guid: 930e67ef58107624896ef16cf186bb86, type: 2}
-    weight: 2
-  - dalsuData: {fileID: 11400000, guid: 97b87d722be56e341820c886673d20cd, type: 2}
+  - dalsuData: {fileID: 11400000, guid: c2db1d83a76f73b45971f924200fda4a, type: 2}
+    weight: 3
+  - dalsuData: {fileID: 11400000, guid: 7a4e139ae4509354ca15a343e9301817, type: 2}
+    weight: 1
+  - dalsuData: {fileID: 11400000, guid: e4254f1dde0304242a8bf4b54bf0a0a9, type: 2}
     weight: 1
