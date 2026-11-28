@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f5c34f0a8ded4447b1377c811bb08d0, type: 3}
+  m_Name: dalsu_duck
+  m_EditorClassIdentifier: Assembly-CSharp::DalsuData
+  id: Dalsu_009
+  dalsuName: "\uC624\uB9AC\uB2EC\uC218"
+  type: 
+  description: 
+  rarity: 0
+  icon: {fileID: 21300000, guid: 479a35d7f64ef7e41805061af4041bce, type: 3}
+  prefab: {fileID: 6855638012574220257, guid: cec73172615bf0a479aac64996bb424d, type: 3}
+  latitude: 0
+  longitude: 0
+  spawnRadius: 30
