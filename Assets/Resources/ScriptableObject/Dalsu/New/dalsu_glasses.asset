@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f5c34f0a8ded4447b1377c811bb08d0, type: 3}
+  m_Name: dalsu_glasses
+  m_EditorClassIdentifier: Assembly-CSharp::DalsuData
+  id: Dalsu_012
+  dalsuName: "\uC548\uACBD\uB2EC\uC218"
+  type: 
+  description: 
+  rarity: 0
+  icon: {fileID: 21300000, guid: ec02a345939906d428839f9681176d40, type: 3}
+  prefab: {fileID: 4534550721110253834, guid: c2c77ceab45a96d4ea8de20939f96f8f, type: 3}
+  latitude: 0
+  longitude: 0
+  spawnRadius: 30

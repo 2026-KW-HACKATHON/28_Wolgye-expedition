@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f5c34f0a8ded4447b1377c811bb08d0, type: 3}
+  m_Name: dalsu_monitor
+  m_EditorClassIdentifier: Assembly-CSharp::DalsuData
+  id: Dalsu_015
+  dalsuName: "\uBAA8\uB2C8\uD130\uB2EC\uC218"
+  type: 
+  description: 
+  rarity: 0
+  icon: {fileID: 21300000, guid: 208da34151b7e1d47ad1e691c3351e0b, type: 3}
+  prefab: {fileID: 3313785162920527821, guid: 4f6e1a0cc75c9ed4c9d1f59963952e90, type: 3}
+  latitude: 0
+  longitude: 0
+  spawnRadius: 30
