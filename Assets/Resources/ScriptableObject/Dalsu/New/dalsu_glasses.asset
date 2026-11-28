@@ -16,7 +16,7 @@ MonoBehaviour:
   dalsuName: "\uC548\uACBD\uB2EC\uC218"
   type: 
   description: 
-  rarity: 0
+  rarity: 1
   icon: {fileID: 21300000, guid: ec02a345939906d428839f9681176d40, type: 3}
   prefab: {fileID: 4534550721110253834, guid: c2c77ceab45a96d4ea8de20939f96f8f, type: 3}
   latitude: 0
